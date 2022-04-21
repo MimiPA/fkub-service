@@ -1,0 +1,9 @@
+{ 
+    "verbose": true, 
+    "watch": ["src"],
+    "ext": "js,json",
+    "exec": "node ./src/bin/www", 
+    "env": { 
+        "NODE_ENV": "development" 
+    } 
+}

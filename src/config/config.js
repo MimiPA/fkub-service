@@ -1,0 +1,54 @@
+require("dotenv").config();
+
+const {
+  DB_HOSTNAME_TEST,
+  DB_NAME_TEST,
+  DB_USERNAME_TEST,
+  DB_PASSWORD_TEST,
+  DB_PORT_TEST,
+
+  DB_HOSTNAME,
+  DB_NAME,
+  DB_USERNAME,
+  DB_PASSWORD, 
+  DB_PORT,
+} = process.env;
+
+module.exports = {
+  development: {
+    username: DB_USERNAME_TEST,
+    password: DB_PASSWORD_TEST,
+    database: DB_NAME_TEST,
+    host: DB_HOSTNAME_TEST,
+    port: DB_PORT_TEST,
+    dialect: "mysql",
+
+    dialectOptions: {
+      connectTimeout: 120000,
+    },
+  },
+  test: {
+    username: DB_USERNAME,
+    password: DB_PASSWORD,
+    database: DB_NAME,
+    host: DB_HOSTNAME,
+    dialect: "mysql",
+    port: DB_PORT,
+    
+    dialectOptions: {
+      connectTimeout: 120000,
+    },
+  },
+
+  production: {
+    username: DB_USERNAME_PROD,
+    password: DB_PASSWORD_PROD,
+    database: DB_NAME_PROD,
+    host: DB_HOSTNAME_PROD,
+    port: DB_PORT_PROD,
+    dialect: "mysql",
+    dialectOptions: {
+      connectTimeout: 120000,
+    },
+  },
+};
