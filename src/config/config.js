@@ -39,16 +39,4 @@ module.exports = {
       connectTimeout: 120000,
     },
   },
-
-  production: {
-    username: DB_USERNAME_PROD,
-    password: DB_PASSWORD_PROD,
-    database: DB_NAME_PROD,
-    host: DB_HOSTNAME_PROD,
-    port: DB_PORT_PROD,
-    dialect: "mysql",
-    dialectOptions: {
-      connectTimeout: 120000,
-    },
-  },
 };

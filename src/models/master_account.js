@@ -1,0 +1,49 @@
+'use strict';
+
+module.exports = (sequelize, DataTypes) => {
+  const Master_account = sequelize.define(
+    "Master_account",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false,
+        unique: true,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING(100),
+        unique: true,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING(200),
+        allowNull: false,
+      },
+      idUser_create: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      idUser_update: {
+        type: DataTypes.INTEGER,
+      },
+    },
+    {
+      tableName: "master_accounts",
+      timestamps: true,
+    }
+  );
+
+  Master_account.associate = function (models) {
+    Master_account.belongsTo(models.Master_role, {
+      foreignKey: {
+        name: 'id_role',
+        type: DataTypes.INTEGER,
+        allowNull: false
+      }
+    });
+  }
+
+  return Master_account;
+};
