@@ -12,6 +12,7 @@ module.exports = {
         type: Sequelize.STRING(100),
         unique: true,
         allowNull: false,
+        defaultValue: "User",
       },
       idUser_create: {
         type: Sequelize.INTEGER,
@@ -25,7 +26,6 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });

@@ -20,9 +20,9 @@ module.exports = {
     password: DB_PASSWORD_TEST,
     database: DB_NAME_TEST,
     host: DB_HOSTNAME_TEST,
-    port: DB_PORT_TEST,
     dialect: "mysql",
-
+    port: DB_PORT_TEST,
+    
     dialectOptions: {
       connectTimeout: 120000,
     },
@@ -32,7 +32,7 @@ module.exports = {
     password: DB_PASSWORD,
     database: DB_NAME,
     host: DB_HOSTNAME,
-    dialect: "mysql",
+    dialect: "postgres",
     port: DB_PORT,
     
     dialectOptions: {

@@ -43,6 +43,28 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
+    Master_account.hasOne(models.Master_user, {
+      foreignKey: {
+        name: "id",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    });
+    Master_account.hasMany(models.Master_applicant, {
+      foreignKey: {
+        name: "id_user",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+
+      },
+    });
+    Master_account.belongsTo(models.Trx_requirement_document, {
+      foreignKey: {
+        name: "id_user",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    })
   }
 
   return Master_account;

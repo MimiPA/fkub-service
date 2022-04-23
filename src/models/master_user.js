@@ -32,7 +32,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       gender: {
-        type: DataTypes.ENUM("Female", "Male"),
+        type: DataTypes.ENUM('Perempuan', 'Laki-laki'),
+        allowNull: false,
+      },
+      religion: {
+        type: DataTypes.ENUM('Kristen', 'Katolik', 'Buddha', 'Islam', 'Hindu', 'Konghucu'),
         allowNull: false,
       },
       date_birth: {

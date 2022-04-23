@@ -1,45 +1,45 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('master_users', {
+    await queryInterface.createTable('master_applicants', {
       id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      id_user: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'master_accounts',
-          key: 'id'
+          model: "master_accounts",
+          key: "id",
         },
         allowNull: false,
-        primaryKey: true,
       },
-      firstname: {
+      referral_code: {
+        type: Sequelize.STRING(8),
+        allowNull: false,
+        unique: true
+      },
+      title: {
         type: Sequelize.STRING(100),
         allowNull: false
       },
-      lastname: {
+      placename: {
         type: Sequelize.STRING(100),
-        allowNull: false
-      },
-      phone: {
-        type: Sequelize.STRING(20),
         allowNull: false
       },
       address: {
         type: Sequelize.STRING(200),
         allowNull: false
       },
-      gender: {
-        type: Sequelize.ENUM('Perempuan', 'Laki-laki'),
+      status: {
+        type: Sequelize.ENUM('Submit', 'Accepted', 'Rejected'),
+        defaultValue: 'Submit'
+      },
+      application_filename: {        
+        type: Sequelize.STRING(255),
         allowNull: false
-      },
-      religion: {
-        type: Sequelize.ENUM('Kristen', 'Katolik', 'Buddha', 'Islam', 'Hindu', 'Konghucu'),
-        allowNull: false
-      },
-      date_birth: {
-        type: Sequelize.DATEONLY
-      },
-      photo: {
-        type: Sequelize.TEXT
       },
       idUser_create: {
         type: Sequelize.INTEGER,
@@ -58,6 +58,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('master_users');
+    await queryInterface.dropTable('master_applicants');
   }
 };

@@ -1,29 +1,35 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('master_accounts', {
+    await queryInterface.createTable('trx_requirement_documents', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_role: {
+      id_applicant: {
         type: Sequelize.INTEGER,
         references: {
-          model: "master_roles",
+          model: "master_applicants",
           key: "id",
         },
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING(100),
-        unique: true,
-        allowNull: false
+      id_user: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "master_accounts",
+          key: "id",
+        },
+        allowNull: false,
       },
-      password: {
-        type: Sequelize.STRING(200),
-        allowNull: false
+      filename: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
+      filetype: {
+        type: Sequelize.STRING(10),
       },
       idUser_create: {
         type: Sequelize.INTEGER,
@@ -42,6 +48,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('master_accounts');
+    await queryInterface.dropTable('trx_requirement_documents');
   }
 };
