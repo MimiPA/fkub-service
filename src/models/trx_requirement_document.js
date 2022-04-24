@@ -4,11 +4,11 @@ module.exports = (sequelize, DataTypes) => {
   const Trx_requirement_document = sequelize.define(
     "Trx_requirement_document",
     {
-      filename: {
+      nama_file: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
-      filetype: {
+      tipe_file: {
         type: DataTypes.STRING(10),
       },
       idUser_create: {

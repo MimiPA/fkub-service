@@ -9,15 +9,15 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         allowNull: false,
       },
-      title: {
+      judul: {
         type: DataTypes.STRING(100),
         allowNull: false
       },
-      placename: {
+      nama_tempat: {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      address: {
+      alamat: {
         type: DataTypes.STRING(200),
         allowNull: false,
       },
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM('Submit', 'Accepted', 'Rejected'),
         defaultValue: 'Submit'
       },
-      application_filename: {
+      nama_file_permohonan: {
         type: DataTypes.STRING(255),
         allowNull: false
       },

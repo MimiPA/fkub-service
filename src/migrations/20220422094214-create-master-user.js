@@ -11,34 +11,34 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      firstname: {
+      nama_depan: {
         type: Sequelize.STRING(100),
         allowNull: false
       },
-      lastname: {
+      nama_belakang: {
         type: Sequelize.STRING(100),
         allowNull: false
       },
-      phone: {
+      telepon: {
         type: Sequelize.STRING(20),
         allowNull: false
       },
-      address: {
+      alamat: {
         type: Sequelize.STRING(200),
         allowNull: false
       },
-      gender: {
+      jenis_kelamin: {
         type: Sequelize.ENUM('Perempuan', 'Laki-laki'),
         allowNull: false
       },
-      religion: {
+      agama: {
         type: Sequelize.ENUM('Kristen', 'Katolik', 'Buddha', 'Islam', 'Hindu', 'Konghucu'),
         allowNull: false
       },
-      date_birth: {
+      tanggal_lahir: {
         type: Sequelize.DATEONLY
       },
-      photo: {
+      foto: {
         type: Sequelize.TEXT
       },
       idUser_create: {

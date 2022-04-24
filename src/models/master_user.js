@@ -4,45 +4,45 @@ module.exports = (sequelize, DataTypes) => {
   const Master_user = sequelize.define(
     "Master_user",
     {
-      firstname: {
+      nama_depan: {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      lastname: {
+      nama_belakang: {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      fullname: {
+      nama_lengkap: {
         type: DataTypes.VIRTUAL,
         get() {
-          const firstname = this.firstname;
-          const lastname = this.lastname;
+          const firstname = this.nama_depan;
+          const lastname = this.nama_belakang;
           return `${firstname} ${lastname}`;
         },
         set(value) {
           throw new Error("Do not try to set the `fullname` value!");
         },
       },
-      phone: {
+      telepon: {
         type: DataTypes.STRING(20),
         allowNull: false,
       },
-      address: {
+      alamat: {
         type: DataTypes.STRING(200),
         allowNull: false,
       },
-      gender: {
+      jenis_kelamin: {
         type: DataTypes.ENUM('Perempuan', 'Laki-laki'),
         allowNull: false,
       },
-      religion: {
+      agama: {
         type: DataTypes.ENUM('Kristen', 'Katolik', 'Buddha', 'Islam', 'Hindu', 'Konghucu'),
         allowNull: false,
       },
-      date_birth: {
+      tanggal_lahir: {
         type: DataTypes.DATEONLY,
       },
-      photo: {
+      foto: {
         type: DataTypes.TEXT,
       },
       idUser_create: {

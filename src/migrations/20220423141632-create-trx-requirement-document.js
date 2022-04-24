@@ -24,11 +24,11 @@ module.exports = {
         },
         allowNull: false,
       },
-      filename: {
+      nama_file: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
-      filetype: {
+      tipe_file: {
         type: Sequelize.STRING(10),
       },
       idUser_create: {

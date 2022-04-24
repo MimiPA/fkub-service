@@ -21,15 +21,15 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      title: {
+      judul: {
         type: Sequelize.STRING(100),
         allowNull: false
       },
-      placename: {
+      nama_tempat: {
         type: Sequelize.STRING(100),
         allowNull: false
       },
-      address: {
+      alamat: {
         type: Sequelize.STRING(200),
         allowNull: false
       },
@@ -37,7 +37,7 @@ module.exports = {
         type: Sequelize.ENUM('Submit', 'Accepted', 'Rejected'),
         defaultValue: 'Submit'
       },
-      application_filename: {        
+      nama_file_permohonan: {        
         type: Sequelize.STRING(255),
         allowNull: false
       },
