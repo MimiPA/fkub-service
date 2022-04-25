@@ -1,27 +1,14 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('master_accounts', {
+    await queryInterface.createTable('master_requirements', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_role: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "master_roles",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      email: {
-        type: Sequelize.STRING(100),
-        unique: true,
-        allowNull: false
-      },
-      password: {
+      kategori_berkas: {
         type: Sequelize.STRING(200),
         allowNull: false
       },
@@ -43,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('master_accounts');
+    await queryInterface.dropTable('master_requirements');
   }
 };

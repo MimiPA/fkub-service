@@ -24,12 +24,23 @@ module.exports = {
         },
         allowNull: false,
       },
+      id_kategori_berkas: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "master_requirements",
+          key: "id",
+        },
+      },
       nama_file: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
       tipe_file: {
         type: Sequelize.STRING(10),
+      },
+      status: {
+        type: Sequelize.ENUM('Submit', 'Accepted', 'Rejected'),
+        defaultValue: 'Submit'
       },
       idUser_create: {
         type: Sequelize.INTEGER,
@@ -43,7 +54,8 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: true
       }
     });
   },

@@ -2,10 +2,11 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert("master_roles", [
+    return queryInterface.bulkInsert("master_religions", [
       {
         id: 1,
-        role: "Admin",
+        agama: "Buddha",
+        tempat_ibadah: "Vihara",
         idUser_create: "1",
         idUser_update: null,
         createdAt: new Date(),
@@ -13,7 +14,8 @@ module.exports = {
       },
       {
         id: 2,
-        role: "User",
+        agama: "Hindu",
+        tempat_ibadah: "Pura",
         idUser_create: "1",
         idUser_update: null,
         createdAt: new Date(),
@@ -21,7 +23,8 @@ module.exports = {
       },
       {
         id: 3,
-        role: "PMPTSP",
+        agama: "Islam",
+        tempat_ibadah: "Masjid",
         idUser_create: "1",
         idUser_update: null,
         createdAt: new Date(),
@@ -29,7 +32,8 @@ module.exports = {
       },
       {
         id: 4,
-        role: "FKUB",
+        agama: "Katolik",
+        tempat_ibadah: "Gereja",
         idUser_create: "1",
         idUser_update: null,
         createdAt: new Date(),
@@ -37,7 +41,8 @@ module.exports = {
       },
       {
         id: 5,
-        role: "Kemenag",
+        agama: "Konghucu",
+        tempat_ibadah: "Klenteng",
         idUser_create: "1",
         idUser_update: null,
         createdAt: new Date(),
@@ -45,7 +50,8 @@ module.exports = {
       },
       {
         id: 6,
-        role: "Dinas Tata Ruang",
+        agama: "Kristen",
+        tempat_ibadah: "Gereja",
         idUser_create: "1",
         idUser_update: null,
         createdAt: new Date(),
@@ -55,6 +61,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("master_roles", null, {});
+    return queryInterface.bulkDelete("master_religions", null, {});
   },
 };

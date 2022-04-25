@@ -16,6 +16,14 @@ module.exports = {
         },
         allowNull: false,
       },
+      id_religion: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "master_religions",
+          key: "id",
+        },
+        allowNull: false,
+      },
       referral_code: {
         type: Sequelize.STRING(8),
         allowNull: false,
@@ -23,6 +31,10 @@ module.exports = {
       },
       judul: {
         type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      jenis_pembangunan: {
+        type: Sequelize.ENUM('Renovasi', 'Bangun Baru'),
         allowNull: false
       },
       nama_tempat: {
@@ -37,7 +49,7 @@ module.exports = {
         type: Sequelize.ENUM('Submit', 'Accepted', 'Rejected'),
         defaultValue: 'Submit'
       },
-      nama_file_permohonan: {        
+      nama_file_permohonan: {
         type: Sequelize.STRING(255),
         allowNull: false
       },
@@ -53,7 +65,8 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: true
       }
     });
   },

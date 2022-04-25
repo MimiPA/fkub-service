@@ -4,6 +4,13 @@ module.exports = (sequelize, DataTypes) => {
   const Master_applicant = sequelize.define(
     "Master_applicant",
     {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false,
+        unique: true,
+      },
       referral_code: {
         type: DataTypes.STRING(8),
         unique: true,
@@ -12,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       judul: {
         type: DataTypes.STRING(100),
         allowNull: false
+      },
+      jenis_pembangunan: {
+        type: DataTypes.ENUM('Renovasi', 'Bangun Baru'),
+        allowNull: false,
       },
       nama_tempat: {
         type: DataTypes.STRING(100),
@@ -58,7 +69,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-    })
+    });
+    Master_applicant.belongsTo(models.Master_religion, {
+      foreignKey: {
+        name: "id_religion",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    });
   }
   return Master_applicant;
 };

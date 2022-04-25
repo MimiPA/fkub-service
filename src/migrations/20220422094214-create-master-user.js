@@ -11,6 +11,18 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
+      id_religion: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "master_religions",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      nik: {
+        type: Sequelize.STRING(20),
+        allowNull: false
+      },
       nama_depan: {
         type: Sequelize.STRING(100),
         allowNull: false
@@ -27,12 +39,28 @@ module.exports = {
         type: Sequelize.STRING(200),
         allowNull: false
       },
+      rt: {
+        type: Sequelize.STRING(5),
+        allowNull: false
+      },
+      rw: {
+        type: Sequelize.STRING(5),
+        allowNull: false
+      },
+      kelurahan: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      kecamatan: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
       jenis_kelamin: {
         type: Sequelize.ENUM('Perempuan', 'Laki-laki'),
         allowNull: false
       },
-      agama: {
-        type: Sequelize.ENUM('Kristen', 'Katolik', 'Buddha', 'Islam', 'Hindu', 'Konghucu'),
+      tempat_lahir: {
+        type: Sequelize.STRING(50),
         allowNull: false
       },
       tanggal_lahir: {
@@ -53,7 +81,8 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: true
       }
     });
   },

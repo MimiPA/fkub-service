@@ -1,29 +1,20 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('master_accounts', {
+    await queryInterface.createTable('master_religions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_role: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "master_roles",
-          key: "id",
-        },
+      agama: {
+        type: Sequelize.STRING(20),
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING(100),
-        unique: true,
-        allowNull: false
-      },
-      password: {
-        type: Sequelize.STRING(200),
-        allowNull: false
+      tempat_ibadah: {
+        type: Sequelize.STRING(20),
+        allowNull: false,
       },
       idUser_create: {
         type: Sequelize.INTEGER,
@@ -37,12 +28,12 @@ module.exports = {
         type: Sequelize.DATE
       },
       updatedAt: {
-        type: Sequelize.DATE,
-        allowNull: true
+        allowNull: true,
+        type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('master_accounts');
+    await queryInterface.dropTable('master_religions');
   }
 };

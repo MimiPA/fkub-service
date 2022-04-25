@@ -4,12 +4,24 @@ module.exports = (sequelize, DataTypes) => {
   const Trx_requirement_document = sequelize.define(
     "Trx_requirement_document",
     {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false,
+        unique: true,
+      },
       nama_file: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
       tipe_file: {
         type: DataTypes.STRING(10),
+      },
+      status: {
+        allowNull: true,
+        type: DataTypes.ENUM('Submit', 'Accepted', 'Rejected'),
+        defaultValue: 'Submit'
       },
       idUser_create: {
         type: DataTypes.INTEGER,
@@ -36,6 +48,19 @@ module.exports = (sequelize, DataTypes) => {
     Trx_requirement_document.hasOne(models.Master_account, {
       foreignKey: {
         name: "id_user",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    });
+    Trx_requirement_document.belongsTo(models.Master_requirement, {
+      foreignKey: {
+        name: "id_kategori_berkas",
+        type: DataTypes.INTEGER,
+      },
+    });
+    Trx_requirement_document.hasOne(models.Trx_similarity, {
+      foreignKey: {
+        name: "id_requirement_document",
         type: DataTypes.INTEGER,
         allowNull: false,
       },

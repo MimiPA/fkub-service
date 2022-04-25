@@ -4,6 +4,10 @@ module.exports = (sequelize, DataTypes) => {
   const Master_user = sequelize.define(
     "Master_user",
     {
+      nik: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
       nama_depan: {
         type: DataTypes.STRING(100),
         allowNull: false,
@@ -31,12 +35,28 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(200),
         allowNull: false,
       },
+      rt: {
+        type: DataTypes.STRING(5),
+        allowNull: false,
+      },
+      rw: {
+        type: DataTypes.STRING(5),
+        allowNull: false,
+      },
+      kelurahan: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      kecamatan: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
       jenis_kelamin: {
         type: DataTypes.ENUM('Perempuan', 'Laki-laki'),
         allowNull: false,
       },
-      agama: {
-        type: DataTypes.ENUM('Kristen', 'Katolik', 'Buddha', 'Islam', 'Hindu', 'Konghucu'),
+      tempat_lahir: {
+        type: DataTypes.STRING(50),
         allowNull: false,
       },
       tanggal_lahir: {
@@ -67,7 +87,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-    })
+    });
+    Master_user.belongsTo(models.Master_religion, {
+      foreignKey: {
+        name: "id_religion",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    });
   }
 
   return Master_user;
