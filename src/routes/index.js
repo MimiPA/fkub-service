@@ -3,9 +3,9 @@ const express = require("express");
 const router = express.Router();
 
 // Define Routes
-//const authRouter = require("./auth");
+const authRouter = require("./auth");
 
 // Get All Routes
-//router.use("", authRouter);
+router.use("", authRouter);
 
 module.exports = router;
