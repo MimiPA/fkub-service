@@ -26,6 +26,11 @@ module.exports = {
                 type: Sequelize.STRING(200),
                 allowNull: false
             },
+            is_active: {
+                type: Sequelize.ENUM('Enable', 'Disable'),
+                defaultValue: "Disable",
+                allowNull: false
+            },
             idUser_create: {
                 type: Sequelize.INTEGER,
                 allowNull: false

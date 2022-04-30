@@ -42,6 +42,17 @@ const register = async(req, res) => {
             return errorResponse(req, res, 400, checkRegister);
         }
 
+        //Check Religion
+        const religion = await Master_religion.findOne({
+            where: {
+                agama: agama
+            },
+        });
+
+        if (!religion) {
+            return errorResponse(req, res, 400, "Agama tidak terdaftar");
+        }
+
         //Check Email
         const account = await Master_account.findOne({
             where: {
@@ -63,18 +74,17 @@ const register = async(req, res) => {
             },
         });
 
-        if (role == "User" || checkRole) {
+        if (checkRole) {
             //Account payload
             const dataAccount = {
+                id_role: checkRole.id,
                 email: email,
                 password: passHash,
                 idUser_create: 1,
             };
 
             if (role == "User") {
-                dataAccount.id_role = 2;
-            } else {
-                dataAccount.id_role = checkRole.id;
+                dataAccount.is_active = "Enable";
             }
 
             //Insert Account to DB
@@ -84,6 +94,7 @@ const register = async(req, res) => {
             //User Payload
             const dataUser = {
                 id: insert.id,
+                id_religion: religion.id,
                 nik: nik,
                 nama_depan: nama_depan,
                 nama_belakang: nama_belakang,

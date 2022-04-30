@@ -34,7 +34,6 @@ const register = {
         enum: ["Perempuan", "Laki-laki"],
     },
     tempat_lahir: { type: "string", empty: false },
-    tanggal_lahir: { type: "date", empty: false },
 };
 
 /*validator for login*/
