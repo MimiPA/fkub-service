@@ -13,33 +13,54 @@ const Validator = require("fastest-validator");
 const v = new Validator();
 const authValidator = require('./validator/auth.validator');
 
-const register = async(req, res) => {
+const register = async (req, res) => {
     try {
         const {
             email,
             password,
-            role,
             nik,
             nama_depan,
             nama_belakang,
-            telepon,
+            jenis_kelamin,
             agama,
+            telepon,
+            tempat_lahir,
+            tanggal_lahir,
             alamat,
             rt,
             rw,
-            kelurahan,
             kecamatan,
-            jenis_kelamin,
-            tempat_lahir,
-            tanggal_lahir,
-            foto
+            kelurahan,
+            foto,
+            role
         } = req.body;
 
         //Validate Register Requirement
         const checkRegister = v.validate(req.body, authValidator.register);
 
+        if (agama == 'Agama') {
+            return errorResponse(req, res, 400, "Mohon Memilih Agama Anda");
+        }
+        else if (kecamatan == "Kecamatan") {
+            return errorResponse(req, res, 400, "Mohon Memilih Kecamatan Anda");
+        }
+        else if (kelurahan == "Kelurahan") {
+            return errorResponse(req, res, 400, "Mohon Memilih Kelurahan Anda");
+        }
+
         if (checkRegister.length) {
             return errorResponse(req, res, 400, checkRegister);
+        }
+
+        //Check NIK
+        const id_nik = await Master_user.findOne({
+            where: {
+                nik: nik
+            },
+        });
+
+        if (id_nik) {
+            return errorResponse(req, res, 400, "NIK sudah terdaftar");
         }
 
         //Check Religion
@@ -77,10 +98,10 @@ const register = async(req, res) => {
         if (checkRole) {
             //Account payload
             const dataAccount = {
-                id_role: checkRole.id,
                 email: email,
                 password: passHash,
                 idUser_create: 1,
+                id_role: checkRole.id,
             };
 
             if (role == "User") {
