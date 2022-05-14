@@ -45,6 +45,7 @@ const login = {
         optional: true,
         items: "string",
         enum: ["Admin", "User", "PMPTSP", "FKUB", "Kemenag", "Dinas Tata Ruang"],
+        default: "User",
     },
 };
 

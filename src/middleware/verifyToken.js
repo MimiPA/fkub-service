@@ -5,13 +5,13 @@ const { errorResponse, successResponse } = require("../helpers");
 const jwt = require('jsonwebtoken');
 
 //Import Model
-const { Master_account } = require("../models");
+const { Master_account, Master_role } = require("../models");
 
 const { SECRET, SECRET_EXPIRED, REFRESH_TOKEN } = process.env;
 
 module.exports = [
     //Authentication using access token
-    async(req, res, next) => {
+    async (req, res, next) => {
         //Extract access token from header
         const accessToken = req.headers["authorization"];
 
@@ -24,11 +24,15 @@ module.exports = [
             //Verify access token
             const account = jwt.verify(accessToken, SECRET);
 
-            //Destructure account data from account object
-            const { id, email, role } = account.data;
+            if(!account){
+                return errorResponse(req,res, 400, account);
+            }
 
-            //Add accoount data to the request object
-            req.user = { id, email, role };
+            //Destructure account data from account object
+            const { id, email, id_role, role } = account.data;
+
+            //Add account data to the request object
+            req.user = { id, email, id_role, role };
 
             //Continue to next middleware
             return next();
@@ -44,7 +48,7 @@ module.exports = [
     },
 
     //Refreshing access token using refresh token
-    async(req, res, next) => {
+    async (req, res, next) => {
         //Check if request need to be refreshed
         if (!req.isRefreshNeeded) {
             //If refresh not needed then continue to next middleware
@@ -66,10 +70,21 @@ module.exports = [
             const { id } = refreshAccount.data;
 
             //Retrieve the latest account data from database
-            const data = await Master_account.findOne({
+            const dataPayload = await Master_account.findOne({
                 where: { id: id },
-                attributes: ['id', 'email', 'role']
+                attributes: ['id', 'email', 'id_role'],
+                include: [{
+                    model: Master_role,
+                    attributes: ["role"]
+                }]
             });
+
+            const data = {
+                id: dataPayload.id,
+                email: dataPayload.email,
+                id_role: dataPayload.id_role,
+                role: dataPayload.Master_role.role
+            };
 
             if (!data) {
                 return errorResponse(req, res, 401, "Account is no longer exist in the database.");
