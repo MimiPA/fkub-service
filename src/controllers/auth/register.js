@@ -15,7 +15,7 @@ const authValidator = require('./validator/auth.validator');
 
 const register = async (req, res) => {
     try {
-        const {
+        let {
             email,
             password,
             nik,
@@ -35,9 +35,6 @@ const register = async (req, res) => {
             role
         } = req.body;
 
-        //Validate Register Requirement
-        const checkRegister = v.validate(req.body, authValidator.register);
-
         if (agama == 'Agama') {
             return errorResponse(req, res, 400, "Mohon Memilih Agama Anda");
         }
@@ -48,8 +45,13 @@ const register = async (req, res) => {
             return errorResponse(req, res, 400, "Mohon Memilih Kelurahan Anda");
         }
 
+        //Validate Register Requirement
+        const checkRegister = v.validate(req.body, authValidator.register);
         if (checkRegister.length) {
-            return errorResponse(req, res, 400, checkRegister);
+            return res.status(400).json({
+                status: 'error',
+                message: checkRegister
+            });
         }
 
         //Check NIK
@@ -58,7 +60,6 @@ const register = async (req, res) => {
                 nik: nik
             },
         });
-
         if (id_nik) {
             return errorResponse(req, res, 400, "NIK sudah terdaftar");
         }
@@ -69,7 +70,6 @@ const register = async (req, res) => {
                 agama: agama
             },
         });
-
         if (!religion) {
             return errorResponse(req, res, 400, "Agama tidak terdaftar");
         }
@@ -80,7 +80,6 @@ const register = async (req, res) => {
                 email: email
             },
         });
-
         if (account) {
             return errorResponse(req, res, 400, "Email sudah terdaftar");
         }
@@ -111,6 +110,13 @@ const register = async (req, res) => {
             //Insert Account to DB
             const insert = await Master_account.create(dataAccount);
             await Master_account.update({ idUser_create: insert.id }, { where: { id: insert.id } });
+
+            if (jenis_kelamin == 'Laki-laki') {
+                foto = 'https://thumbs.dreamstime.com/z/smart-boy-character-cartoon-illustration-looking-49704212.jpg';
+            }
+            else if (jenis_kelamin == 'Perempuan') {
+                foto = 'https://thumbs.dreamstime.com/z/hand-drawn-beautiful-young-woman-sunglasses-stylish-girl-bow-her-head-fashion-look-sketch-vector-illustration-152344263.jpg';
+            }
 
             //User Payload
             const dataUser = {

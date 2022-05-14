@@ -1,7 +1,8 @@
 const verifyToken = require("./verifyToken");
-const { adminAuth, pmptspAuth } = require("./roleAuth");
+const { adminAuth, userAuth, pmptspAuth } = require("./roleAuth");
 
 module.exports = {
     verifyToken,
     adminAuth,
+    userAuth,
 };

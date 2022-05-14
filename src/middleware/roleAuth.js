@@ -1,17 +1,17 @@
 const errorResponse = require("../helpers/errorResponse");
 
 exports.adminAuth = (req, res, next) => {
-    if (req.user && req.user.email && req.user.role === "Admin") {
+    if (req.user && req.user.email && req.user.role === "admin") {
         return next();
     } else {
-        errorResponse(req, res, 401, "You dont have admin access.")
+        errorResponse(req, res, 401, "You don't have admin access.")
     }
 };
 
-exports.pmptspAuth = (req, res, next) => {
-    if (req.user && req.user.email && req.user.role === "PMPTSP") {
+exports.userAuth = (req, res, next) => {
+    if (req.user && req.user.email && req.user.role === "User") {
         return next();
     } else {
-        errorResponse(req, res, 401, "You dont have PMPTSP access.")
+        errorResponse(req, res, 401, "You don't have user access.")
     }
 };

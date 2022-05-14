@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const publicRoutes = require('./src/routes');
 const errorHandler = require('./src/middleware/errorHandler');
+const authMiddleware = require("./src/middleware");
 
 const app = express();
 
@@ -31,7 +32,7 @@ app.use(express.static(path.join(__dirname, './src/public')));
 
 // Public & protected routes
 app.use('/api', publicRoutes);
-// app.use('/api/v1', authMiddleware.verifyToken)
+app.use('/api', authMiddleware.verifyToken);
 
 app.use(errorHandler);
 
