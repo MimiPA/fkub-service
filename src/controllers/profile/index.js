@@ -35,7 +35,7 @@ const profile = async (req, res) => {
         });
 
         if (dataProfile) {
-            return successResponse(req, res, 'User profile retrieved successfully', dataProfile);
+            return res.send(dataProfile);
         }
     }
     catch (err) {
