@@ -11,7 +11,7 @@ const userProfileRouter = require('../../controllers/profile');
 
 
 /* ---------------------- */
-router.use(verifyToken, userAuth);
+router.use(verifyToken);
 
 //Get User profile
 router.get('/', userProfileRouter);

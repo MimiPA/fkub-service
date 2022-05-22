@@ -142,7 +142,7 @@ const register = async (req, res) => {
             if (!createUser) {
                 return errorResponse(req, res, 400, "Register Unsuccessfully. Please Try Again!");
             }
-            return successResponse(req, res, "Register Successfully");
+            return successResponse(req, res, "Register Successfully. Silahkan Login!");
         } else {
             return errorResponse(req, res, 400, "Role doesn't Exist!")
         }

@@ -38,7 +38,7 @@ const login = async (req, res) => {
             return errorResponse(req, res, 400, checkLogin);
         }
 
-        if(role == undefined){
+        if (role == undefined) {
             role = 'User';
         }
 
@@ -68,7 +68,11 @@ const login = async (req, res) => {
         //Compare bycrpt password
         const isValidPass = await bcrypt.compare(password, user.password);
         if (!isValidPass) {
-            return errorResponse(req, res, 400, 'Password Salah!');
+            return errorResponse(req, res, 400, 'Password Anda Salah!');
+        }
+
+        if (user.is_active == "Disable") {
+            return errorResponse(req, res, 400, 'Mohon maaf, akun Anda tidak aktif. Silahkan menghubungi admin untuk mengaktifkannya.');
         }
 
         //Payload for generate token
