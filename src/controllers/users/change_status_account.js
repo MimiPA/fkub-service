@@ -7,7 +7,7 @@ const { Master_account, Master_user, Master_religion, Master_role, Trx_access_to
 const changeStatusAccount = async (req, res) => {
     try {
         const id = req.params.id;
-        const { status } = req.query;
+        let { status } = req.query;
 
         if (!id) {
             return errorResponse(req, res, 400, 'Required user ID in request parameter.');
@@ -43,12 +43,19 @@ const changeStatusAccount = async (req, res) => {
             return errorResponse(req, res, 400, 'Akun user tidak ditemukan di database');
         }
 
+        if (status == "Disable") {
+            status = "Enable";
+        }
+        else if (status == "Enable") {
+            status = "Disable";
+        }
+
         const update = await Master_account.update({ is_active: status }, { where: { id: id } });
         if (!update) {
             return errorResponse(req, res, 400, 'Gagal Mengubah Status Akun. Mohon Coba Lagi.');
         }
 
-        return successResponse(req, res, `Successfully Changed Account Status`);
+        return successResponse(req, res, `Successfully Changed Account Status`, status);
     }
     catch (err) {
         console.log(err.message);

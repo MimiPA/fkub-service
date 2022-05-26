@@ -11,6 +11,6 @@ router.get('/', usersController.list_all_users);
 router.get('/:id?', usersController.user_byId);
 
 //POST change status account
-router.post('/:id?/status', usersController.changeStatusAccount);
+router.put('/:id?/status', usersController.changeStatusAccount);
 
 module.exports = router;
