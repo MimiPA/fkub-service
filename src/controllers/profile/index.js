@@ -30,7 +30,12 @@ const profile = async (req, res) => {
                 attributes: ["agama"]
             }, {
                 model: Master_account,
-                attributes: ['id', 'email']
+                attributes: ['id', 'email'],
+                include: [{
+                    model: Master_role,
+                    attributes: ["role"],
+                    required: true,
+                }]
             }]
         });
 
