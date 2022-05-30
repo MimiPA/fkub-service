@@ -11,6 +11,21 @@ const { Master_religion, Master_applicant } = require('../../models');
 
 const pengajuanProposal = async (req, res) => {
     try {
+        if (req.file == null) {
+            return errorResponse(req, res, 400, 'Berkas Pendukung Pengajuan Perlu Diisi');
+        }
+
+        if (req.body.jenis_pembangunan == 'Jenis Pembangunan') {
+            return errorResponse(req, res, 400, "Mohon Memilih Jenis Pembangunan");
+        }
+        else if (req.body.agama == 'Agama') {
+            return errorResponse(req, res, 400, "Mohon Memilih Agama Anda");
+        }
+        else if (req.body.tempat_ibadah == 'Tempat Ibadah') {
+            return errorResponse(req, res, 400, "Mohon Memilih Tempat Ibadah Yang Ingin Dibangun");
+        }
+
+
         if (req.file.mimetype != 'application/pdf') {
             return errorResponse(req, res, 400, 'File Anda Bukan Tipe .pdf !!! Mohon upload ulang');
         }
@@ -43,6 +58,7 @@ const pengajuanProposal = async (req, res) => {
             jenis_pembangunan: req.body.jenis_pembangunan,
             nama_tempat: req.body.nama_tempat,
             alamat: req.body.alamat,
+            status: 'Submit',
             nama_file_permohonan: uploaded.secure_url,
             idUser_create: req.user.id
         });
