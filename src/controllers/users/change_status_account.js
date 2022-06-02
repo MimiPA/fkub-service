@@ -2,7 +2,7 @@
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Master_account, Master_user, Master_religion, Master_role, Trx_access_token } = require('../../models');
+const { Master_account, Master_role } = require('../../models');
 
 const changeStatusAccount = async (req, res) => {
     try {
