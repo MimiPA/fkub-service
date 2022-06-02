@@ -12,6 +12,12 @@ const {
     DB_USERNAME_POSTGRES,
     DB_PASSWORD_POSTGRES,
     DB_PORT_POSTGRES,
+
+    DB_HOSTNAME_HEROKU,
+    DB_NAME_HEROKU,
+    DB_USERNAME_HEROKU,
+    DB_PASSWORD_HEROKU,
+    DB_PORT_HEROKU,
 } = process.env;
 
 module.exports = {
@@ -37,6 +43,22 @@ module.exports = {
 
         dialectOptions: {
             connectTimeout: 120000,
+        },
+    },
+    heroku: {
+        username: DB_USERNAME_HEROKU,
+        password: DB_PASSWORD_HEROKU,
+        database: DB_NAME_HEROKU,
+        host: DB_HOSTNAME_HEROKU,
+        dialect: "postgres",
+        port: DB_PORT_HEROKU,
+
+        dialectOptions: {
+            connectTimeout: 120000,
+            ssl:{
+                require: true,
+                rejectUnauthorized:false
+            }
         },
     },
 };
