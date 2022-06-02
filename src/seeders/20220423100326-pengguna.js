@@ -2,22 +2,25 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert("master_users", [
+    return queryInterface.bulkInsert("pengguna", [
       {
-        id: 1,
-        id_religion: 6,
         nik: "7371012345678910",
+        id_role: 1,
+        email: "fkubmksservice@gmail.com",
+        password: "$2b$10$xTBa0Oxovx2g/5zFjahfiuLBtslz0IJQn7a/BtD9c0ikfdFHW01/y",
+        is_active: "Enable",
         nama_depan: "Paramita",
         nama_belakang: "Aditung",
-        telepon: "085256993110",
-        alamat: "Jl. Everywhere 30",
-        rt: "003",
-        rw: "003",
-        kelurahan: "Melayu",
-        kecamatan: "Wajo",
         jenis_kelamin: "Perempuan",
+        agama: "Kristen",
+        telepon: "085256993110",
         tempat_lahir: "Makassar",
         tanggal_lahir: '2000-01-01',
+        alamat: "Jalan Everywhere 30",
+        rt: "003",
+        rw: "003",
+        kecamatan: "Wajo",
+        kelurahan: "Melayu",
         foto: "https://thumbs.dreamstime.com/z/hand-drawn-beautiful-cute-little-girl-pretty-cat-vector-illustration-144667109.jpg",
         idUser_create: 1,
         idUser_update: null,
@@ -28,6 +31,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("master_users", null, {});
+    return queryInterface.bulkDelete("pengguna", null, {});
   },
 };

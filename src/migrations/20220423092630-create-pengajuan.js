@@ -1,26 +1,18 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('master_applicants', {
+    await queryInterface.createTable('pengajuan', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER(4)
       },
       id_user: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(16),
         references: {
-          model: "master_accounts",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      id_religion: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "master_religions",
-          key: "id",
+          model: "pengguna",
+          key: "nik",
         },
         allowNull: false,
       },
@@ -40,6 +32,10 @@ module.exports = {
       nama_tempat: {
         type: Sequelize.STRING(100),
         allowNull: false
+      },
+      tempat_ibadah: {
+        type: Sequelize.ENUM('Vihara', 'Pura', 'Islam', 'Gereja', 'Klenteng'),
+        allowNull: false,
       },
       alamat: {
         type: Sequelize.STRING(200),
@@ -71,6 +67,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('master_applicants');
+    await queryInterface.dropTable('pengajuan');
   }
 };

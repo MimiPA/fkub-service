@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Trx_access_token.associate = function (models) {
-    Trx_access_token.belongsTo(models.Master_account, {
+    Trx_access_token.belongsTo(models.Pengguna, {
       foreignKey: {
-        name: 'id',
-        type: DataTypes.INTEGER,
+        name: 'nik',
+        type: DataTypes.STRING,
         allowNull: false
       }
     })

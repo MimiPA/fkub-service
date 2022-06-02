@@ -1,26 +1,33 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('master_users', {
-      id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'master_accounts',
-          key: 'id'
-        },
+    await queryInterface.createTable('pengguna', {
+      nik: {
         allowNull: false,
         primaryKey: true,
+        type: Sequelize.STRING(16)
       },
-      id_religion: {
+      id_role: {
         type: Sequelize.INTEGER,
         references: {
-          model: "master_religions",
+          model: "master_roles",
           key: "id",
         },
+        defaultValue: "2",
         allowNull: false,
       },
-      nik: {
-        type: Sequelize.STRING(20),
+      email: {
+        type: Sequelize.STRING(100),
+        unique: true,
+        allowNull: false
+      },
+      password: {
+        type: Sequelize.STRING(200),
+        allowNull: false
+      },
+      is_active: {
+        type: Sequelize.ENUM('Enable', 'Disable'),
+        defaultValue: "Disable",
         allowNull: false
       },
       nama_depan: {
@@ -31,9 +38,24 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false
       },
+      jenis_kelamin: {
+        type: Sequelize.ENUM('Perempuan', 'Laki-laki'),
+        allowNull: false
+      },
+      agama: {
+        type: Sequelize.ENUM('Buddha', 'Hindu', 'Islam', 'Katolik', 'Konghucu', 'Kristen'),
+        allowNull: false,
+      },
       telepon: {
         type: Sequelize.STRING(20),
         allowNull: false
+      },
+      tempat_lahir: {
+        type: Sequelize.STRING(50),
+        allowNull: false
+      },
+      tanggal_lahir: {
+        type: Sequelize.DATEONLY
       },
       alamat: {
         type: Sequelize.STRING(200),
@@ -47,24 +69,13 @@ module.exports = {
         type: Sequelize.STRING(5),
         allowNull: false
       },
-      kelurahan: {
-        type: Sequelize.STRING(100),
-        allowNull: false
-      },
       kecamatan: {
         type: Sequelize.STRING(100),
         allowNull: false
       },
-      jenis_kelamin: {
-        type: Sequelize.ENUM('Perempuan', 'Laki-laki'),
+      kelurahan: {
+        type: Sequelize.STRING(100),
         allowNull: false
-      },
-      tempat_lahir: {
-        type: Sequelize.STRING(50),
-        allowNull: false
-      },
-      tanggal_lahir: {
-        type: Sequelize.DATEONLY
       },
       foto: {
         type: Sequelize.TEXT
@@ -87,6 +98,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('master_users');
+    await queryInterface.dropTable('pengguna');
   }
 };

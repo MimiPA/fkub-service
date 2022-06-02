@@ -1,11 +1,11 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Master_applicant = sequelize.define(
-    "Master_applicant",
+  const Pengajuan = sequelize.define(
+    "Pengajuan",
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER(16),
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,
@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       nama_tempat: {
         type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      tempat_ibadah: {
+        type: DataTypes.ENUM('Vihara', 'Pura', 'Islam', 'Gereja', 'Klenteng'),
         allowNull: false,
       },
       alamat: {
@@ -50,33 +54,26 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "master_applicants",
+      tableName: "pengajuan",
       timestamps: true,
     }
   );
 
-  Master_applicant.associate = function (models) {
-    Master_applicant.belongsTo(models.Master_account, {
+  Pengajuan.associate = function (models) {
+    Pengajuan.belongsTo(models.Pengguna, {
       foreignKey: {
-        name: "id",
-        type: DataTypes.INTEGER,
+        name: "nik",
+        type: DataTypes.STRING,
         allowNull: false,
       },
     });
-    Master_applicant.hasMany(models.Trx_requirement_document, {
+    Pengajuan.hasMany(models.Trx_requirement_document, {
       foreignKey: {
         name: "id_applicant",
         type: DataTypes.INTEGER,
         allowNull: false,
       },
     });
-    Master_applicant.belongsTo(models.Master_religion, {
-      foreignKey: {
-        name: "id_religion",
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    });
   }
-  return Master_applicant;
+  return Pengajuan;
 };

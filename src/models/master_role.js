@@ -32,10 +32,10 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Master_role.associate = function (models) {
-    Master_role.hasMany(models.Master_account, {
+    Master_role.hasMany(models.Pengguna, {
       foreignKey: {
         name: "id_role",
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     });

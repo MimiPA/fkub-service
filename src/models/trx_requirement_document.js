@@ -36,17 +36,17 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     Trx_requirement_document.associate = function(models) {
-        Trx_requirement_document.belongsTo(models.Master_applicant, {
+        Trx_requirement_document.belongsTo(models.Pengajuan, {
             foreignKey: {
                 name: "id_applicant",
                 type: DataTypes.INTEGER,
                 allowNull: false,
             },
         });
-        Trx_requirement_document.belongsTo(models.Master_account, {
+        Trx_requirement_document.belongsTo(models.Pengguna, {
             foreignKey: {
                 name: "id_user",
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING,
                 allowNull: false,
             },
         });

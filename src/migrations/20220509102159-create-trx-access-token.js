@@ -9,10 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_user: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(16),
         references: {
-          model: "master_accounts",
-          key: "id",
+          model: "pengguna",
+          key: "nik",
         },
         allowNull: false,
       },

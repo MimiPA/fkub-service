@@ -11,16 +11,16 @@ module.exports = {
       id_applicant: {
         type: Sequelize.INTEGER,
         references: {
-          model: "master_applicants",
+          model: "pengajuan",
           key: "id",
         },
         allowNull: false,
       },
       id_user: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(16),
         references: {
-          model: "master_accounts",
-          key: "id",
+          model: "pengguna",
+          key: "nik",
         },
         allowNull: false,
       },
