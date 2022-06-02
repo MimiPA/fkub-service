@@ -45,7 +45,7 @@ module.exports = {
             connectTimeout: 120000,
         },
     },
-    heroku: {
+    production: {
         username: DB_USERNAME_HEROKU,
         password: DB_PASSWORD_HEROKU,
         database: DB_NAME_HEROKU,
