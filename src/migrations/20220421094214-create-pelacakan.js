@@ -1,15 +1,15 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('master_requirements', {
+    await queryInterface.createTable('pelacakan', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER(4),
+        unique: true,
       },
-      kategori_berkas: {
-        type: Sequelize.STRING(200),
+      kategori_pelacakan: {
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       idUser_create: {
@@ -30,6 +30,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('master_requirements');
+    await queryInterface.dropTable('pelacakan');
   }
 };

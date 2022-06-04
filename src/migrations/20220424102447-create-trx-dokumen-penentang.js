@@ -1,14 +1,14 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('trx_requirement_documents', {
+    await queryInterface.createTable('trx_dokumen_penentang', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_applicant: {
+      id_pengajuan: {
         type: Sequelize.INTEGER,
         references: {
           model: "pengajuan",
@@ -22,25 +22,18 @@ module.exports = {
           model: "pengguna",
           key: "nik",
         },
-        allowNull: false,
       },
-      id_kategori_berkas: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "master_requirements",
-          key: "id",
-        },
-      },
-      nama_file: {
+      dokumen: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
-      tipe_file: {
-        type: Sequelize.STRING(10),
+      kategori_dokumen: {
+        type: Sequelize.ENUM('Surat Pernyataan Penolakan', 'Foto KTP', 'Foto Diri'),
+        allowNull: false,
       },
-      status: {
-        type: Sequelize.ENUM('Submit', 'Accepted', 'Rejected'),
-        defaultValue: 'Submit'
+      alasan: {
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       idUser_create: {
         type: Sequelize.INTEGER,
@@ -60,6 +53,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('trx_requirement_documents');
+    await queryInterface.dropTable('trx_dokumen_penentang');
   }
 };

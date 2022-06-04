@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      role: {
+        type: DataTypes.ENUM('User', 'Admin', 'PMPTSP', 'FKUB', 'Kemenag', 'Dinas Tata Ruang'),
+        defaultValue: "User",
+        allowNull: false,
+      },
       email: {
         type: DataTypes.STRING(100),
         unique: true,
@@ -100,22 +105,21 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   Pengguna.associate = function (models) {
-    Pengguna.belongsTo(models.Master_role, {
-      foreignKey: {
-        name: 'id_role',
-        type: DataTypes.INTEGER,
-        allowNull: false
-      }
-    });
     Pengguna.hasMany(models.Pengajuan, {
       foreignKey: {
         name: "id_user",
         type: DataTypes.STRING,
         allowNull: false,
-
       },
     });
-    Pengguna.hasMany(models.Trx_requirement_document, {
+    Pengguna.hasMany(models.Trx_dokumen_pendukung, {
+      foreignKey: {
+        name: "id_user",
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    });
+    Pengguna.hasMany(models.Trx_dokumen_penentang, {
       foreignKey: {
         name: "id_user",
         type: DataTypes.STRING,

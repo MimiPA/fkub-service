@@ -1,12 +1,20 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('pengajuan', {
+    await queryInterface.createTable('trx_dokumen_pendukung', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER(4)
+        type: Sequelize.INTEGER
+      },
+      id_pengajuan: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "pengajuan",
+          key: "id",
+        },
+        allowNull: false,
       },
       id_user: {
         type: Sequelize.STRING(16),
@@ -14,32 +22,14 @@ module.exports = {
           model: "pengguna",
           key: "nik",
         },
-        allowNull: false,
       },
-      referral_code: {
-        type: Sequelize.STRING(8),
-        allowNull: false,
-        unique: true
-      },
-      jenis_pembangunan: {
-        type: Sequelize.ENUM('Renovasi', 'Bangun Baru'),
-        allowNull: false
-      },
-      nama_tempat: {
-        type: Sequelize.STRING(100),
-        allowNull: false
-      },
-      tempat_ibadah: {
-        type: Sequelize.ENUM('Vihara', 'Pura', 'Islam', 'Gereja', 'Klenteng'),
-        allowNull: false,
-      },
-      alamat: {
-        type: Sequelize.STRING(200),
-        allowNull: false
-      },
-      surat_permohonan: {
+      dokumen: {
         type: Sequelize.STRING(255),
-        allowNull: false
+        allowNull: false,
+      },
+      kategori_dokumen: {
+        type: Sequelize.ENUM('Surat Pernyataan Dukungan', 'Foto KTP', 'Foto Diri'),
+        allowNull: false,
       },
       idUser_create: {
         type: Sequelize.INTEGER,
@@ -59,6 +49,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('pengajuan');
+    await queryInterface.dropTable('trx_dokumen_pendukung');
   }
 };

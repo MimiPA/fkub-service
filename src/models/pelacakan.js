@@ -1,21 +1,18 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Master_role = sequelize.define(
-    "Master_role",
+  const Pelacakan = sequelize.define(
+    "Pelacakan",
     {
       id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.INTEGER(4),
         primaryKey: true,
         allowNull: false,
         unique: true,
       },
-      role: {
-        type: DataTypes.STRING(100),
-        unique: true,
+      kategori_pelacakan: {
+        type: DataTypes.STRING(255),
         allowNull: false,
-        defaultValue: "User",
       },
       idUser_create: {
         type: DataTypes.INTEGER,
@@ -26,20 +23,20 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "master_roles",
+      tableName: "pelacakan",
       timestamps: true,
     }
   );
 
-  Master_role.associate = function (models) {
-    Master_role.hasMany(models.Pengguna, {
+  Pelacakan.associate = function (models) {
+    Pelacakan.hasMany(models.Trx_status_lacak, {
       foreignKey: {
-        name: "id_role",
-        type: DataTypes.STRING,
+        name: "id_pelacakan",
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     });
-  };
+  }
 
-  return Master_role;
-}
+  return Pelacakan;
+};

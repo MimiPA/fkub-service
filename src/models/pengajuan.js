@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     "Pengajuan",
     {
       id: {
-        type: DataTypes.INTEGER(16),
+        type: DataTypes.INTEGER(4),
         autoIncrement: true,
         primaryKey: true,
         allowNull: false,
@@ -15,10 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(8),
         unique: true,
         allowNull: false,
-      },
-      judul: {
-        type: DataTypes.STRING(100),
-        allowNull: false
       },
       jenis_pembangunan: {
         type: DataTypes.ENUM('Renovasi', 'Bangun Baru'),
@@ -36,12 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(200),
         allowNull: false,
       },
-      status: {
-        allowNull: true,
-        type: DataTypes.ENUM('Submit', 'Accepted', 'Rejected'),
-        defaultValue: 'Submit'
-      },
-      nama_file_permohonan: {
+      surat_permohonan: {
         type: DataTypes.STRING(255),
         allowNull: false
       },
@@ -67,11 +58,32 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     });
-    Pengajuan.hasMany(models.Trx_requirement_document, {
+    Pengajuan.hasMany(models.Trx_dokumen_pemohon, {
       foreignKey: {
-        name: "id_applicant",
+        name: "id_pengajuan",
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+    });
+    Pengajuan.hasMany(models.Trx_dokumen_penentang, {
+      foreignKey: {
+        name: "id_pengajuan",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    });
+    Pengajuan.hasMany(models.Trx_dokumen_pendukung, {
+      foreignKey: {
+        name: "id_pengajuan",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    });
+    Pengajuan.hasMany(models.Trx_status_lacak, {
+      foreignKey: {
+        name: "id_pengajuan",
+        type: DataTypes.INTEGER,
+        allowNull: false
       },
     });
   }

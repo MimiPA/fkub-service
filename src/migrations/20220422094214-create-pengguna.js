@@ -5,15 +5,12 @@ module.exports = {
       nik: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING(16)
+        type: Sequelize.STRING(16),
+        unique: true,
       },
-      id_role: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "master_roles",
-          key: "id",
-        },
-        defaultValue: "2",
+      role: {
+        type: Sequelize.ENUM('User', 'Admin', 'PMPTSP', 'FKUB', 'Kemenag', 'Dinas Tata Ruang'),
+        defaultValue: "User",
         allowNull: false,
       },
       email: {
