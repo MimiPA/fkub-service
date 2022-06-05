@@ -101,8 +101,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: "pengguna",
       timestamps: true,
-    }
-  );
+    });
 
   Pengguna.associate = function (models) {
     Pengguna.hasMany(models.Pengajuan, {
@@ -131,6 +130,34 @@ module.exports = (sequelize, DataTypes) => {
         name: "id_user",
         type: DataTypes.STRING,
         allowNull: false
+      },
+    });
+    Pengguna.hasMany(models.Trx_dokumen_pmptsp, {
+      foreignKey: {
+        name: "id_user",
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    });
+    Pengguna.hasMany(models.Trx_dokumen_dtr, {
+      foreignKey: {
+        name: "id_user",
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    });
+    Pengguna.hasMany(models.Trx_dokumen_kemenag, {
+      foreignKey: {
+        name: "id_user",
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    });
+    Pengguna.hasMany(models.Trx_dokumen_fkub, {
+      foreignKey: {
+        name: "id_user",
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     });
   }

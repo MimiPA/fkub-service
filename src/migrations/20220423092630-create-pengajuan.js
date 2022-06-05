@@ -41,6 +41,11 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false
       },
+      status: {
+        type: Sequelize.ENUM('Submit', 'Selesai'),
+        defaultValue: "Submit",
+        allowNull: false
+      },
       idUser_create: {
         type: Sequelize.INTEGER,
         allowNull: false

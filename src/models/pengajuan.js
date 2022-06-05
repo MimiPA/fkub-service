@@ -36,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: false
       },
+      status: {
+        type: DataTypes.ENUM('Submit', 'Selesai'),
+        defaultValue: "Submit",
+        allowNull: false
+      },
       idUser_create: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -47,8 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: "pengajuan",
       timestamps: true,
-    }
-  );
+    });
 
   Pengajuan.associate = function (models) {
     Pengajuan.belongsTo(models.Pengguna, {
@@ -84,6 +88,34 @@ module.exports = (sequelize, DataTypes) => {
         name: "id_pengajuan",
         type: DataTypes.INTEGER,
         allowNull: false
+      },
+    });
+    Pengajuan.hasMany(models.Trx_dokumen_pmptsp, {
+      foreignKey: {
+        name: "id_pengajuan",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    });
+    Pengajuan.hasMany(models.Trx_dokumen_dtr, {
+      foreignKey: {
+        name: "id_pengajuan",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    });
+    Pengajuan.hasMany(models.Trx_dokumen_kemenag, {
+      foreignKey: {
+        name: "id_pengajuan",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    });
+    Pengajuan.hasMany(models.Trx_dokumen_fkub, {
+      foreignKey: {
+        name: "id_pengajuan",
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
     });
   }
