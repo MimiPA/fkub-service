@@ -90,13 +90,6 @@ module.exports = (sequelize, DataTypes) => {
       foto: {
         type: DataTypes.TEXT,
       },
-      idUser_create: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      idUser_update: {
-        type: DataTypes.INTEGER,
-      },
     },
     {
       tableName: "pengguna",

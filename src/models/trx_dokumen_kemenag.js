@@ -42,5 +42,5 @@ module.exports = (sequelize, DataTypes) => {
             },
         });
     }
-    return Trx_dokumen_pmptsp;
+    return Trx_dokumen_kemenag;
 };

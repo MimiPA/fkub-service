@@ -77,13 +77,6 @@ module.exports = {
       foto: {
         type: Sequelize.TEXT
       },
-      idUser_create: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      idUser_update: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

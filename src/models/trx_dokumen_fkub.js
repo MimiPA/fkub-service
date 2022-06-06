@@ -47,5 +47,5 @@ module.exports = (sequelize, DataTypes) => {
             },
         });
     }
-    return Trx_dokumen_dtr;
+    return Trx_dokumen_fkub;
 };

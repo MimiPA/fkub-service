@@ -49,6 +49,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('trx_dokumen_dtr');
+    await queryInterface.dropTable('trx_dokumen_fkub');
   }
 };

@@ -25,8 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       tableName: "pelacakan",
       timestamps: true,
-    }
-  );
+    });
 
   Pelacakan.associate = function (models) {
     Pelacakan.hasMany(models.Trx_status_lacak, {

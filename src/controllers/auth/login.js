@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 //Import Model
-const { Master_account, Master_role, Trx_access_token } = require('../../models');
+const { Pengguna, Trx_access_token } = require('../../models');
 
 //Validator
 const Validator = require('fastest-validator');
@@ -28,7 +28,7 @@ const {
 
 const login = async (req, res) => {
     try {
-        const { email, password, role } = req.body;
+        const { nik, password, role } = req.body;
 
         //Validate Login Requirement
         const checkLogin = v.validate(req.body, authValidator.login);
@@ -42,27 +42,16 @@ const login = async (req, res) => {
             role = 'User';
         }
 
-        //Check role
-        const checkRole = await Master_role.findOne({
-            where: {
-                role: role
-            },
-        });
-
-        if (!checkRole) {
-            return errorResponse(req, res, 400, "Role tidak ditemukan");
-        }
-
         //Validate if user exist in DB
-        const user = await Master_account.findOne({
+        const user = await Pengguna.findOne({
             where: {
-                email: email,
-                id_role: checkRole.id
+                nik: nik,
+                role: role,
             },
         });
 
         if (!user) {
-            return errorResponse(req, res, 400, "Akun user tidak ditemukan di database");
+            return errorResponse(req, res, 404, "Akun Pengguna Tidak Ditemukan");
         }
 
         //Compare bycrpt password
@@ -76,21 +65,10 @@ const login = async (req, res) => {
         }
 
         //Payload for generate token
-        const dataPayload = await Master_account.findOne({
-            where: { id: user.id },
-            attributes: ['id', 'email', 'id_role'],
-            include: [{
-                model: Master_role,
-                attributes: ["role"]
-            }]
+        const data = await Pengguna.findOne({
+            where: { nik: user.nik },
+            attributes: ['nik', 'email', 'role', 'is_active', 'agama'],
         });
-
-        const data = {
-            id: dataPayload.id,
-            email: dataPayload.email,
-            id_role: dataPayload.id_role,
-            role: dataPayload.Master_role.role
-        };
 
         //Generate Token
         const accessToken = jwt.sign({
@@ -109,7 +87,7 @@ const login = async (req, res) => {
         //Find id user in table token
         const idToken = await Trx_access_token.findOne({
             where: {
-                id_user: user.id
+                id_user: user.nik
             },
         });
 
@@ -118,7 +96,7 @@ const login = async (req, res) => {
         if (!idToken) {
             //Store data and insert to DB
             dataToken = {
-                id_user: user.id,
+                id_user: user.nik,
                 accessToken: refreshToken,
                 ip_address: ipAddress
             }
@@ -131,11 +109,11 @@ const login = async (req, res) => {
                     ip_address: ipAddress
                 },
                 {
-                    where: { id_user: user.id }
+                    where: { id_user: user.nik }
                 });
         }
 
-        return successResponse(req, res, 'User Authentication Success', { accessToken, refreshToken, data });
+        return successResponse(req, res, 'Autentikasi Pengguna Berhasil.', { accessToken, refreshToken, data });
     }
     catch (err) {
         console.log(err.message);

@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
   Trx_access_token.associate = function (models) {
     Trx_access_token.belongsTo(models.Pengguna, {
       foreignKey: {
-        name: 'nik',
+        name: 'id_user',
         type: DataTypes.STRING,
         allowNull: false
       }

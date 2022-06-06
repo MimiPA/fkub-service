@@ -2,10 +2,10 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert("master_requirements", [
+    return queryInterface.bulkInsert("pelacakan", [
       {
         id: 1,
-        kategori_berkas: "SK Panitia Pembangunan",
+        kategori_pelacakan: "Pengajuan Surat Permohonan Pendirian Rumah Ibadah",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -13,7 +13,7 @@ module.exports = {
       },
       {
         id: 2,
-        kategori_berkas: "Akta Jual Beli",
+        kategori_pelacakan: "PMPTSP menyampaikan ke Dinas Tata Ruang untuk mendapatkan KRK",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         id: 3,
-        kategori_berkas: "Sertifikat Hak Milik",
+        kategori_pelacakan: "Dinas Tata Ruang memberikan KRK",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -29,7 +29,7 @@ module.exports = {
       },
       {
         id: 4,
-        kategori_berkas: "Surat Ukur",
+        kategori_pelacakan: "Pengajuan permohonan Rekomendasi Tertulis ke Kementrian Agama",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -37,7 +37,7 @@ module.exports = {
       },
       {
         id: 5,
-        kategori_berkas: "Surat IMB Lama",
+        kategori_pelacakan: "Verifikasi Legalitas Ajaran dan Susunan Kepanitiaan",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         id: 6,
-        kategori_berkas: "Surat IMB Baru",
+        kategori_pelacakan: "Penerbitan Rekomendasi Tertulis Kementrian Agama",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -53,7 +53,7 @@ module.exports = {
       },
       {
         id: 7,
-        kategori_berkas: "Surat Rekomendasi Kemenag",
+        kategori_pelacakan: "Pengajuan permohonan Rekomendasi Tertulis ke FKUB",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -61,7 +61,7 @@ module.exports = {
       },
       {
         id: 8,
-        kategori_berkas: "Surat Rekomendasi FKUB",
+        kategori_pelacakan: "Melampirkan Berkas Administrasi Pengajuan",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -69,7 +69,7 @@ module.exports = {
       },
       {
         id: 9,
-        kategori_berkas: "Badan Hukum",
+        kategori_pelacakan: "Mengumpulkan Berkas Pendukung",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -77,7 +77,7 @@ module.exports = {
       },
       {
         id: 10,
-        kategori_berkas: "Rencana Anggaran Biaya",
+        kategori_pelacakan: "Penelitian Berkas Administrasi oleh Komisi Pendirian Rumah Ibadah",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -85,7 +85,7 @@ module.exports = {
       },
       {
         id: 11,
-        kategori_berkas: "Gambar Denah Gedung",
+        kategori_pelacakan: "Rapat Tim Komisi atas Kelengkapan Berkas dan Peninjauan Lokasi",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -93,7 +93,7 @@ module.exports = {
       },
       {
         id: 12,
-        kategori_berkas: "Surat Pernyataan Anggota",
+        kategori_pelacakan: "Survey Lapangan oleh Tim FKUB bersama instansi terkait",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -101,7 +101,7 @@ module.exports = {
       },
       {
         id: 13,
-        kategori_berkas: "Surat Pernyataan Warga",
+        kategori_pelacakan: "Pemasangan Pengumuman Pendirian Rumah Ibadah",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -109,7 +109,7 @@ module.exports = {
       },
       {
         id: 14,
-        kategori_berkas: "Kartu Tanda Penduduk Anggota",
+        kategori_pelacakan: "Rapat Pleno",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -117,7 +117,7 @@ module.exports = {
       },
       {
         id: 15,
-        kategori_berkas: "Kartu Tanda Penduduk Warga",
+        kategori_pelacakan: "Penerbitan Rekomendasi Tertulis FKUB",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -125,7 +125,7 @@ module.exports = {
       },
       {
         id: 16,
-        kategori_berkas: "Surat Panggilan Lapangan",
+        kategori_pelacakan: "Penerbitan IMB / PBG",
         idUser_create: 1,
         idUser_update: null,
         createdAt: new Date(),
@@ -135,6 +135,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete("master_requirements", null, {});
+    return queryInterface.bulkDelete("pelacakan", null, {});
   },
 };

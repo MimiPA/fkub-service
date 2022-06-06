@@ -3,8 +3,7 @@ const v = new Validator();
 
 /*validator for register*/
 const register = {
-    email: { type: "email", empty: false },
-    password: { type: "string", empty: false, min: 6, max: 25 },
+    nik: { type: "string", empty: false, min: 16, max: 16 },
     role: {
         type: "string",
         optional: true,
@@ -12,33 +11,34 @@ const register = {
         enum: ["Admin", "User", "PMPTSP", "FKUB", "Kemenag", "Dinas Tata Ruang"],
         default: "User",
     },
-    nik: { type: "string", empty: false, min: 16, max: 16 },
+    email: { type: "email", empty: false },
+    password: { type: "string", empty: false, min: 6, max: 25 },
     nama_depan: { type: "string", empty: false },
     nama_belakang: { type: "string", empty: false },
-    telepon: { type: "string", empty: false },
-    agama: {
-        type: "string",
-        empty: false,
-        items: "string",
-        enum: ["Buddha", "Hindu", "Islam", "Katolik", "Konghucu", "Kristen"],
-    },
-    alamat: { type: "string", empty: false },
-    rt: { type: "string", empty: false },
-    rw: { type: "string", empty: false },
-    kelurahan: { type: "string", empty: false },
-    kecamatan: { type: "string", empty: false },
     jenis_kelamin: {
         type: "string",
         optional: true,
         items: "string",
         enum: ["Perempuan", "Laki-laki"],
     },
+    agama: {
+        type: "string",
+        empty: false,
+        items: "string",
+        enum: ["Buddha", "Hindu", "Islam", "Katolik", "Konghucu", "Kristen"],
+    },
+    telepon: { type: "string", empty: false },
     tempat_lahir: { type: "string", empty: false },
+    alamat: { type: "string", empty: false },
+    rt: { type: "string", empty: false },
+    rw: { type: "string", empty: false },
+    kecamatan: { type: "string", empty: false },
+    kelurahan: { type: "string", empty: false },
 };
 
 /*validator for login*/
 const login = {
-    email: { type: "email", empty: false },
+    nik: { type: "string", empty: false, min: 16, max: 16 },
     password: { type: "string", min: 6, empty: false },
     role: {
         type: "string",

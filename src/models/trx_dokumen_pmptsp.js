@@ -24,8 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         tableName: "trx_dokumen_pmptsp",
         timestamps: true,
-    }
-    );
+    });
 
     Trx_dokumen_pmptsp.associate = function (models) {
         Trx_dokumen_pmptsp.belongsTo(models.Pengajuan, {
