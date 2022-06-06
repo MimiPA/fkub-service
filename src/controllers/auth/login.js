@@ -117,7 +117,7 @@ const login = async (req, res) => {
     }
     catch (err) {
         console.log(err.message);
-        return errorResponse(req, res, 500, `Internal Server Error ${err.message}`);
+        return errorResponse(req, res, 500, `Internal Server Error. ${err.message}`);
     }
 }
 

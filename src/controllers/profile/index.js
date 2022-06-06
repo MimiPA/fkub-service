@@ -2,19 +2,27 @@
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Master_account, Master_user, Master_religion, Master_role, Trx_access_token } = require('../../models');
+const { Pengguna } = require('../../models');
 
 const profile = async (req, res) => {
     try {
-        const id_user = req.user.id;
+        const id_user = req.user.nik;
 
-        const dataProfile = await Master_user.findOne({
-            where: { id: id_user },
+        if (id_user == undefined) {
+            return errorResponse(req, res, 400, 'Request ID Parameter');
+        }
+
+        const dataProfile = await Pengguna.findOne({
+            where: { nik: id_user },
             attributes: [
                 'nik',
+                'role',
+                'email',
+                'nama_lengkap',
                 'nama_depan',
                 'nama_belakang',
                 'jenis_kelamin',
+                'agama',
                 'telepon',
                 'tempat_lahir',
                 'tanggal_lahir',
@@ -25,18 +33,6 @@ const profile = async (req, res) => {
                 'kecamatan',
                 'foto'
             ],
-            include: [{
-                model: Master_religion,
-                attributes: ["agama"]
-            }, {
-                model: Master_account,
-                attributes: ['id', 'email'],
-                include: [{
-                    model: Master_role,
-                    attributes: ["role"],
-                    required: true,
-                }]
-            }]
         });
 
         if (dataProfile) {
@@ -45,7 +41,7 @@ const profile = async (req, res) => {
     }
     catch (err) {
         console.log(err.message);
-        return errorResponse(req, res, 500, 'Internal Server Error');
+        return errorResponse(req, res, 500, `Internal Server Error. ${err.message}`);
     }
 };
 

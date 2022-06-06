@@ -2,40 +2,36 @@
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Master_account, Master_role } = require('../../models');
+const { Pengguna } = require('../../models');
 
 const changeStatusAccount = async (req, res) => {
     try {
-        const id = req.params.id;
+        const nik = req.params.nik;
         let { status } = req.query;
 
-        if (!id) {
-            return errorResponse(req, res, 400, 'Required user ID in request parameter.');
+        if (!nik) {
+            return errorResponse(req, res, 400, 'Diperlukan ID Akun pada parameter request.');
         }
         if (!status) {
-            return errorResponse(req, res, 400, 'Required user STATUS in request parameter.');
+            return errorResponse(req, res, 400, 'Diperlukan Status Akun pada parameter request.');
         }
 
-        const id_user = req.user.id;
-        const admin = await Master_account.findOne({
+        const id_user = req.user.nik;
+        const admin = await Pengguna.findOne({
             where: {
-                id: id_user,
-                is_active: "Enable"
+                nik: id_user,
+                is_active: "Enable",
+                role: "Admin"
             },
-            include: [{
-                model: Master_role,
-                attributes: ["role"],
-                where: { role: "Admin" },
-            }]
         });
 
         if (!admin) {
             return errorResponse(req, res, 400, 'Mohon maaf, Anda tidak dapat mengakses menu ini');
         }
 
-        const userAccount = await Master_account.findOne({
+        const userAccount = await Pengguna.findOne({
             where: {
-                id: id
+                nik: nik
             }
         });
 
@@ -50,12 +46,12 @@ const changeStatusAccount = async (req, res) => {
             status = "Disable";
         }
 
-        const update = await Master_account.update({ is_active: status }, { where: { id: id } });
+        const update = await Pengguna.update({ is_active: status }, { where: { nik: nik } });
         if (!update) {
-            return errorResponse(req, res, 400, 'Gagal Mengubah Status Akun. Mohon Coba Lagi.');
+            return errorResponse(req, res, 400, 'Gagal Mengubah Status Akun. Mohon Coba Lagi!');
         }
 
-        return successResponse(req, res, `Successfully Changed Account Status`, status);
+        return successResponse(req, res, `Berhasil Mengubah Status Akun`, status);
     }
     catch (err) {
         console.log(err.message);

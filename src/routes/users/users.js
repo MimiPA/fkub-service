@@ -8,9 +8,9 @@ const usersController = require('../../controllers/users');
 router.get('/', usersController.list_all_users);
 
 //Get user by id
-router.get('/:id?', usersController.user_byId);
+router.get('/:nik?', usersController.user_byId);
 
 //POST change status account
-router.put('/:id?/status', usersController.changeStatusAccount);
+router.put('/:nik?/status', usersController.changeStatusAccount);
 
 module.exports = router;

@@ -5,7 +5,7 @@ const { errorResponse, successResponse } = require("../helpers");
 const jwt = require('jsonwebtoken');
 
 //Import Model
-const { Master_account, Master_role } = require("../models");
+const { Pengguna } = require("../models");
 
 const { SECRET, SECRET_EXPIRED, REFRESH_TOKEN } = process.env;
 
@@ -25,10 +25,10 @@ module.exports = [
             const account = jwt.verify(accessToken, SECRET);
 
             // Destructure account data from account object
-            const { id, email, id_role, role } = account.data;
+            const { nik, email, role, is_active, agama } = account.data;
 
             // Add account data to the request object
-            req.user = { id, email, id_role, role };
+            req.user = { nik, email, role, is_active, agama };
 
             // Continue to next middleware
             return next();
@@ -63,23 +63,12 @@ module.exports = [
             const refreshAccount = jwt.verify(refreshToken, REFRESH_TOKEN);
 
             // Get the id from refresh token
-            const { id } = refreshAccount.data;
+            const { nik } = refreshAccount.data;
             // Retrieve the latest account data from database
-            const dataPayload = await Master_account.findOne({
-                where: { id: id },
-                attributes: ['id', 'email', 'id_role'],
-                include: [{
-                    model: Master_role,
-                    attributes: ["role"]
-                }]
+            const data = await Pengguna.findOne({
+                where: { nik: nik },
+                attributes: ['nik', 'email', 'role', 'is_active', 'agama'],
             });
-
-            const data = {
-                id: dataPayload.id,
-                email: dataPayload.email,
-                id_role: dataPayload.id_role,
-                role: dataPayload.Master_role.role
-            };
 
             if (!data) {
                 return errorResponse(req, res, 401, "Account is no longer exist in the database.");
