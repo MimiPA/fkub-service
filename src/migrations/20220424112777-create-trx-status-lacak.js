@@ -28,11 +28,11 @@ module.exports = {
         allowNull: false,
       },
       idUser_create: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(16),
         allowNull: false
       },
       idUser_update: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING(16)
       },
       createdAt: {
         allowNull: false,

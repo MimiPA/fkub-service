@@ -30,7 +30,7 @@ module.exports = {
         allowNull: false
       },
       tempat_ibadah: {
-        type: Sequelize.ENUM('Vihara', 'Pura', 'Islam', 'Gereja', 'Klenteng'),
+        type: Sequelize.ENUM('Vihara', 'Pura', 'Masjid', 'Gereja', 'Klenteng'),
         allowNull: false,
       },
       alamat: {
@@ -47,11 +47,11 @@ module.exports = {
         allowNull: false
       },
       idUser_create: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(16),
         allowNull: false
       },
       idUser_update: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING(16)
       },
       createdAt: {
         allowNull: false,

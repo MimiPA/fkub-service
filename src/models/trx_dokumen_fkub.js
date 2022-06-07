@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         idUser_create: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(16),
             allowNull: false,
         },
         idUser_update: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(16),
         },
     }, {
         tableName: "trx_dokumen_fkub",

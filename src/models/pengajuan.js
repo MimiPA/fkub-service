@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       tempat_ibadah: {
-        type: DataTypes.ENUM('Vihara', 'Pura', 'Islam', 'Gereja', 'Klenteng'),
+        type: DataTypes.ENUM('Vihara', 'Pura', 'Masjid', 'Gereja', 'Klenteng'),
         allowNull: false,
       },
       alamat: {
@@ -42,11 +42,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       idUser_create: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(16),
         allowNull: false,
       },
       idUser_update: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(16),
       },
     },
     {
@@ -57,8 +57,8 @@ module.exports = (sequelize, DataTypes) => {
   Pengajuan.associate = function (models) {
     Pengajuan.belongsTo(models.Pengguna, {
       foreignKey: {
-        name: "nik",
-        type: DataTypes.STRING,
+        name: "id_user",
+        type: DataTypes.STRING(16),
         allowNull: false,
       },
     });

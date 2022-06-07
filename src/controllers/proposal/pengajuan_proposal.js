@@ -7,71 +7,81 @@ const { Op } = require('sequelize');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Master_religion, Master_applicant } = require('../../models');
+const { Pengajuan, Pelacakan, Trx_status_lacak } = require('../../models');
 
 const pengajuanProposal = async (req, res) => {
     try {
         if (req.file == null) {
-            return errorResponse(req, res, 400, 'Berkas Pendukung Pengajuan Perlu Diisi');
+            return errorResponse(req, res, 400, 'Surat Pengajuan Perlu Diisi');
         }
 
         if (req.body.jenis_pembangunan == 'Jenis Pembangunan') {
             return errorResponse(req, res, 400, "Mohon Memilih Jenis Pembangunan");
         }
-        else if (req.body.agama == 'Agama') {
-            return errorResponse(req, res, 400, "Mohon Memilih Agama Anda");
-        }
-        else if (req.body.tempat_ibadah == 'Tempat Ibadah') {
-            return errorResponse(req, res, 400, "Mohon Memilih Tempat Ibadah Yang Ingin Dibangun");
-        }
-
 
         if (req.file.mimetype != 'application/pdf') {
             return errorResponse(req, res, 400, 'File Anda Bukan Tipe .pdf !!! Mohon upload ulang');
+        }
+        else if (req.file.size > 5242880) {
+            return errorResponse(req, res, 400, 'Batas Maksimal Ukuran File 5 MB');
         }
 
         // Generate Referral Code
         const referralCode = nanoid(8);
 
         if (referralCode == null) {
-            return errorResponse(req, res, 400, "Referral code doesn't exist");
+            return errorResponse(req, res, 400, "Referral code tidak tersedia. Mohon Coba Lagi!");
         }
 
-        const religion = await Master_religion.findOne({
+        const dataPengajuan = await Pengajuan.findOne({
             where: {
-                [Op.and]: [{ agama: req.body.agama }, { tempat_ibadah: req.body.tempat_ibadah }]
+                jenis_pembangunan: req.body.jenis_pembangunan,
+                nama_tempat: req.body.nama_tempat,
+                alamat: req.body.alamat
+            },
+        });
+
+        if (dataPengajuan) {
+            return errorResponse(req, res, 400, 'Rincian Pengajuan Sudah Pernah Diajukan.');
+        }
+
+        const datauri = new Datauri().format('.pdf', req.file.buffer);
+        const uploaded = await cloudinary.uploader.upload(datauri.content);
+
+        const createPengajuan = await Pengajuan.create({
+            id_user: req.user.nik,
+            referral_code: referralCode,
+            jenis_pembangunan: req.body.jenis_pembangunan,
+            nama_tempat: req.body.nama_tempat,
+            tempat_ibadah: req.body.tempat_ibadah,
+            alamat: req.body.alamat,
+            surat_permohonan: uploaded.secure_url,
+            status: 'Submit',
+            idUser_create: req.user.nik
+        });
+
+        if (!createPengajuan) {
+            return errorResponse(req, res, 400, 'Pengajuan Tidak Berhasil. Mohon Coba Lagi!');
+        }
+
+        const pelacakan = await Pelacakan.findOne({
+            where: {
+                kategori_pelacakan: "Pengajuan Surat Permohonan Pendirian Rumah Ibadah"
             }
         });
 
-        if (!religion) {
-            return errorResponse(req, res, 404, "Tempat Ibadah Yang Dipilih Tidak Tersedia");
-        }
-
-        const datauri = new Datauri().format('.pdf' || '.docx', req.file.buffer);
-        const uploaded = await cloudinary.uploader.upload(datauri.content);
-
-        const create = await Master_applicant.create({
-            id_user: req.user.id,
-            id_religion: religion.id,
-            referral_code: referralCode,
-            judul: req.body.judul,
-            jenis_pembangunan: req.body.jenis_pembangunan,
-            nama_tempat: req.body.nama_tempat,
-            alamat: req.body.alamat,
-            status: 'Submit',
-            nama_file_permohonan: uploaded.secure_url,
-            idUser_create: req.user.id
+        const createStatus = await Trx_status_lacak.create({
+            id_pengajuan: createPengajuan.id,
+            id_pelacakan: pelacakan.id,
+            status: "Proses",
+            idUser_create: req.user.nik
         });
 
-        if (!create) {
-            return errorResponse(req, res, 400, 'Submission Unsuccessfully. Please Try Again!');
-        }
-
-        return successResponse(req, res, 'Submission Successfully.', create);
+        return successResponse(req, res, 'Pengajuan Berhasil.', { createPengajuan, createStatus });
     }
     catch (err) {
         console.log(err.message);
-        return errorResponse(req, res, 500, 'Internal Server Error');
+        return errorResponse(req, res, 500, `Internal Server Error. ${err.message}`);
     }
 };
 

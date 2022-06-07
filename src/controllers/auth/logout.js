@@ -9,7 +9,7 @@ const logout = async (req, res) => {
     //const id_user = req.user.id;
 
     // Temporary using logout by query string
-    const id_user = req.query.id;
+    const id_user = req.query.nik;
 
     const user = await Trx_access_token.findOne({
         where: {

@@ -15,6 +15,6 @@ router.post("/register", masterController.register);
 router.post("/login", masterController.login);
 
 //POST user logout
-router.post("/logout:id?", auth.verifyToken, masterController.logout);
+router.post("/logout:nik?", auth.verifyToken, masterController.logout);
 
 module.exports = router;

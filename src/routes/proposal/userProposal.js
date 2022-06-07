@@ -6,7 +6,7 @@ const multer = require('multer');
 const proposalController = require("../../controllers/proposal");
 
 //POST Pengajuan Proposal
-router.post("/", multer({ storage: multer.memoryStorage() }).single("nama_file_permohonan"), proposalController.pengajuanProposal);
+router.post("/", multer({ storage: multer.memoryStorage() }).single("surat_permohonan"), proposalController.pengajuanProposal);
 
 //GET Pengajuan Proposal
 router.get("/list", proposalController.listPengajuanProposal);
