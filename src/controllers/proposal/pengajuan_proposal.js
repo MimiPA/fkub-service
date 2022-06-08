@@ -15,7 +15,7 @@ const pengajuanProposal = async (req, res) => {
             return errorResponse(req, res, 400, 'Surat Pengajuan Perlu Diisi');
         }
 
-        if (req.body.jenis_pembangunan == 'Jenis Pembangunan') {
+        if (req.body.jenis_pembangunan == 'Pilih' || req.body.jenis_pembangunan == "") {
             return errorResponse(req, res, 400, "Mohon Memilih Jenis Pembangunan");
         }
 

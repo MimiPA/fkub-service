@@ -42,7 +42,7 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM('Submit', 'Selesai'),
+        type: Sequelize.ENUM('Submit', 'Proses', 'Selesai'),
         defaultValue: "Submit",
         allowNull: false
       },

@@ -4,11 +4,11 @@ const { Op } = require('sequelize');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Master_religion, Master_applicant } = require('../../models');
+const { Pengajuan } = require('../../models');
 
 const listPengajuanProposal = async (req, res) => {
     try {
-        const id_user = req.user.id;
+        const id_user = req.user.nik;
 
         const { jenis_pembangunan } = req.query;
 
@@ -16,30 +16,24 @@ const listPengajuanProposal = async (req, res) => {
             return errorResponse(req, res, 400, 'Required jenis_pembangunan in request parameter');
         }
 
-        const data = await Master_applicant.findAll({
+        const data = await Pengajuan.findAll({
             where: {
                 [Op.and]: [
                     { id_user: id_user },
                     { jenis_pembangunan: jenis_pembangunan }
                 ]
             },
-            include: [
-                {
-                    model: Master_religion,
-                    attributes: ['agama', 'tempat_ibadah']
-                },
-            ]
         });
 
-        if (!data) {
-            return successResponse(req, res, 'No data available in table');
+        if (data == null) {
+            return successResponse(req, res, 'Tidak Ada Data Tersedia');
         }
 
-        return successResponse(req, res, 'List Proposal Submission Retrieved Successfully', data);
+        return successResponse(req, res, 'Daftar Pengajuan Proposal Berhasil Diambil', data);
     }
     catch (err) {
         console.log(err.message);
-        return errorResponse(req, res, 500, 'Internal Server Error');
+        return errorResponse(req, res, 500, `Internal Server Error. ${err.message}`);
     }
 };
 
