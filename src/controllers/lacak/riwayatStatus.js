@@ -5,7 +5,7 @@ const { errorResponse, successResponse } = require("../../helpers");
 //Import Model
 const { Pengajuan, Trx_status_lacak, Pelacakan } = require('../../models');
 
-const statusNow = async (req, res) => {
+const riwayatStatus = async (req, res) => {
     try {
         const id_user = req.user.nik;
 
@@ -24,17 +24,32 @@ const statusNow = async (req, res) => {
                 },
             }],
             order: [
-                [Pengajuan, 'createdAt', 'DESC'],
-                ['createdAt', 'DESC']
+                [Pengajuan, 'createdAt', 'DESC']
             ]
         });
 
         if (!status) {
-            return errorResponse(req, res, 404, 'Status Terkini Pengajuan Tidak Ditemukan. Mungkin Anda belum mengajukan');
+            return errorResponse(req, res, 404, 'Anda belum mengajukan');
         }
 
-        return successResponse(req, res, 'Data Status Terkini Berhasil Diambil.', status);
+        const lacak = await Trx_status_lacak.findAll({
+            where: {
+                status: { [Op.or]: ["Proses", "Selesai"] },
+                id_pengajuan: status.Pengajuan.id
+            },
+            include: [{
+                model: Pelacakan,
+                attributes: ["kategori_pelacakan"]
+            }],
+            order: [['createdAt', 'DESC']],
+            limit: 3
+        });
 
+        if (!lacak) {
+            return errorResponse(req, res, 404, 'Riwayat Pengajuan Tidak Ditemukan. Mungkin Berkas Anda belum di proses');
+        }
+
+        return successResponse(req, res, 'Data Riwayat Pengajuan Berhasil Diambil.', lacak);
     }
     catch (err) {
         console.log(err.message);
@@ -42,4 +57,4 @@ const statusNow = async (req, res) => {
     }
 };
 
-module.exports = statusNow;
+module.exports = riwayatStatus;
