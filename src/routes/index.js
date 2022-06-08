@@ -7,12 +7,14 @@ const authRouter = require("./auth");
 const profileRouter = require("./profile");
 const usersRouter = require("./users");
 const proposalRouter = require("./proposal");
+const lacakRouter = require("./lacak");
 
 // Get All Routes
 router.use("", authRouter);
 router.use("/profile", profileRouter);
 router.use("/user", usersRouter);
 router.use("/proposal", proposalRouter);
+router.use("/lacak", lacakRouter);
 
 
 module.exports = router;
