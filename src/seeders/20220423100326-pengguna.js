@@ -47,6 +47,28 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: null
       },
+      {
+        nik: "1122112211221122",
+        role: "PMPTSP",
+        email: "pmptsp@gmail.com",
+        password: "$2b$10$0G7TZ29dUKfG5qve6OSZ/.mC2fCjmhvEhJTi7gafHaMLNkfGMIPba",
+        is_active: "Enable",
+        nama_depan: "Akun",
+        nama_belakang: "PMPTSP",
+        jenis_kelamin: "Perempuan",
+        agama: "Katolik",
+        telepon: "089556993111",
+        tempat_lahir: "Jakarta",
+        tanggal_lahir: '1995-01-01',
+        alamat: "Jalan Homeless 30",
+        rt: "002",
+        rw: "002",
+        kecamatan: "Tallo",
+        kelurahan: "Bira",
+        foto: "https://thumbs.dreamstime.com/z/hand-drawn-beautiful-cute-little-girl-pretty-cat-vector-illustration-144667109.jpg",
+        createdAt: new Date(),
+        updatedAt: null
+      },
     ]);
   },
 

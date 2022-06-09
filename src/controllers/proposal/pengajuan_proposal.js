@@ -18,6 +18,12 @@ const pengajuanProposal = async (req, res) => {
         if (req.body.jenis_pembangunan == 'Pilih' || req.body.jenis_pembangunan == "") {
             return errorResponse(req, res, 400, "Mohon Memilih Jenis Pembangunan");
         }
+        else if (req.body.nama_tempat == null) {
+            return errorResponse(req, res, 400, "Mohon Mengisi Nama Tempat");
+        }
+        else if (req.body.alamat == null) {
+            return errorResponse(req, res, 400, "Mohon Mengisi Alamat");
+        }
 
         if (req.file.mimetype != 'application/pdf') {
             return errorResponse(req, res, 400, 'File Anda Bukan Tipe .pdf !!! Mohon upload ulang');
