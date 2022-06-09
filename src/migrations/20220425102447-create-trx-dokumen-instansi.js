@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('trx_dokumen_pemohon', {
+    await queryInterface.createTable('trx_dokumen_instansi', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,7 +13,11 @@ module.exports = {
         allowNull: false,
       },
       kategori_dokumen: {
-        type: Sequelize.ENUM('SK Panitia Pembangunan', 'Akta Jual Beli', 'Sertifikat Hak Milik', 'Surat Ukur', 'Badan Hukum', 'Rencana Anggaran Biaya', 'Gambar Denah Gedung', 'Surat Lainnya'),
+        type: Sequelize.ENUM('Surat Pengajuan KRK', 'KRK', 'Surat Rekomendasi Kemenag', 'Surat Survey Lapangan', 'Surat Rekomendasi FKUB', 'IMB'),
+        allowNull: false,
+      },
+      role: {
+        type: Sequelize.ENUM('Admin', 'PMPTSP', 'FKUB', 'Kemenag', 'Dinas Tata Ruang'),
         allowNull: false,
       },
       idUser_create: {
@@ -39,9 +43,16 @@ module.exports = {
         },
         allowNull: false,
       },
+      id_user: {
+        type: Sequelize.STRING(16),
+        references: {
+          model: "pengguna",
+          key: "nik",
+        },
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('trx_dokumen_pemohon');
+    await queryInterface.dropTable('trx_dokumen_instansi');
   }
 };

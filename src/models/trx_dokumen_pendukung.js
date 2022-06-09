@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.ENUM('Surat Pernyataan Dukungan', 'Foto KTP', 'Foto Diri'),
             allowNull: false,
         },
+        status: {
+            type: DataTypes.ENUM('Submit', 'Ditolak', 'Diterima'),
+            defaultValue: "Submit",
+            allowNull: false
+        },
         idUser_create: {
             type: DataTypes.STRING(16),
             allowNull: false,

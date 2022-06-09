@@ -8,14 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER(4)
       },
-      id_user: {
-        type: Sequelize.STRING(16),
-        references: {
-          model: "pengguna",
-          key: "nik",
-        },
-        allowNull: false,
-      },
       referral_code: {
         type: Sequelize.STRING(8),
         allowNull: false,
@@ -42,7 +34,7 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM('Submit', 'Proses', 'Selesai'),
+        type: Sequelize.ENUM('Submit', 'Ditolak', 'Proses', 'Selesai'),
         defaultValue: "Submit",
         allowNull: false
       },
@@ -60,7 +52,15 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: true
-      }
+      },
+      id_user: {
+        type: Sequelize.STRING(16),
+        references: {
+          model: "pengguna",
+          key: "nik",
+        },
+        allowNull: false,
+      },
     });
   },
   async down(queryInterface, Sequelize) {

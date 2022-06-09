@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       status: {
-        type: DataTypes.ENUM('Submit', 'Proses', 'Selesai'),
+        type: DataTypes.ENUM('Submit', 'Ditolak', 'Proses', 'Selesai'),
         defaultValue: "Submit",
         allowNull: false
       },
@@ -90,28 +90,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
     });
-    Pengajuan.hasMany(models.Trx_dokumen_pmptsp, {
-      foreignKey: {
-        name: "id_pengajuan",
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    });
-    Pengajuan.hasMany(models.Trx_dokumen_dtr, {
-      foreignKey: {
-        name: "id_pengajuan",
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    });
-    Pengajuan.hasMany(models.Trx_dokumen_kemenag, {
-      foreignKey: {
-        name: "id_pengajuan",
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    });
-    Pengajuan.hasMany(models.Trx_dokumen_fkub, {
+    Pengajuan.hasMany(models.Trx_dokumen_instansi, {
       foreignKey: {
         name: "id_pengajuan",
         type: DataTypes.INTEGER,

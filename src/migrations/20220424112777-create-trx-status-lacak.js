@@ -8,21 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_pengajuan: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "pengajuan",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      id_pelacakan: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "pelacakan",
-          key: "id",
-        },
-      },
       status: {
         type: Sequelize.ENUM('Proses', 'Selesai'),
         allowNull: false,
@@ -41,7 +26,22 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: true
-      }
+      },
+      id_pengajuan: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "pengajuan",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      id_pelacakan: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "pelacakan",
+          key: "id",
+        },
+      },
     });
   },
   async down(queryInterface, Sequelize) {

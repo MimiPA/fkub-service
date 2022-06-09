@@ -8,21 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_pengajuan: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "pengajuan",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      id_user: {
-        type: Sequelize.STRING(16),
-        references: {
-          model: "pengguna",
-          key: "nik",
-        },
-      },
       dokumen: {
         type: Sequelize.STRING(255),
         allowNull: false,
@@ -34,6 +19,11 @@ module.exports = {
       alasan: {
         type: Sequelize.TEXT,
         allowNull: false,
+      },
+      status: {
+        type: Sequelize.ENUM('Submit', 'Ditolak', 'Diterima'),
+        defaultValue: "Submit",
+        allowNull: false
       },
       idUser_create: {
         type: Sequelize.STRING(16),
@@ -49,7 +39,22 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: true
-      }
+      },
+      id_pengajuan: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "pengajuan",
+          key: "id",
+        },
+        allowNull: false,
+      },
+      id_user: {
+        type: Sequelize.STRING(16),
+        references: {
+          model: "pengguna",
+          key: "nik",
+        },
+      },
     });
   },
   async down(queryInterface, Sequelize) {

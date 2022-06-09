@@ -125,28 +125,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
     });
-    Pengguna.hasMany(models.Trx_dokumen_pmptsp, {
-      foreignKey: {
-        name: "id_user",
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    });
-    Pengguna.hasMany(models.Trx_dokumen_dtr, {
-      foreignKey: {
-        name: "id_user",
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    });
-    Pengguna.hasMany(models.Trx_dokumen_kemenag, {
-      foreignKey: {
-        name: "id_user",
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    });
-    Pengguna.hasMany(models.Trx_dokumen_fkub, {
+    Pengguna.hasMany(models.Trx_dokumen_instansi, {
       foreignKey: {
         name: "id_user",
         type: DataTypes.STRING,

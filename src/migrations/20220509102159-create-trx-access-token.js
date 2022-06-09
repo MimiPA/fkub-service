@@ -8,14 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_user: {
-        type: Sequelize.STRING(16),
-        references: {
-          model: "pengguna",
-          key: "nik",
-        },
-        allowNull: false,
-      },
       access_token: {
         type: Sequelize.TEXT
       },
@@ -29,7 +21,15 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      id_user: {
+        type: Sequelize.STRING(16),
+        references: {
+          model: "pengguna",
+          key: "nik",
+        },
+        allowNull: false,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
