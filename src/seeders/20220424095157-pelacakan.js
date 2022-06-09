@@ -131,6 +131,14 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: null
       },
+      {
+        id: 17,
+        kategori_pelacakan: "Permohonan Pembangunan Rumah Ibadah Anda Ditolak",
+        idUser_create: "7777777777777777",
+        idUser_update: null,
+        createdAt: new Date(),
+        updatedAt: null
+      },
     ]);
   },
 

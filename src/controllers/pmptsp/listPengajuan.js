@@ -8,16 +8,7 @@ const { Pengajuan, Pengguna } = require('../../models');
 
 const listPengajuan = async (req, res) => {
     try {
-        const { jenis_pembangunan } = req.query;
-
-        if (!jenis_pembangunan) {
-            return errorResponse(req, res, 400, 'Required jenis_pembangunan in request parameter');
-        }
-
         const data = await Pengajuan.findAll({
-            where: {
-                jenis_pembangunan: jenis_pembangunan
-            },
             include: [{
                 model: Pengguna,
                 attributes: ["nik", "nama_depan", "nama_belakang", "agama", "telepon"]
