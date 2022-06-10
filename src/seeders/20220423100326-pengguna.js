@@ -69,6 +69,28 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: null
       },
+      {
+        nik: "2233223322332233",
+        role: "Dinas Tata Ruang",
+        email: "dtr@gmail.com",
+        password: "$2b$10$kPhA9oW7syaChmbdDOV/tOarejyI8IETO2x//A0PtZQvc/TbfByq2",
+        is_active: "Enable",
+        nama_depan: "Tata",
+        nama_belakang: "Ruang",
+        jenis_kelamin: "Laki-laki",
+        agama: "Buddha",
+        telepon: "089556993222",
+        tempat_lahir: "Amerika",
+        tanggal_lahir: '1990-01-01',
+        alamat: "Jalan Nowhere 30",
+        rt: "002",
+        rw: "002",
+        kecamatan: "Makassar",
+        kelurahan: "Bongaya",
+        foto: "https://thumbs.dreamstime.com/z/smart-boy-character-cartoon-illustration-looking-49704212.jpg",
+        createdAt: new Date(),
+        updatedAt: null
+      },
     ]);
   },
 
