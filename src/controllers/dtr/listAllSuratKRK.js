@@ -1,15 +1,15 @@
-const { Op } = require('sequelize');
-
 //Response Message
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
 const { Trx_dokumen_instansi, Pengajuan } = require('../../models');
 
-const listSuratPermintaanKRK = async (req, res) => {
+const listAllSuratKRK = async (req, res) => {
     try {
         const data = await Trx_dokumen_instansi.findAll({
-            where: { kategori_dokumen: "Surat Pengajuan KRK" },
+            where: {
+                kategori_dokumen: "KRK"
+            },
             include: [{
                 model: Pengajuan,
             }]
@@ -19,7 +19,7 @@ const listSuratPermintaanKRK = async (req, res) => {
             return successResponse(req, res, 'Data Tidak Tersedia');
         }
 
-        return successResponse(req, res, 'Riwayat Surat Permintaan KRK Berhasil Diambil', data);
+        return successResponse(req, res, 'Surat KRK Berhasil Diambil', data);
     }
     catch (err) {
         console.log(err.message);
@@ -27,4 +27,4 @@ const listSuratPermintaanKRK = async (req, res) => {
     }
 };
 
-module.exports = listSuratPermintaanKRK;
+module.exports = listAllSuratKRK;

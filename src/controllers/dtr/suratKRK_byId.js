@@ -6,20 +6,23 @@ const { errorResponse, successResponse } = require("../../helpers");
 //Import Model
 const { Trx_dokumen_instansi, Pengajuan } = require('../../models');
 
-const listSuratPermintaanKRK = async (req, res) => {
+const suratKRKById = async (req, res) => {
     try {
-        const data = await Trx_dokumen_instansi.findAll({
-            where: { kategori_dokumen: "Surat Pengajuan KRK" },
+        const data = await Trx_dokumen_instansi.findOne({
+            where: {
+                id_pengajuan: req.params.id_pengajuan,
+                kategori_dokumen: "KRK"
+            },
             include: [{
                 model: Pengajuan,
             }]
         });
 
         if (!data) {
-            return successResponse(req, res, 'Data Tidak Tersedia');
+            return successResponse(req, res, 'Data Tidak Tersedia', data);
         }
 
-        return successResponse(req, res, 'Riwayat Surat Permintaan KRK Berhasil Diambil', data);
+        return successResponse(req, res, 'Detail Surat KRK Berhasil Diambil', data);
     }
     catch (err) {
         console.log(err.message);
@@ -27,4 +30,4 @@ const listSuratPermintaanKRK = async (req, res) => {
     }
 };
 
-module.exports = listSuratPermintaanKRK;
+module.exports = suratKRKById;
