@@ -20,7 +20,7 @@ const riwayatStatus = async (req, res) => {
                 model: Pengajuan,
                 where: {
                     id_user: id_user,
-                    status: { [Op.or]: ["Submit", "Proses", "Selesai"] }
+                    status: { [Op.or]: ["Submit", "Proses", "Ditolak", "Selesai"] }
                 },
             }],
             order: [

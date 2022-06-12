@@ -11,4 +11,7 @@ router.post("/", multer({ storage: multer.memoryStorage() }).single("surat_permo
 //GET Pengajuan Proposal
 router.get("/list", proposalController.listPengajuanProposal);
 
+//GET Status Proposal untuk Menu
+router.get("/menu", proposalController.checkStatusProposal);
+
 module.exports = router;

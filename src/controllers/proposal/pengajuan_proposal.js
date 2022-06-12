@@ -39,6 +39,17 @@ const pengajuanProposal = async (req, res) => {
             return errorResponse(req, res, 400, "Referral code tidak tersedia. Mohon Coba Lagi!");
         }
 
+        const proposal = await Pengajuan.findOne({
+            where: {
+                id_user: req.user.nik,
+                status: { [Op.or]: ["Submit", "Proses"] }
+            }
+        });
+
+        if (proposal) {
+            return errorResponse(req, res, 400, 'Tidak Dapat Mengajukan. Anda Masih Memiliki Pengajuan Yang Dalam Proses / Belum Selesai');
+        }
+
         const dataPengajuan = await Pengajuan.findOne({
             where: {
                 jenis_pembangunan: req.body.jenis_pembangunan,
