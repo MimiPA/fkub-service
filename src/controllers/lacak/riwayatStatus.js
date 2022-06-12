@@ -42,7 +42,7 @@ const riwayatStatus = async (req, res) => {
                 attributes: ["kategori_pelacakan"]
             }],
             order: [['createdAt', 'DESC']],
-            limit: 3
+            limit: 4
         });
 
         if (!lacak) {

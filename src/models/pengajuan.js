@@ -32,6 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(200),
         allowNull: false,
       },
+      rt: {
+        type: DataTypes.STRING(5),
+        allowNull: false,
+      },
+      rw: {
+        type: DataTypes.STRING(5),
+        allowNull: false,
+      },
       surat_permohonan: {
         type: DataTypes.STRING(255),
         allowNull: false

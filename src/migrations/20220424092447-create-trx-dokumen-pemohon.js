@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false,
       },
       kategori_dokumen: {
-        type: Sequelize.ENUM('SK Panitia Pembangunan', 'Akta Jual Beli', 'Sertifikat Hak Milik', 'Surat Ukur', 'Badan Hukum', 'Rencana Anggaran Biaya', 'Gambar Denah Gedung', 'Surat Lainnya'),
+        type: Sequelize.ENUM('Surat Permohonan Rekomendasi FKUB', 'Surat Permohonan Rekomendasi Kemenag', 'SK Panitia Pembangunan', 'Akta Jual Beli', 'Sertifikat Hak Milik', 'Surat Ukur', 'Badan Hukum', 'Rencana Anggaran Biaya', 'Gambar Denah Gedung', 'Surat Lainnya'),
         allowNull: false,
       },
       idUser_create: {

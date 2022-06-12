@@ -24,6 +24,12 @@ const pengajuanProposal = async (req, res) => {
         else if (req.body.alamat == null) {
             return errorResponse(req, res, 400, "Mohon Mengisi Alamat");
         }
+        else if (req.body.rt == null) {
+            return errorResponse(req, res, 400, "Mohon Mengisi RT");
+        }
+        else if (req.body.rw == null) {
+            return errorResponse(req, res, 400, "Mohon Mengisi RW");
+        }
 
         if (req.file.mimetype != 'application/pdf') {
             return errorResponse(req, res, 400, 'File Anda Bukan Tipe .pdf !!! Mohon upload ulang');
@@ -54,7 +60,9 @@ const pengajuanProposal = async (req, res) => {
             where: {
                 jenis_pembangunan: req.body.jenis_pembangunan,
                 nama_tempat: req.body.nama_tempat,
-                alamat: req.body.alamat
+                alamat: req.body.alamat,
+                rt: req.body.rt,
+                rw: req.body.rw
             },
         });
 
@@ -66,15 +74,17 @@ const pengajuanProposal = async (req, res) => {
         const uploaded = await cloudinary.uploader.upload(datauri.content);
 
         const createPengajuan = await Pengajuan.create({
-            id_user: req.user.nik,
             referral_code: referralCode,
             jenis_pembangunan: req.body.jenis_pembangunan,
             nama_tempat: req.body.nama_tempat,
             tempat_ibadah: req.body.tempat_ibadah,
             alamat: req.body.alamat,
+            rt: req.body.rt,
+            rw: req.body.rw,
             surat_permohonan: uploaded.secure_url,
             status: 'Submit',
-            idUser_create: req.user.nik
+            idUser_create: req.user.nik,
+            id_user: req.user.nik,
         });
 
         if (!createPengajuan) {

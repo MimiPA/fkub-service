@@ -29,6 +29,14 @@ module.exports = {
         type: Sequelize.STRING(200),
         allowNull: false
       },
+      rt: {
+        type: Sequelize.STRING(5),
+        allowNull: false
+      },
+      rw: {
+        type: Sequelize.STRING(5),
+        allowNull: false
+      },
       surat_permohonan: {
         type: Sequelize.STRING(255),
         allowNull: false
