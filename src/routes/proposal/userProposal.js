@@ -14,4 +14,16 @@ router.get("/list", proposalController.listPengajuanProposal);
 //GET Status Proposal untuk Menu
 router.get("/menu", proposalController.checkStatusProposal);
 
+//GET Detail Pengajuan By ID
+router.get("/list/detail/:id?", proposalController.detailPengajuanById);
+
+//GET Detail Pengajuan with Dokumen Instansi
+router.get("/list/detailInstansi/:id?", proposalController.detailDokumenInstansi);
+
+//GET Detail Pengajuan with Dokumen Pemohon
+router.get("/list/detailAdministrasi/:id?", proposalController.detailDokumenPemohon);
+
+//GET Detail Pengajuan with Dokumen Pendukung
+router.get("/list/detailPendukung/:id?", proposalController.detailDokumenPendukung);
+
 module.exports = router;

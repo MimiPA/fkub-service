@@ -5,12 +5,12 @@ const Datauri = require('datauri/parser');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pelacakan, Trx_status_lacak, Trx_dokumen_pemohon } = require('../../models');
+const { Trx_dokumen_pemohon } = require('../../models');
 
-const uploadSuratFKUB = async (req, res) => {
+const uploadRAB = async (req, res) => {
     try {
         if (req.file == null) {
-            return errorResponse(req, res, 400, 'Surat Permohonan Rekomendasi FKUB Perlu Diisi');
+            return errorResponse(req, res, 400, 'Rencana Anggaran Biaya Perlu Diisi');
         }
 
         if (req.file.mimetype != 'application/pdf') {
@@ -23,7 +23,7 @@ const uploadSuratFKUB = async (req, res) => {
         const surat = await Trx_dokumen_pemohon.findOne({
             where: {
                 id_pengajuan: req.body.id_pengajuan,
-                kategori_dokumen: "Surat Permohonan Rekomendasi FKUB"
+                kategori_dokumen: "Rencana Anggaran Biaya"
             }
         });
 
@@ -36,7 +36,7 @@ const uploadSuratFKUB = async (req, res) => {
 
         const createDokumen = await Trx_dokumen_pemohon.create({
             dokumen: uploaded.secure_url,
-            kategori_dokumen:"Surat Permohonan Rekomendasi FKUB",
+            kategori_dokumen: "Rencana Anggaran Biaya",
             idUser_create: req.user.nik,
             id_pengajuan: req.body.id_pengajuan,
         });
@@ -45,20 +45,7 @@ const uploadSuratFKUB = async (req, res) => {
             return errorResponse(req, res, 400, 'Upload Tidak Berhasil. Mohon Coba Lagi!');
         }
 
-        const pelacakan = await Pelacakan.findOne({
-            where: {
-                kategori_pelacakan: "Pengajuan permohonan Rekomendasi Tertulis ke FKUB"
-            }
-        });
-
-        const createStatus = await Trx_status_lacak.create({
-            id_pengajuan: req.body.id_pengajuan,
-            id_pelacakan: pelacakan.id,
-            status: "Proses",
-            idUser_create: req.user.nik
-        });
-
-        return successResponse(req, res, 'Upload Berhasil.', { createDokumen, createStatus });
+        return successResponse(req, res, 'Upload Berhasil.', { createDokumen });
     }
     catch (err) {
         console.log(err.message);
@@ -66,4 +53,4 @@ const uploadSuratFKUB = async (req, res) => {
     }
 };
 
-module.exports = uploadSuratFKUB;
+module.exports = uploadRAB;

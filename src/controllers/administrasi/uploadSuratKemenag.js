@@ -7,10 +7,10 @@ const { errorResponse, successResponse } = require("../../helpers");
 //Import Model
 const { Pelacakan, Trx_status_lacak, Trx_dokumen_pemohon } = require('../../models');
 
-const uploadSuratFKUB = async (req, res) => {
+const uploadSuratKemenag = async (req, res) => {
     try {
         if (req.file == null) {
-            return errorResponse(req, res, 400, 'Surat Permohonan Rekomendasi FKUB Perlu Diisi');
+            return errorResponse(req, res, 400, 'Surat Permohonan Rekomendasi Kemenag Perlu Diisi');
         }
 
         if (req.file.mimetype != 'application/pdf') {
@@ -23,7 +23,7 @@ const uploadSuratFKUB = async (req, res) => {
         const surat = await Trx_dokumen_pemohon.findOne({
             where: {
                 id_pengajuan: req.body.id_pengajuan,
-                kategori_dokumen: "Surat Permohonan Rekomendasi FKUB"
+                kategori_dokumen: "Surat Permohonan Rekomendasi Kemenag"
             }
         });
 
@@ -36,7 +36,7 @@ const uploadSuratFKUB = async (req, res) => {
 
         const createDokumen = await Trx_dokumen_pemohon.create({
             dokumen: uploaded.secure_url,
-            kategori_dokumen:"Surat Permohonan Rekomendasi FKUB",
+            kategori_dokumen: "Surat Permohonan Rekomendasi Kemenag",
             idUser_create: req.user.nik,
             id_pengajuan: req.body.id_pengajuan,
         });
@@ -47,7 +47,7 @@ const uploadSuratFKUB = async (req, res) => {
 
         const pelacakan = await Pelacakan.findOne({
             where: {
-                kategori_pelacakan: "Pengajuan permohonan Rekomendasi Tertulis ke FKUB"
+                kategori_pelacakan: "Pengajuan permohonan Rekomendasi Tertulis ke Kementrian Agama"
             }
         });
 
@@ -66,4 +66,4 @@ const uploadSuratFKUB = async (req, res) => {
     }
 };
 
-module.exports = uploadSuratFKUB;
+module.exports = uploadSuratKemenag;

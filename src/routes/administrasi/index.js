@@ -8,6 +8,6 @@ const administrasiRouter = require('./administrasi');
 const middleware = require("../../middleware");
 const verifyToken = middleware.verifyToken;
 
-router.use('/', verifyToken, administrasiRouter);
+router.use('/upload', verifyToken, administrasiRouter);
 
 module.exports = router;
