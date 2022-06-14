@@ -33,27 +33,6 @@ const detailPengajuanById = async (req, res) => {
             return successResponse(req, res, 'Data Tidak Ditemukan');
         }
 
-        // const dataInstansi = await Trx_dokumen_instansi.findAll({
-        //     where: {
-        //         id_pengajuan: id,
-        //         kategori_dokumen: {
-        //             [Op.or]: ['KRK', 'Surat Rekomendasi Kemenag', 'Surat Rekomendasi FKUB', 'Surat Survey Lapangan', 'IMB']
-        //         }
-        //     }
-        // });
-
-        // const dataAdministrasi = await Trx_dokumen_pemohon.findAll({
-        //     where: {
-        //         id_pengajuan: id,
-        //     }
-        // });
-
-        // const dataPendukung = await Trx_dokumen_pendukung.findAll({
-        //     where: {
-        //         id_pengajuan: id,
-        //     }
-        // });
-
         return successResponse(req, res, 'Detail Pengajuan Berhasil Diambil', data);
     }
     catch (err) {
