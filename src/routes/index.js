@@ -11,6 +11,7 @@ const lacakRouter = require("./lacak");
 const suratKRKRouter = require("./suratKRK");
 const checkRouter = require("./check_administrasi");
 const administrasiRouter = require("./administrasi");
+const suratRekomenRouter = require('./suratRekomendasi');
 
 // Get All Routes
 router.use("", authRouter);
@@ -21,5 +22,6 @@ router.use("/lacak", lacakRouter);
 router.use("/suratKRK", suratKRKRouter);
 router.use("/check", checkRouter);
 router.use("/administrasi", administrasiRouter);
+router.use("/rekomendasi", suratRekomenRouter);
 
 module.exports = router;
