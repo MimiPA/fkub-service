@@ -10,10 +10,10 @@ const detailDokumenPendukung = async (req, res) => {
     try {
         const id_pengajuan = req.params.id;
 
-        const data = await Trx_dokumen_pendukung.findAll({
+        const dataPengguna = await Trx_dokumen_pendukung.findAll({
             where: {
                 id_pengajuan: id_pengajuan,
-                kategori_dokumen: "Surat Pernyataan Dukungan",
+                sumber_dukungan: "Pengguna",
             },
             include: [{
                 model: Pengguna,
@@ -21,9 +21,22 @@ const detailDokumenPendukung = async (req, res) => {
             }]
         });
 
-        if (!data) {
+        const dataMasyarakat = await Trx_dokumen_pendukung.findAll({
+            where: {
+                id_pengajuan: id_pengajuan,
+                sumber_dukungan: "Masyarakat",
+            },
+            include: [{
+                model: Pengguna,
+                attributes: ["nik", "email", "nama_depan", "nama_belakang", "jenis_kelamin", "agama", "telepon"]
+            }]
+        });
+
+        if (!dataPengguna || !dataMasyarakat) {
             return successResponse(req, res, 'Data Tidak Ditemukan');
         }
+
+        const data = { dataPengguna, dataMasyarakat };
 
         return successResponse(req, res, 'Detail Dokumen Pendukung Berhasil Diambil', data);
     }
