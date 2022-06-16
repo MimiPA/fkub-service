@@ -10,12 +10,20 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             unique: true,
         },
-        dokumen: {
+        sumber_dukungan: {
+            type: DataTypes.ENUM('Pengguna', 'Masyarakat'),
+            allowNull: false,
+        },
+        surat_pernyataan: {
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        kategori_dokumen: {
-            type: DataTypes.ENUM('Surat Pernyataan Dukungan', 'Foto KTP', 'Foto Diri'),
+        foto_ktp: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        foto_diri: {
+            type: DataTypes.STRING(255),
             allowNull: false,
         },
         status: {

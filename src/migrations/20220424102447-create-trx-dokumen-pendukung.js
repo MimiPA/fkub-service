@@ -8,12 +8,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      dokumen: {
+      sumber_dukungan: {
+        type: Sequelize.ENUM('Pengguna', 'Masyarakat'),
+        allowNull: false,
+      },
+      surat_pernyataan: {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
-      kategori_dokumen: {
-        type: Sequelize.ENUM('Surat Pernyataan Dukungan', 'Foto KTP', 'Foto Diri'),
+      foto_ktp: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
+      foto_diri: {
+        type: Sequelize.STRING(255),
         allowNull: false,
       },
       status: {
