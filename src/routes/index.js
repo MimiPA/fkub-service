@@ -13,6 +13,7 @@ const checkRouter = require("./check_administrasi");
 const administrasiRouter = require("./administrasi");
 const suratRekomenRouter = require('./suratRekomendasi');
 const pendukungRouter = require("./pendukung");
+const countRouter = require('./count');
 
 // Get All Routes
 router.use("", authRouter);
@@ -25,5 +26,6 @@ router.use("/check", checkRouter);
 router.use("/administrasi", administrasiRouter);
 router.use("/rekomendasi", suratRekomenRouter);
 router.use("/pendukung", pendukungRouter);
+router.use("/count", countRouter);
 
 module.exports = router;
