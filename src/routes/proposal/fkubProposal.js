@@ -20,6 +20,9 @@ router.get('/list/detailInstansi/:id?', fkubController.detailDokumenInstansi);
 //GET Detail Pengajuan with Dokumen Pendukung
 router.get('/list/detailPendukung/:id?', fkubController.detailDokumenPendukung);
 
+//PUT Change Status Pendukung
+router.put('/dukungan/:id?/status', fkubController.changeStatusPendukung);
+
 //POST Change Status Proposal
 //router.post('/list/detail/:id?/status', multer({ storage: multer.memoryStorage() }).single("dokumen"), pmptspController.changeStatusPengajuan);
 

@@ -11,7 +11,7 @@ const suratRekomendasiById = async (req, res) => {
         const data = await Trx_dokumen_instansi.findOne({
             where: {
                 id_pengajuan: req.params.id_pengajuan,
-                kategori_dokumen: "Surat Rekomendasi Kemenag"
+                kategori_dokumen: "Surat Rekomendasi FKUB"
             },
             include: [{
                 model: Pengajuan,
@@ -22,7 +22,7 @@ const suratRekomendasiById = async (req, res) => {
             return successResponse(req, res, 'Data Tidak Tersedia');
         }
 
-        return successResponse(req, res, 'Detail Riwayat Surat Rekomendasi Kemenag Berhasil Diambil', data);
+        return successResponse(req, res, 'Detail Riwayat Surat Rekomendasi FKUB Berhasil Diambil', data);
     }
     catch (err) {
         console.log(err.message);
