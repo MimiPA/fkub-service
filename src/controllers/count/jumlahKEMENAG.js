@@ -17,9 +17,7 @@ const jumlahKEMENAG = async (req, res) => {
 
         const jumlahPermintaanRekomen = await Trx_dokumen_pemohon.count({
             where: {
-                kategori_dokumen: {
-                    [Op.and]: ["Surat Permohonan Rekomendasi Kemenag", "SK Panitia Pembangunan"]
-                },
+                kategori_dokumen: "Surat Permohonan Rekomendasi Kemenag"
             },
         });
 

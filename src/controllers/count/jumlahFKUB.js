@@ -27,7 +27,13 @@ const jumlahFKUB = async (req, res) => {
             },
         });
 
-        return successResponse(req, res, 'Jumlah Untuk FKUB Berhasil Diambil', { jumlahRekomendasi, jumlahPermintaanRekomen, jumlahSelesai });
+        const jumlahDiproses = await Pengajuan.count({
+            where: {
+                status: "Proses",
+            },
+        });
+
+        return successResponse(req, res, 'Jumlah Untuk FKUB Berhasil Diambil', { jumlahRekomendasi, jumlahPermintaanRekomen, jumlahSelesai, jumlahDiproses });
     }
     catch (err) {
         console.log(err.message);

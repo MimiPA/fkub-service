@@ -1,8 +1,8 @@
 //Response Message
-const { errorResponse, successResponse } = require("../../helpers");
+const { errorResponse, successResponse } = require("../../../helpers");
 
 //Import Model
-const { Pengajuan, Pengguna, Trx_dokumen_pemohon } = require('../../models');
+const { Pengajuan, Pengguna } = require('../../../models');
 
 const pengajuanById = async (req, res) => {
     try {
@@ -20,7 +20,7 @@ const pengajuanById = async (req, res) => {
             return successResponse(req, res, 'Data Tidak Ditemukan');
         }
 
-        return successResponse(req, res, 'Detail Pengajuan Pemohon Berhasil Diambil', data);
+        return successResponse(req, res, 'Detail Pengajuan Berhasil Diambil', data);
     }
     catch (err) {
         console.log(err.message);

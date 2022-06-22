@@ -14,6 +14,7 @@ const administrasiRouter = require("./administrasi");
 const suratRekomenRouter = require('./suratRekomendasi');
 const pendukungRouter = require("./pendukung");
 const countRouter = require('./count');
+const imbRouter = require('./imb');
 
 // Get All Routes
 router.use("", authRouter);
@@ -27,5 +28,6 @@ router.use("/administrasi", administrasiRouter);
 router.use("/rekomendasi", suratRekomenRouter);
 router.use("/pendukung", pendukungRouter);
 router.use("/count", countRouter);
+router.use("/imb", imbRouter);
 
 module.exports = router;

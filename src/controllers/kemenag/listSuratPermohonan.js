@@ -1,5 +1,4 @@
 const { Op } = require("sequelize");
-const lodash = require('lodash');
 
 //Response Message
 const { errorResponse, successResponse } = require("../../helpers");

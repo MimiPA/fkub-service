@@ -9,5 +9,5 @@ module.exports = {
     permintaanKRKById,
     suratKRKById,
     uploadSuratKRK,
-    listAllSuratKRK
+    listAllSuratKRK,
 };

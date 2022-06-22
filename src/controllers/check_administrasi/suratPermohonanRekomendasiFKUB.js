@@ -15,7 +15,7 @@ const suratPermohonanRekomendasiFKUB = async (req, res) => {
         });
 
         if (!data) {
-            return successResponse(req, res, 'Data Tidak Tersedia', data);
+            return successResponse(req, res, 'Data Tidak Tersedia');
         }
 
         return successResponse(req, res, 'Semua Dokumen Pemohon Berhasil Diambil', data);
