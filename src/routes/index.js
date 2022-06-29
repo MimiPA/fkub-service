@@ -16,6 +16,8 @@ const pendukungRouter = require("./pendukung");
 const countRouter = require('./count');
 const imbRouter = require('./imb');
 
+const cobaRouter = require('./coba');
+
 // Get All Routes
 router.use("", authRouter);
 router.use("/profile", profileRouter);
@@ -29,5 +31,6 @@ router.use("/rekomendasi", suratRekomenRouter);
 router.use("/pendukung", pendukungRouter);
 router.use("/count", countRouter);
 router.use("/imb", imbRouter);
+router.use("/coba", cobaRouter);
 
 module.exports = router;

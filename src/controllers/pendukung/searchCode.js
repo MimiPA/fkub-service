@@ -20,6 +20,7 @@ const searchCode = async (req, res) => {
                 status: "Proses",
             },
             attributes: [
+                "id",
                 "referral_code",
                 "jenis_pembangunan",
                 "nama_tempat",

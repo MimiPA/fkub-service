@@ -34,7 +34,8 @@ module.exports = {
         allowNull: false
       },
       idUser_update: {
-        type: Sequelize.STRING(16)
+        type: Sequelize.STRING(16),
+        allowNull:true,
       },
       createdAt: {
         allowNull: false,

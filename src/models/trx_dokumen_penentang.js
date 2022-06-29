@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         idUser_update: {
             type: DataTypes.STRING(16),
+            allowNull:true,
         },
     }, {
         tableName: "trx_dokumen_penentang",

@@ -8,7 +8,25 @@ const pendukungController = require("../../controllers/pendukung");
 //POST Pengajuan Proposal
 //router.post("/", multer({ storage: multer.memoryStorage() }).single("surat_permohonan"), proposalController.pengajuanProposal);
 
-//POST Search Code Pengajuan
+//GET Search Code Pengajuan
 router.get("/searchCode/:referral_code?", pendukungController.searchCode);
+
+//POST Mendukung/Menentang
+router.post("/upload/:id_pengajuan?", pendukungController.jenisDukungan);
+
+//GET List All Dukungan
+router.get("/list", pendukungController.listAllDukungan);
+
+//POST Upload Surat Pernyataan
+router.post("/upload/suratPernyataan/:id?", multer({ storage: multer.memoryStorage() }).single("surat_pernyataan"), pendukungController.uploadSuratPernyataan);
+
+//POST Upload Foto Diri
+router.post("/upload/fotoDiri/:id?", pendukungController.uploadFotoDiri);
+
+//POST Upload Foto KTP
+router.post("/upload/fotoKTP/:id?", pendukungController.uploadFotoKTP);
+
+//POST Upload Alasan
+router.post("/upload/alasan/:id?", pendukungController.uploadAlasan);
 
 module.exports = router;
