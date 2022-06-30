@@ -1,8 +1,9 @@
 //Response Message
 const { errorResponse, successResponse } = require("../../helpers");
 
-const { BASE_URL } = process.env;
-const uploadImage = require('../../utils/image');
+const uploadImage = require('../../utils/image/uploadImage');
+
+const urlKu = "http://localhost:5000";
 
 //Import Model
 const { Trx_dokumen_pendukung, Trx_dokumen_penentang } = require('../../models');
@@ -11,9 +12,9 @@ const uploadFotoKTP = async (req, res) => {
     try {
         const { id } = req.params;
         const { jenis } = req.query;
-        const { foto } = req.body;
+        const foto = req.body.foto;
 
-        if (!foto || foto == null || foto == undefined) {
+        if (foto === null || foto === undefined) {
             return errorResponse(req, res, 400, 'Mohon Foto KTP Anda');
         }
         else if (!id) {
@@ -35,7 +36,7 @@ const uploadFotoKTP = async (req, res) => {
             }
 
             const gambar = uploadImage(foto, "./src/public");
-            const linkGambar = `${BASE_URL}/${gambar}`;
+            const linkGambar = `${urlKu}/${gambar}`;
 
             const updateDokumen = await Trx_dokumen_pendukung.update(
                 { foto_ktp: linkGambar },
@@ -60,7 +61,7 @@ const uploadFotoKTP = async (req, res) => {
             }
 
             const gambar = uploadImage(foto, "./src/public");
-            const linkGambar = `${BASE_URL}/${gambar}`;
+            const linkGambar = `${urlKu}/${gambar}`;
 
             const updateDokumen = await Trx_dokumen_penentang.update(
                 { foto_ktp: linkGambar },

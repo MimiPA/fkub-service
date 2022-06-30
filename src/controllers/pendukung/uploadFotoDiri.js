@@ -1,8 +1,9 @@
 //Response Message
 const { errorResponse, successResponse } = require("../../helpers");
 
-const { BASE_URL } = process.env;
-const uploadImage = require('../../utils/image');
+const uploadImage = require('../../utils/image/uploadImage');
+
+const urlKu = "http://localhost:5000";
 
 //Import Model
 const { Trx_dokumen_pendukung, Trx_dokumen_penentang } = require('../../models');
@@ -35,7 +36,7 @@ const uploadFotoDiri = async (req, res) => {
             }
 
             const gambar = uploadImage(foto, "./src/public");
-            const linkGambar = `${BASE_URL}/${gambar}`;
+            const linkGambar = `${urlKu}/${gambar}`;
 
             const updateDokumen = await Trx_dokumen_pendukung.update(
                 { foto_diri: linkGambar },
@@ -60,7 +61,7 @@ const uploadFotoDiri = async (req, res) => {
             }
 
             const gambar = uploadImage(foto, "./src/public");
-            const linkGambar = `${BASE_URL}/${gambar}`;
+            const linkGambar = `${urlKu}/${gambar}`;
 
             const updateDokumen = await Trx_dokumen_penentang.update(
                 { foto_diri: linkGambar },

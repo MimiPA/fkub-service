@@ -21,10 +21,10 @@ router.get("/list", pendukungController.listAllDukungan);
 router.post("/upload/suratPernyataan/:id?", multer({ storage: multer.memoryStorage() }).single("surat_pernyataan"), pendukungController.uploadSuratPernyataan);
 
 //POST Upload Foto Diri
-router.post("/upload/fotoDiri/:id?", pendukungController.uploadFotoDiri);
+router.post("/upload/foto_diri/:id?", multer({ storage: multer.memoryStorage() }).single("foto"), pendukungController.uploadFotoDiri);
 
 //POST Upload Foto KTP
-router.post("/upload/fotoKTP/:id?", pendukungController.uploadFotoKTP);
+router.post("/upload/foto_ktp/:id?", multer({ storage: multer.memoryStorage() }).single("foto"), pendukungController.uploadFotoKTP);
 
 //POST Upload Alasan
 router.post("/upload/alasan/:id?", pendukungController.uploadAlasan);
