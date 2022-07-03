@@ -11,23 +11,23 @@ const { Pengajuan, Pelacakan, Trx_status_lacak } = require('../../models');
 
 const pengajuanProposal = async (req, res) => {
     try {
-        if (req.file == null) {
+        if (req.file == null || !req.file) {
             return errorResponse(req, res, 400, 'Surat Pengajuan Perlu Diisi');
         }
 
         if (req.body.jenis_pembangunan == 'Pilih' || req.body.jenis_pembangunan == "") {
             return errorResponse(req, res, 400, "Mohon Memilih Jenis Pembangunan");
         }
-        else if (req.body.nama_tempat == null) {
+        else if (req.body.nama_tempat == null || !req.body.nama_tempat || req.body.nama_tempat == " ") {
             return errorResponse(req, res, 400, "Mohon Mengisi Nama Tempat");
         }
-        else if (req.body.alamat == null) {
+        else if (req.body.alamat == null || !req.body.alamat || req.body.alamat == " ") {
             return errorResponse(req, res, 400, "Mohon Mengisi Alamat");
         }
-        else if (req.body.rt == null) {
+        else if (req.body.rt == null || !req.body.rt || req.body.rt == " ") {
             return errorResponse(req, res, 400, "Mohon Mengisi RT");
         }
-        else if (req.body.rw == null) {
+        else if (req.body.rw == null || !req.body.rw || req.body.rw == " ") {
             return errorResponse(req, res, 400, "Mohon Mengisi RW");
         }
 
@@ -73,11 +73,28 @@ const pengajuanProposal = async (req, res) => {
         const datauri = new Datauri().format('.pdf', req.file.buffer);
         const uploaded = await cloudinary.uploader.upload(datauri.content);
 
+        let tempat_ibadah = "";
+        if (req.user.agama == 'Buddha') {
+            tempat_ibadah = "Vihara";
+        }
+        else if (req.user.agama == 'Hindu') {
+            tempat_ibadah = "Pura";
+        }
+        else if (req.user.agama == 'Islam') {
+            tempat_ibadah = "Masjid";
+        }
+        else if (req.user.agama == 'Konghucu') {
+            tempat_ibadah = "Klenteng";
+        }
+        else {
+            tempat_ibadah = "Gereja";
+        }
+
         const createPengajuan = await Pengajuan.create({
             referral_code: referralCode,
             jenis_pembangunan: req.body.jenis_pembangunan,
             nama_tempat: req.body.nama_tempat,
-            tempat_ibadah: req.body.tempat_ibadah,
+            tempat_ibadah: tempat_ibadah,
             alamat: req.body.alamat,
             rt: req.body.rt,
             rw: req.body.rw,

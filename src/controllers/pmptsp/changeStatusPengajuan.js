@@ -75,7 +75,7 @@ const changeStatusPengajuan = async (req, res) => {
             const createDokumen = await Trx_dokumen_instansi.create({
                 dokumen: uploaded.secure_url,
                 kategori_dokumen: req.body.kategori_dokumen,
-                role: req.body.role,
+                role: req.user.role,
                 idUser_create: req.user.nik,
                 id_pengajuan: id,
                 id_user: req.user.nik
