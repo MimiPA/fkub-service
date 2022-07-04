@@ -3,10 +3,13 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('trx_dokumen_pendukung', {
       id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'pendukung',
+          key: 'id'
+        },
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
       sumber_dukungan: {
         type: Sequelize.ENUM('Pengguna', 'Masyarakat'),
@@ -24,6 +27,10 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false,
       },
+      tanda_tangan: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+      },
       status: {
         type: Sequelize.ENUM('Submit', 'Ditolak', 'Diterima'),
         defaultValue: "Submit",
@@ -35,7 +42,7 @@ module.exports = {
       },
       idUser_update: {
         type: Sequelize.STRING(16),
-        allowNull:true,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,
@@ -44,21 +51,6 @@ module.exports = {
       updatedAt: {
         type: Sequelize.DATE,
         allowNull: true
-      },
-      id_pengajuan: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "pengajuan",
-          key: "id",
-        },
-        allowNull: false,
-      },
-      id_user: {
-        type: Sequelize.STRING(16),
-        references: {
-          model: "pengguna",
-          key: "nik",
-        },
       },
     });
   },

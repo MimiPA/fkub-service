@@ -77,14 +77,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     });
-    Pengajuan.hasMany(models.Trx_dokumen_penentang, {
-      foreignKey: {
-        name: "id_pengajuan",
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    });
-    Pengajuan.hasMany(models.Trx_dokumen_pendukung, {
+    Pengajuan.hasMany(models.Pendukung, {
       foreignKey: {
         name: "id_pengajuan",
         type: DataTypes.INTEGER,

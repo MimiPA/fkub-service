@@ -2,15 +2,17 @@
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pengajuan, Pengguna } = require('../../models');
+const { Pengajuan, Pengguna, Trx_dokumen_instansi } = require('../../models');
 
 const listAllPengajuan = async (req, res) => {
     try {
         const data = await Pengajuan.findAll({
-            where: {
-                status: 'Proses',
-            },
             include: [{
+                model: Trx_dokumen_instansi,
+                where: {
+                    kategori_dokumen: "Surat Rekomendasi Kemenag"
+                },
+            }, {
                 model: Pengguna,
                 attributes: { exclude: ['role', 'password', 'is_active', 'createdAt', 'updatedAt'] }
             }]

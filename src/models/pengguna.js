@@ -104,20 +104,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     });
-    Pengguna.hasMany(models.Trx_dokumen_pendukung, {
-      foreignKey: {
-        name: "id_user",
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    });
-    Pengguna.hasMany(models.Trx_dokumen_penentang, {
-      foreignKey: {
-        name: "id_user",
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-    });
     Pengguna.hasMany(models.Trx_access_token, {
       foreignKey: {
         name: "id_user",

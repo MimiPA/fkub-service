@@ -3,13 +3,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Trx_dokumen_pendukung = sequelize.define(
         "Trx_dokumen_pendukung", {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-            allowNull: false,
-            unique: true,
-        },
         sumber_dukungan: {
             type: DataTypes.ENUM('Pengguna', 'Masyarakat'),
             allowNull: false,
@@ -26,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(255),
             allowNull: false,
         },
+        tanda_tangan: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
         status: {
             type: DataTypes.ENUM('Submit', 'Ditolak', 'Diterima'),
             defaultValue: "Submit",
@@ -37,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         idUser_update: {
             type: DataTypes.STRING(16),
-            allowNull:true,
+            allowNull: true,
         },
     }, {
         tableName: "trx_dokumen_pendukung",
@@ -45,18 +42,12 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Trx_dokumen_pendukung.associate = function (models) {
-        Trx_dokumen_pendukung.belongsTo(models.Pengajuan, {
+        Trx_dokumen_pendukung.belongsTo(models.Pendukung, {
             foreignKey: {
-                name: "id_pengajuan",
+                name: "id",
                 type: DataTypes.INTEGER,
                 allowNull: false,
-            },
-        });
-        Trx_dokumen_pendukung.belongsTo(models.Pengguna, {
-            foreignKey: {
-                name: "id_user",
-                type: DataTypes.STRING(16),
-                allowNull: false,
+                primaryKey: true,
             },
         });
     }

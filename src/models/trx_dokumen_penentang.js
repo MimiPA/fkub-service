@@ -3,13 +3,6 @@
 module.exports = (sequelize, DataTypes) => {
     const Trx_dokumen_penentang = sequelize.define(
         "Trx_dokumen_penentang", {
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-            allowNull: false,
-            unique: true,
-        },
         surat_pernyataan: {
             type: DataTypes.STRING(255),
             allowNull: false,
@@ -19,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
         foto_diri: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+        },
+        tanda_tangan: {
             type: DataTypes.STRING(255),
             allowNull: false,
         },
@@ -45,18 +42,12 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Trx_dokumen_penentang.associate = function (models) {
-        Trx_dokumen_penentang.belongsTo(models.Pengajuan, {
+        Trx_dokumen_penentang.belongsTo(models.Pendukung, {
             foreignKey: {
-                name: "id_pengajuan",
+                name: "id",
                 type: DataTypes.INTEGER,
                 allowNull: false,
-            },
-        });
-        Trx_dokumen_penentang.belongsTo(models.Pengguna, {
-            foreignKey: {
-                name: "id_user",
-                type: DataTypes.STRING(16),
-                allowNull: false,
+                primaryKey: true,
             },
         });
     }

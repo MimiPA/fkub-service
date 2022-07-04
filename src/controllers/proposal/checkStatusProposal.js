@@ -4,13 +4,13 @@ const { Op } = require('sequelize');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pengajuan } = require('../../models');
+const { Pengajuan, Trx_dokumen_instansi } = require('../../models');
 
 const checkStatusProposal = async (req, res) => {
     try {
         const id_user = req.user.nik;
 
-        const data = await Pengajuan.findOne({
+        const dataPengajuan = await Pengajuan.findOne({
             where: {
                 id_user: id_user
             },
@@ -19,11 +19,14 @@ const checkStatusProposal = async (req, res) => {
             ]
         });
 
-        if (!data) {
-            return successResponse(req, res, 'Data Tidak Tersedia', data);
-        }
+        const dataRekomen = await Trx_dokumen_instansi.findOne({
+            where: {
+                id_pengajuan: dataPengajuan.id,
+                kategori_dokumen: "Surat Rekomendasi Kemenag",
+            },
+        });
 
-        return successResponse(req, res, 'Daftar Pengajuan Proposal Berhasil Diambil', data);
+        return successResponse(req, res, 'Daftar Pengajuan Proposal Berhasil Diambil', { dataPengajuan, dataRekomen });
     }
     catch (err) {
         console.log(err.message);

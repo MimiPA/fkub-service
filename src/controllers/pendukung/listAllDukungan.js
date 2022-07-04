@@ -8,7 +8,7 @@ const listAllDukungan = async (req, res) => {
     try {
         const dataPendukung = await Trx_dokumen_pendukung.findAll({
             where: {
-                id_user: req.user.nik
+                id_pengajuan: req.params.id,
             },
             include: [{
                 model: Pengajuan,
