@@ -5,7 +5,6 @@ const jumlahKEMENAG = require('./jumlahKEMENAG');
 const jumlahFKUB = require('./jumlahFKUB');
 const jumlahPendukungPengguna = require('./jumlahPendukungPengguna');
 const jumlahPendukungMasyarakat = require('./jumlahPendukungMasyarakat');
-const jumlahPenentang = require('./jumlahPenentang');
 
 module.exports = {
     jumlahADMIN,
@@ -15,5 +14,4 @@ module.exports = {
     jumlahFKUB,
     jumlahPendukungPengguna,
     jumlahPendukungMasyarakat,
-    jumlahPenentang
 };

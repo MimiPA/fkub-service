@@ -2,72 +2,78 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Pendukung = sequelize.define(
-    "Pendukung", {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      allowNull: false,
-      unique: true,
-    },
-    nik: {
-      type: DataTypes.STRING(16),
-      allowNull: false,
-      unique: true,
-    },
-    nama_lengkap: {
-      type: DataTypes.STRING(255),
-      allowNull: false,
-    },
-    jenis_kelamin: {
-      type: DataTypes.ENUM('Perempuan', 'Laki-laki'),
-      allowNull: false,
-    },
-    agama: {
-      type: DataTypes.ENUM('Buddha', 'Hindu', 'Islam', 'Katolik', 'Konghucu', 'Kristen'),
-      allowNull: false,
-    },
-    telepon: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
-    tempat_lahir: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-    },
-    tanggal_lahir: {
-      type: DataTypes.DATEONLY,
-    },
-    alamat: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
-    },
-    rt: {
-      type: DataTypes.STRING(5),
-      allowNull: false,
-    },
-    rw: {
-      type: DataTypes.STRING(5),
-      allowNull: false,
-    },
-    kecamatan: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    kelurahan: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-    },
-    idUser_create: {
-      type: DataTypes.STRING(16),
-      allowNull: false,
-    },
-    idUser_update: {
-      type: DataTypes.STRING(16),
-      allowNull: true,
-    },
-  }, {
-    tableName: "Pendukung",
+    "Pendukung",
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false,
+        unique: true,
+      },
+      nik: {
+        type: DataTypes.STRING(16),
+        allowNull: false,
+        unique: true,
+      },
+      nama_lengkap: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      jenis_kelamin: {
+        type: DataTypes.ENUM('Perempuan', 'Laki-laki'),
+        allowNull: false,
+      },
+      agama: {
+        type: DataTypes.ENUM('Buddha', 'Hindu', 'Islam', 'Katolik', 'Konghucu', 'Kristen'),
+        allowNull: false,
+      },
+      telepon: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
+      tempat_lahir: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+      },
+      tanggal_lahir: {
+        type: DataTypes.DATEONLY,
+      },
+      alamat: {
+        type: DataTypes.STRING(200),
+        allowNull: false,
+      },
+      rt: {
+        type: DataTypes.STRING(5),
+        allowNull: false,
+      },
+      rw: {
+        type: DataTypes.STRING(5),
+        allowNull: false,
+      },
+      kecamatan: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      kelurahan: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.ENUM('Submit', 'Ditolak', 'Diterima'),
+        defaultValue: "Submit",
+        allowNull: false
+      },
+      idUser_create: {
+        type: DataTypes.STRING(16),
+        allowNull: false,
+      },
+      idUser_update: {
+        type: DataTypes.STRING(16),
+        allowNull: true,
+      },
+    }, {
+    tableName: "pendukung",
     timestamps: true,
   });
 
@@ -86,13 +92,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     });
-    Pendukung.hasOne(models.Trx_dokumen_penentang, {
-      foreignKey: {
-        name: "id",
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-    });
+    // Pendukung.hasOne(models.Trx_dokumen_penentang, {
+    //   foreignKey: {
+    //     name: "id",
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    //   },
+    // });
   }
 
   return Pendukung;

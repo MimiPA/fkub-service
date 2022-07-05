@@ -4,31 +4,33 @@ const { Op } = require('sequelize');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pengguna, Trx_dokumen_pendukung } = require('../../models');
+const { Pengguna, Trx_dokumen_pendukung, Pendukung } = require('../../models');
 
 const detailDokumenPendukung = async (req, res) => {
     try {
         const id_pengajuan = req.params.id;
 
-        const dataPengguna = await Trx_dokumen_pendukung.findAll({
+        const dataPengguna = await Pendukung.findAll({
             where: {
                 id_pengajuan: id_pengajuan,
-                sumber_dukungan: "Pengguna",
             },
             include: [{
-                model: Pengguna,
-                attributes: ["nik", "email", "nama_depan", "nama_belakang", "jenis_kelamin", "agama", "telepon"]
+                model: Trx_dokumen_pendukung,
+                where: {
+                    sumber_dukungan: "Pengguna",
+                }
             }]
         });
 
-        const dataMasyarakat = await Trx_dokumen_pendukung.findAll({
+        const dataMasyarakat = await Pendukung.findAll({
             where: {
                 id_pengajuan: id_pengajuan,
-                sumber_dukungan: "Masyarakat",
             },
             include: [{
-                model: Pengguna,
-                attributes: ["nik", "email", "nama_depan", "nama_belakang", "jenis_kelamin", "agama", "telepon"]
+                model: Trx_dokumen_pendukung,
+                where: {
+                    sumber_dukungan: "Masyarakat",
+                }
             }]
         });
 

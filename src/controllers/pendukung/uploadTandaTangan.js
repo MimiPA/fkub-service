@@ -6,15 +6,15 @@ const uploadImage = require('../../utils/image/uploadImage');
 const urlKu = "http://localhost:5000";
 
 //Import Model
-const { Trx_dokumen_pendukung, Trx_dokumen_penentang } = require('../../models');
+const { Trx_dokumen_pendukung } = require('../../models');
 
-const uploadFotoKTP = async (req, res) => {
+const uploadTandaTangan = async (req, res) => {
     try {
         const { id } = req.params;
         const { foto } = req.body;
 
         if (!foto || foto == null || foto == undefined) {
-            return errorResponse(req, res, 400, 'Mohon Foto Diri Anda Bersama KTP');
+            return errorResponse(req, res, 400, 'Mohon Masukkan Tanda Tangan');
         }
         else if (!id) {
             return errorResponse(req, res, 400, 'ID Dibutuhkan Di Request Parameter');
@@ -26,15 +26,15 @@ const uploadFotoKTP = async (req, res) => {
             }
         });
 
-        if (dataPendukung.foto_ktp != "-") {
-            return errorResponse(req, res, 400, 'Anda Sudah Pernah Foto Diri + KTP');
+        if (dataPendukung.tanda_tangan != "-") {
+            return errorResponse(req, res, 400, 'Anda Sudah Tanda Tangan');
         }
 
         const gambar = uploadImage(foto, "./src/public");
         const linkGambar = `${urlKu}/${gambar}`;
 
         const updateDokumen = await Trx_dokumen_pendukung.update(
-            { foto_ktp: linkGambar },
+            { tanda_tangan: linkGambar },
             { where: { id: id } }
         );
 
@@ -50,4 +50,4 @@ const uploadFotoKTP = async (req, res) => {
     }
 };
 
-module.exports = uploadFotoKTP;
+module.exports = uploadTandaTangan;

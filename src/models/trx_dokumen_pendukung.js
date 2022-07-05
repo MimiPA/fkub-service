@@ -23,11 +23,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING(255),
             allowNull: false,
         },
-        status: {
-            type: DataTypes.ENUM('Submit', 'Ditolak', 'Diterima'),
-            defaultValue: "Submit",
-            allowNull: false
-        },
         idUser_create: {
             type: DataTypes.STRING(16),
             allowNull: false,

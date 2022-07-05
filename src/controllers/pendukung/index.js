@@ -1,17 +1,15 @@
-const searchCode = require('./searchCode');
-const jenisDukungan = require('./jenisDukungan');
+const detailPengajuanById = require('./detailPengajuanById');
+const mendukung = require('./mendukung');
 const listAllDukungan = require('./listAllDukungan');
-const uploadSuratPernyataan = require('./uploadSuratPernyataan');
 const uploadFotoDiri = require('./uploadFotoDiri');
 const uploadFotoKTP = require('./uploadFotoKTP');
-const uploadAlasan = require('./uploadAlasan');
+const uploadTandaTangan = require('./uploadTandaTangan');
 
 module.exports = {
-    searchCode,
-    jenisDukungan,
+    detailPengajuanById,
+    mendukung,
     listAllDukungan,
-    uploadSuratPernyataan,
     uploadFotoDiri,
     uploadFotoKTP,
-    uploadAlasan,
+    uploadTandaTangan,
 };

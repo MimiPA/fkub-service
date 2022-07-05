@@ -4,52 +4,43 @@ const { Op } = require('sequelize');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Trx_dokumen_pendukung, Trx_dokumen_penentang, Pengguna } = require('../../models');
+const { Trx_dokumen_pendukung, Pendukung, Pengguna } = require('../../models');
 
 const detailDokumenPendukung = async (req, res) => {
     try {
         const id_pengajuan = req.params.id;
 
-        const dataPengguna = await Trx_dokumen_pendukung.findAll({
-            where: {
-                id_pengajuan: id_pengajuan,
-                sumber_dukungan: "Pengguna",
-            },
-            include: [{
-                model: Pengguna,
-                attributes: { exclude: ['role', 'password', 'is_active', 'createdAt', 'updatedAt'] }
-            }]
-        });
-
-        const dataMasyarakat = await Trx_dokumen_pendukung.findAll({
-            where: {
-                id_pengajuan: id_pengajuan,
-                sumber_dukungan: "Masyarakat",
-            },
-            include: [{
-                model: Pengguna,
-                attributes: { exclude: ['role', 'password', 'is_active', 'createdAt', 'updatedAt'] }
-            }]
-        });
-
-        const dataPenentang = await Trx_dokumen_penentang.findAll({
+        const dataPengguna = await Pendukung.findAll({
             where: {
                 id_pengajuan: id_pengajuan,
             },
             include: [{
-                model: Pengguna,
-                attributes: { exclude: ['role', 'password', 'is_active', 'createdAt', 'updatedAt'] }
+                model: Trx_dokumen_pendukung,
+                where: {
+                    sumber_dukungan: "Pengguna",
+                }
             }]
         });
 
-        if (!(dataPengguna || dataMasyarakat || dataPenentang)) {
+        const dataMasyarakat = await Pendukung.findAll({
+            where: {
+                id_pengajuan: id_pengajuan,
+            },
+            include: [{
+                model: Trx_dokumen_pendukung,
+                where: {
+                    sumber_dukungan: "Masyarakat",
+                }
+            }]
+        });
+
+        if (!(dataPengguna || dataMasyarakat)) {
             return successResponse(req, res, 'Data Tidak Ditemukan');
         }
 
         const data = {
             dataPengguna,
             dataMasyarakat,
-            dataPenentang
         }
 
         return successResponse(req, res, 'Detail Berhasil Diambil', data);

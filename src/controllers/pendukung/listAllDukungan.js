@@ -2,15 +2,20 @@
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pengajuan, Trx_dokumen_pendukung, Trx_dokumen_penentang } = require('../../models');
+const { Pengajuan, Pendukung, Trx_dokumen_pendukung } = require('../../models');
 
 const listAllDukungan = async (req, res) => {
     try {
-        const dataPendukung = await Trx_dokumen_pendukung.findAll({
+        const dataPengguna = await Pendukung.findAll({
             where: {
                 id_pengajuan: req.params.id,
             },
             include: [{
+                model: Trx_dokumen_pendukung,
+                where: {
+                    sumber_dukungan: "Pengguna",
+                },
+            }, {
                 model: Pengajuan,
                 attributes: [
                     "id",
@@ -25,11 +30,16 @@ const listAllDukungan = async (req, res) => {
             }]
         });
 
-        const dataPenentang = await Trx_dokumen_penentang.findAll({
+        const dataMasyarakat = await Pendukung.findAll({
             where: {
-                id_user: req.user.nik
+                id_pengajuan: req.params.id,
             },
             include: [{
+                model: Trx_dokumen_pendukung,
+                where: {
+                    sumber_dukungan: "Masyarakat",
+                },
+            }, {
                 model: Pengajuan,
                 attributes: [
                     "id",
@@ -44,16 +54,11 @@ const listAllDukungan = async (req, res) => {
             }]
         });
 
-        if (!dataPenentang || !dataPendukung) {
+        if (!(dataPengguna && dataMasyarakat)) {
             return successResponse(req, res, 404, 'Data Tidak Ditemukan');
         }
 
-        const data = {
-            dataPendukung,
-            dataPenentang,
-        };
-
-        return successResponse(req, res, 'List Pendukung & Penentang Berhasil Diambil', data);
+        return successResponse(req, res, 'List Pendukung Berhasil Diambil', { dataPengguna, dataMasyarakat });
 
     }
     catch (err) {

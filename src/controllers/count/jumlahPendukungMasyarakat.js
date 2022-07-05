@@ -5,17 +5,20 @@ const sequelize = require("sequelize");
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Trx_dokumen_pendukung } = require('../../models');
+const { Trx_dokumen_pendukung, Pendukung } = require('../../models');
 
 const jumlahPendukungMasyarakat = async (req, res) => {
     try {
         const jumlahPendukungMasyarakat = await Trx_dokumen_pendukung.count({
             where: {
-                [Op.and]: [
-                    { id_pengajuan: req.params.id },
-                    { sumber_dukungan: "Masyarakat" }
-                ],
+                sumber_dukungan: "Masyarakat"
             },
+            include: [{
+                model: Pendukung,
+                where: {
+                    id_pengajuan: req.params.id,
+                }
+            }]
         });
 
         return successResponse(req, res, 'Jumlah Pendukung Masyarakat Berhasil Diambil', jumlahPendukungMasyarakat);

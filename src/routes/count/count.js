@@ -25,7 +25,4 @@ router.get('/pengguna/:id?', countController.jumlahPendukungPengguna);
 //GET Jumlah Pendukung Masyarakat
 router.get('/masyarakat/:id?', countController.jumlahPendukungMasyarakat);
 
-//GET Jumlah Penentang
-router.get('/penentang/:id?', countController.jumlahPenentang);
-
 module.exports = router;
