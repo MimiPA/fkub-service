@@ -13,7 +13,7 @@ const listAllDukungan = async (req, res) => {
             include: [{
                 model: Trx_dokumen_pendukung,
                 where: {
-                    sumber_dukungan: "Pengguna",
+                    sumber_dukungan: "Jemaat",
                 },
             }, {
                 model: Pengajuan,

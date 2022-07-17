@@ -11,7 +11,7 @@ const jumlahPendukungPengguna = async (req, res) => {
     try {
         const data = await Trx_dokumen_pendukung.count({
             where: {
-                sumber_dukungan: "Pengguna"
+                sumber_dukungan: "Jemaat"
             },
             include: [{
                 model: Pendukung,

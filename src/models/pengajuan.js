@@ -45,8 +45,8 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       status: {
-        type: DataTypes.ENUM('Submit', 'Ditolak', 'Proses', 'Selesai'),
-        defaultValue: "Submit",
+        type: DataTypes.ENUM('Pengajuan', 'Ditolak', 'Proses', 'Selesai'),
+        defaultValue: "Pengajuan",
         allowNull: false
       },
       idUser_create: {

@@ -4,6 +4,10 @@ const { errorResponse, successResponse } = require("../../helpers");
 //Import Model
 const { Pengajuan, Pendukung, Trx_dokumen_pendukung } = require('../../models');
 
+const uploadImage = require('../../utils/image/uploadImage');
+
+const urlKu = "http://localhost:5000";
+
 const mendukung = async (req, res) => {
     try {
         const { id } = req.params;
@@ -21,7 +25,10 @@ const mendukung = async (req, res) => {
             rt,
             rw,
             kecamatan,
-            kelurahan
+            kelurahan,
+            foto_ktp,
+            foto_diri,
+            tanda_tangan
         } = req.body;
 
         if (!id) {
@@ -29,6 +36,9 @@ const mendukung = async (req, res) => {
         }
         else if (!sumber_dukungan || sumber_dukungan == "") {
             return errorResponse(req, res, 400, 'Mohon Memilih Sumber Dukungan');
+        }
+        else if ((foto_diri && foto_ktp && tanda_tangan) == null || !(foto_ktp && foto_diri && tanda_tangan) || (foto_ktp && foto_diri && tanda_tangan) == undefined) {
+            return errorResponse(req, res, 400, 'Mohon Foto KTP / Foto Diri / Tanda Tangan');
         }
 
         const dataPengajuan = await Pengajuan.findOne({
@@ -49,8 +59,17 @@ const mendukung = async (req, res) => {
         });
 
         if (dataPendukung) {
-            return errorResponse(req, res, 400, `NIK tersebut Sudah Pernah Mendukung`);
+            return errorResponse(req, res, 400, `NIK Sudah Pernah Mendukung`);
         }
+
+        const gambarKTP = uploadImage(foto_ktp, "./src/public");
+        const linkGambarKTP = `${urlKu}/${gambarKTP}`;
+
+        const gambarDiri = uploadImage(foto_diri, "./src/public");
+        const linkGambarDiri = `${urlKu}/${gambarDiri}`;
+
+        const gambarTTD = uploadImage(tanda_tangan, "./src/public");
+        const linkGambarTTD = `${urlKu}/${gambarTTD}`;
 
         const createPendukung = await Pendukung.create({
             nik: nik,
@@ -67,6 +86,7 @@ const mendukung = async (req, res) => {
             kelurahan: kelurahan,
             status: "Submit",
             idUser_create: req.user.nik,
+            idUser_update: req.user.nik,
             id_pengajuan: id
         })
 
@@ -74,13 +94,13 @@ const mendukung = async (req, res) => {
             id: createPendukung.id,
             sumber_dukungan: sumber_dukungan,
             surat_pernyataan: "-",
-            foto_ktp: "-",
-            foto_diri: "-",
-            tanda_tangan: "-",
+            foto_ktp: linkGambarKTP,
+            foto_diri: linkGambarDiri,
+            tanda_tangan: linkGambarTTD,
             idUser_create: req.user.nik
         });
 
-        return successResponse(req, res, 'Mendukung Berhasil. Mohon Melengkapi Berkas', { createPendukung, createDukung });
+        return successResponse(req, res, 'Mendukung Berhasil.', { createPendukung, createDukung });
     }
     catch (err) {
         console.log(err.message);

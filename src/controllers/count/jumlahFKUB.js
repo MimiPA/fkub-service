@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Trx_dokumen_instansi, Pengajuan, Trx_dokumen_pemohon } = require('../../models');
+const { Trx_dokumen_instansi, Pengajuan, Trx_dokumen_pemohon, Pengguna } = require('../../models');
 
 const jumlahFKUB = async (req, res) => {
     try {
@@ -33,7 +33,9 @@ const jumlahFKUB = async (req, res) => {
             },
         });
 
-        return successResponse(req, res, 'Jumlah Untuk FKUB Berhasil Diambil', { jumlahRekomendasi, jumlahPermintaanRekomen, jumlahSelesai, jumlahDiproses });
+        const jumlahPengguna = await Pengguna.count();
+
+        return successResponse(req, res, 'Jumlah Untuk FKUB Berhasil Diambil', { jumlahRekomendasi, jumlahPermintaanRekomen, jumlahSelesai, jumlahDiproses, jumlahPengguna });
     }
     catch (err) {
         console.log(err.message);

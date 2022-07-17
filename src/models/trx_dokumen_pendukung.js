@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     const Trx_dokumen_pendukung = sequelize.define(
         "Trx_dokumen_pendukung", {
         sumber_dukungan: {
-            type: DataTypes.ENUM('Pengguna', 'Masyarakat'),
+            type: DataTypes.ENUM('Jemaat', 'Masyarakat'),
             allowNull: false,
         },
         surat_pernyataan: {

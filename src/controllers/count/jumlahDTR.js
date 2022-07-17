@@ -25,13 +25,19 @@ const jumlahDTR = async (req, res) => {
             },
         });
 
+        const jumlahSelesai = await Pengajuan.count({
+            where: {
+                status: "Selesai",
+            },
+        });
+
         const jumlahPermintaanKRK = await Trx_dokumen_instansi.count({
             where: {
                 kategori_dokumen: "Surat Pengajuan KRK"
             }
         });
 
-        return successResponse(req, res, 'Jumlah Untuk Dinas Tata Ruang Berhasil Diambil', { jumlahDiproses, jumlahPermintaanKRK, jumlahKRK, jumlahIMB });
+        return successResponse(req, res, 'Jumlah Untuk Dinas Tata Ruang Berhasil Diambil', { jumlahDiproses, jumlahPermintaanKRK, jumlahKRK, jumlahIMB, jumlahSelesai });
     }
     catch (err) {
         console.log(err.message);

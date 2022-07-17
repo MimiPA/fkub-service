@@ -12,7 +12,7 @@ module.exports = {
         primaryKey: true,
       },
       sumber_dukungan: {
-        type: Sequelize.ENUM('Pengguna', 'Masyarakat'),
+        type: Sequelize.ENUM('Jemaat', 'Masyarakat'),
         allowNull: false,
       },
       surat_pernyataan: {
