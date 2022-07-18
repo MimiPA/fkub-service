@@ -14,6 +14,10 @@ const permintaanKRKById = async (req, res) => {
             include: [{
                 model: Pengajuan,
                 attributes: ["jenis_pembangunan", "nama_tempat", "tempat_ibadah", "alamat", "status"],
+                include: [{
+                    model: Pengguna,
+                    attributes: ["nik", "nama_depan", "nama_belakang", "agama", "telepon", "jenis_kelamin"],
+                }],
             }, {
                 model: Pengguna,
                 attributes: ["nik", "nama_depan", "nama_belakang", "agama", "telepon"]

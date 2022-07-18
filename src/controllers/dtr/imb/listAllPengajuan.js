@@ -11,8 +11,8 @@ const listAllPengajuan = async (req, res) => {
             include: [{
                 model: Trx_dokumen_instansi,
                 where: {
-                    [Op.and]: {
-                        kategori_dokumen: ["Surat Rekomendasi FKUB", "Surat Rekomendasi Kemenag"],
+                    kategori_dokumen: {
+                        [Op.and]: ["Surat Rekomendasi Kemenag", "Surat Rekomendasi FKUB"],
                     },
                 },
             },
@@ -21,7 +21,7 @@ const listAllPengajuan = async (req, res) => {
                 attributes: ["nik", "email", "nama_depan", "nama_belakang", "jenis_kelamin", "agama", "telepon"]
             }],
         });
-        
+
         if (!data) {
             return successResponse(req, res, 'Data Tidak Tersedia');
         }

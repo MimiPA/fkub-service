@@ -21,7 +21,20 @@ const jumlahPendukungMasyarakat = async (req, res) => {
             }]
         });
 
-        return successResponse(req, res, 'Jumlah Pendukung Masyarakat Berhasil Diambil', jumlahPendukungMasyarakat);
+        const jumlahPendukungMasyarakatTerima = await Trx_dokumen_pendukung.count({
+            where: {
+                sumber_dukungan: "Masyarakat"
+            },
+            include: [{
+                model: Pendukung,
+                where: {
+                    id_pengajuan: req.params.id,
+                    status:"Diterima",
+                }
+            }]
+        });
+
+        return successResponse(req, res, 'Jumlah Pendukung Masyarakat Berhasil Diambil', {jumlahPendukungMasyarakat, jumlahPendukungMasyarakatTerima});
     }
     catch (err) {
         console.log(err.message);

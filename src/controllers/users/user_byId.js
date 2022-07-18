@@ -13,7 +13,7 @@ const user_byId = async (req, res) => {
             where: {
                 nik: id_user,
                 is_active: "Enable",
-                role: "Admin"
+                role: "FKUB"
             },
         });
 

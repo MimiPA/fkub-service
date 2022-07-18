@@ -9,7 +9,7 @@ const { Trx_dokumen_pendukung, Pendukung } = require('../../models');
 
 const jumlahPendukungPengguna = async (req, res) => {
     try {
-        const data = await Trx_dokumen_pendukung.count({
+        const jumlahPendukungPengguna = await Trx_dokumen_pendukung.count({
             where: {
                 sumber_dukungan: "Jemaat"
             },
@@ -21,7 +21,20 @@ const jumlahPendukungPengguna = async (req, res) => {
             }]
         });
 
-        return successResponse(req, res, 'Jumlah Pendukung Pengguna Berhasil Diambil', data);
+        const jumlahPendukungPenggunaTerima = await Trx_dokumen_pendukung.count({
+            where: {
+                sumber_dukungan: "Jemaat"
+            },
+            include: [{
+                model: Pendukung,
+                where: {
+                    id_pengajuan: req.params.id,
+                    status: "Diterima",
+                }
+            }]
+        });
+
+        return successResponse(req, res, 'Jumlah Pendukung Pengguna Berhasil Diambil', {jumlahPendukungPengguna, jumlahPendukungPenggunaTerima});
     }
     catch (err) {
         console.log(err.message);
