@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Surat Pernyataan</title>
+
+    <head>
+        <meta charset="utf-8">
+        <style>
+            td {
+                height: 25px;
+            }
+
+            .space {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 20px;
+                letter-spacing: 0.7px;
+                text-align: justify;
+                line-height: 30px;
+            }
+        </style>
+    </head>
+
+<body>
+    <div class="space">
+        <h3 style="text-align: center; margin-bottom:25px;"><b>SURAT PERNYATAAN</b></h3>
+
+        <div>
+            <p>Saya yang bertanda tangan dibawah ini :</p>
+
+            <div style="margin-left: 40px;">
+                <table>
+                    <tr>
+                        <td>Nomor KTP</td>
+                        <td>: {{nik}}</td>
+                    </tr>
+                    <tr>
+                        <td>Nama Lengkap</td>
+                        <td>: {{nama_lengkap}}</td>
+                    </tr>
+                    <tr>
+                        <td>Tempat dan Tanggal Lahir</td>
+                        <td>: {{tempat_lahir}} / {{tanggal_lahir}}</td>
+                    </tr>
+                    <tr>
+                        <td>Jenis Kelamin</td>
+                        <td>: {{jenis_kelamin}}</td>
+                    </tr>
+                    <tr>
+                        <td>Agama</td>
+                        <td>: {{agama}}</td>
+                    </tr>
+                    <tr>
+                        <td>Telepon</td>
+                        <td>: {{telepon}}</td>
+                    </tr>
+                    <tr>
+                        <td>Alamat</td>
+                        <td>: {{alamat}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>&nbsp;&nbsp; RT <span style="margin-left: 127px;"> : {{rt}}</span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>&nbsp;&nbsp; RW <span style="margin-left: 121px;"> : {{rw}}</span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>&nbsp;&nbsp; Kelurahan/Desa <span style="margin-left: 15px;"> : {{kelurahan}}</span></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>&nbsp;&nbsp; Kecamatan <span style="margin-left: 56px;"> : {{kecamatan}}</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <p style="margin-top: 20px;">Dengan ini menyatakan bahwa saya adalah calon jamaah tetap atau jemaat resmi
+                pada rumah ibadah {{nama_tempat}} yang akan di {{jenis_pembangunan}} dengan alamat {{alamatPengajuan}},
+                RT {{rtPengajuan}}, RW {{rwPengajuan}} di Kota Makassar dan belum menjadi jamaah/jemaat resmi pada rumah
+                ibadah di tempat lain dan/atau rumah ibadah yang ada sulit dijangkau.
+            </p>
+
+            <p>Demikian pernyataan ini saya buat dengan sukarela dan tanpa
+                paksaan dari siapapun dan/atau
+                darimanapun.</p>
+
+            <div style="float:right; margin-right:50px;">
+                <p>Makassar, {{createdAt}}</p>
+                <p>Yang membuat pernyataan,</p>
+                <img src="{{{tanda_tangan}}}" height="90" />
+
+                <p style="border-top: solid;">{{nama_lengkap}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

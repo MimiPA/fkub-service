@@ -8,6 +8,13 @@ const uploadImage = require('../../utils/image/uploadImage');
 
 const urlKu = "http://localhost:5000";
 
+//Import Package to pdf
+var fs = require('fs');
+var pdf = require('dynamic-html-pdf');
+const path = require("path");
+const handlebars = require('handlebars');
+const moment = require('moment');
+
 const mendukung = async (req, res) => {
     try {
         const { id } = req.params;
@@ -71,6 +78,60 @@ const mendukung = async (req, res) => {
         const gambarTTD = uploadImage(tanda_tangan, "./src/public");
         const linkGambarTTD = `${urlKu}/${gambarTTD}`;
 
+        const payload = {
+            nik: nik,
+            nama_lengkap: nama_lengkap,
+            tempat_lahir: tempat_lahir,
+            tanggal_lahir: tanggal_lahir,
+            jenis_kelamin: jenis_kelamin,
+            agama: agama,
+            telepon: telepon,
+            alamat: alamat,
+            rt: rt,
+            rw: rw,
+            kelurahan: kelurahan,
+            kecamatan: kecamatan,
+            jenis_pembangunan: dataPengajuan.jenis_pembangunan,
+            nama_tempat: dataPengajuan.nama_tempat,
+            alamatPengajuan: dataPengajuan.alamat,
+            rtPengajuan: dataPengajuan.rt,
+            rwPengajuan: dataPengajuan.rw,
+            //kelurahanPengajuan: dataPengajuan.kelurahan,
+            //kecamatanPengajuan: dataPengajuan.kecamatan,
+            createdAt: moment().format('DD MMMM YYYY'),
+            tanda_tangan: linkGambarTTD,
+        };
+
+        var templateHtml = fs.readFileSync(path.join('src/utils/template', `${sumber_dukungan}.html`), 'utf8');
+        var template = handlebars.compile(templateHtml);
+        var html = template(payload);
+
+        const pdfName = `suratPernyataan-${Date.now()}.pdf`;
+        var pdfPath = path.join('src/public', pdfName);
+
+        var options = {
+            format: "A4",
+            orientation: "portrait",
+            border: "25mm"
+        };
+
+        var document = {
+            type: 'file',     // 'file' or 'buffer'
+            template: html,
+            context: {
+                payload: payload
+            },
+            path: pdfPath   // it is not required if type is buffer
+        };
+
+        const createPDF = await pdf.create(document, options);
+
+        if (!createPDF) {
+            return errorResponse(req, res, 400, `Internal Server Error. ${createPDF}`);
+        }
+
+        const linkPDF = `${urlKu}/${pdfName}`;
+
         const createPendukung = await Pendukung.create({
             nik: nik,
             nama_lengkap: nama_lengkap,
@@ -93,7 +154,7 @@ const mendukung = async (req, res) => {
         const createDukung = await Trx_dokumen_pendukung.create({
             id: createPendukung.id,
             sumber_dukungan: sumber_dukungan,
-            surat_pernyataan: "-",
+            surat_pernyataan: linkPDF,
             foto_ktp: linkGambarKTP,
             foto_diri: linkGambarDiri,
             tanda_tangan: linkGambarTTD,
