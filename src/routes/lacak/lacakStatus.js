@@ -10,4 +10,7 @@ router.get('/now', lacakController.statusNow);
 //Get Riwayat Status Di Dashboard
 router.get('/riwayat', lacakController.riwayatStatus);
 
+//GET Riwayat Lacak By Pengajuan ID
+router.get('/lacakPengajuan/:id?', lacakController.lacakPengajuanById);
+
 module.exports = router;

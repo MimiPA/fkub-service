@@ -46,7 +46,7 @@ const riwayatStatus = async (req, res) => {
         });
 
         if (!lacak) {
-            return errorResponse(req, res, 404, 'Riwayat Pengajuan Tidak Ditemukan. Mungkin Berkas Anda belum di proses');
+            return errorResponse(req, res, 404, 'Riwayat Pengajuan Tidak Ditemukan.');
         }
 
         return successResponse(req, res, 'Data Riwayat Pengajuan Berhasil Diambil.', lacak);
