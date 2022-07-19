@@ -53,17 +53,6 @@ const uploadSuratKRK = async (req, res) => {
             return errorResponse(req, res, 400, 'Surat KRK Tidak Berhasil Diupload. Mohon Coba Lagi!');
         }
 
-        const kategoriPelacakan = await Pelacakan.findOne({
-            where: {
-                kategori_pelacakan: "PMPTSP menyampaikan ke Dinas Tata Ruang untuk mendapatkan KRK"
-            }
-        });
-
-        const updateLacak = await Trx_status_lacak.update({ status: "Selesai" }, { where: { status: "Proses", id_pengajuan: id_pengajuan, id_pelacakan: kategoriPelacakan.id } });
-        if (!updateLacak) {
-            return errorResponse(req, res, 400, 'Gagal Mengubah Status Pelacakan. Mohon Coba Lagi!');
-        }
-
         const pelacakan = await Pelacakan.findOne({
             where: {
                 kategori_pelacakan: "Dinas Tata Ruang memberikan KRK"
@@ -73,11 +62,10 @@ const uploadSuratKRK = async (req, res) => {
         const createStatus = await Trx_status_lacak.create({
             id_pengajuan: id_pengajuan,
             id_pelacakan: pelacakan.id,
-            status: "Selesai",
             idUser_create: req.user.nik
         });
 
-        return successResponse(req, res, `Berhasil Memberikan Surat KRK`, { createDokumen, updateLacak, createStatus });
+        return successResponse(req, res, `Berhasil Memberikan Surat KRK`, { createDokumen, createStatus });
 
     }
     catch (err) {

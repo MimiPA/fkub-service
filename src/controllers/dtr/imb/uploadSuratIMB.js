@@ -62,7 +62,6 @@ const uploadSuratIMB = async (req, res) => {
         const createStatus = await Trx_status_lacak.create({
             id_pengajuan: id_pengajuan,
             id_pelacakan: pelacakan.id,
-            status: "Selesai",
             idUser_create: req.user.nik
         });
 

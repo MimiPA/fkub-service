@@ -19,12 +19,19 @@ const checkStatusProposal = async (req, res) => {
             ]
         });
 
-        const dataRekomen = await Trx_dokumen_instansi.findOne({
-            where: {
-                id_pengajuan: dataPengajuan.id,
-                kategori_dokumen: "Surat Rekomendasi Kemenag",
-            },
-        });
+        let dataRekomen;
+
+        if (dataPengajuan) {
+            dataRekomen = await Trx_dokumen_instansi.findOne({
+                where: {
+                    id_pengajuan: dataPengajuan.id,
+                    kategori_dokumen: "Surat Rekomendasi Kemenag",
+                },
+            });
+        }
+        else {
+            dataRekomen = null;
+        }
 
         return successResponse(req, res, 'Daftar Pengajuan Proposal Berhasil Diambil', { dataPengajuan, dataRekomen });
     }

@@ -1,5 +1,9 @@
 //Response Message
-const { Op } = require("sequelize");
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
+const moment = require("moment");
+
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
@@ -10,9 +14,6 @@ const riwayatStatus = async (req, res) => {
         const id_user = req.user.nik;
 
         const status = await Trx_status_lacak.findOne({
-            where: {
-                status: { [Op.or]: ["Proses", "Selesai"] }
-            },
             include: [{
                 model: Pelacakan,
                 attributes: ["kategori_pelacakan"]
@@ -20,7 +21,7 @@ const riwayatStatus = async (req, res) => {
                 model: Pengajuan,
                 where: {
                     id_user: id_user,
-                    status: { [Op.or]: ["Submit", "Proses", "Ditolak", "Selesai"] }
+                    status: { [Op.or]: ["Pengajuan", "Proses", "Ditolak", "Selesai"] }
                 },
             }],
             order: [
@@ -34,7 +35,6 @@ const riwayatStatus = async (req, res) => {
 
         const lacak = await Trx_status_lacak.findAll({
             where: {
-                status: { [Op.or]: ["Proses", "Selesai"] },
                 id_pengajuan: status.Pengajuan.id
             },
             include: [{

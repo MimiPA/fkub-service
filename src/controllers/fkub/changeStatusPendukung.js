@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pendukung } = require('../../models');
+const { Pendukung, Pelacakan, Trx_status_lacak } = require('../../models');
 
 const changeStatusPendukung = async (req, res) => {
     try {
@@ -30,7 +30,33 @@ const changeStatusPendukung = async (req, res) => {
 
         const update = await Pendukung.update({ status: status }, { where: { id: id } });
 
-        return successResponse(req, res, `Berhasil Mengubah Status Pendukung`, update);
+        const pelacakan = await Pelacakan.findOne({
+            where: {
+                kategori_pelacakan: "Penelitian Berkas Administrasi oleh Komisi Pendirian Rumah Ibadah"
+            }
+        });
+
+        const checkStatus = await Trx_status_lacak.findOne({
+            where: {
+                id_pengajuan: dataPendukung.id_pengajuan,
+                id_pelacakan: pelacakan.id
+            }
+        });
+
+        let createStatus;
+
+        if (!checkStatus) {
+            createStatus = await Trx_status_lacak.create({
+                id_pengajuan: dataPendukung.id_pengajuan,
+                id_pelacakan: pelacakan.id,
+                idUser_create: req.user.nik
+            });
+        }
+        else {
+            createStatus = checkStatus;
+        }
+
+        return successResponse(req, res, `Berhasil Mengubah Status Pendukung`, { update, createStatus });
 
     }
     catch (err) {

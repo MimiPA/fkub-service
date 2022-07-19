@@ -45,6 +45,32 @@ const uploadSertifikatHakMilik = async (req, res) => {
             return errorResponse(req, res, 400, 'Upload Tidak Berhasil. Mohon Coba Lagi!');
         }
 
+        const pelacakan = await Pelacakan.findOne({
+            where: {
+                kategori_pelacakan: "Melampirkan Berkas Administrasi Pengajuan"
+            }
+        });
+
+        const checkStatus = await Trx_status_lacak.findOne({
+            where: {
+                id_pengajuan: req.body.id_pengajuan,
+                id_pelacakan: pelacakan.id
+            }
+        });
+
+        let createStatus;
+
+        if (!checkStatus) {
+            createStatus = await Trx_status_lacak.create({
+                id_pengajuan: req.body.id_pengajuan,
+                id_pelacakan: pelacakan.id,
+                idUser_create: req.user.nik
+            });
+        }
+        else {
+            createStatus = checkStatus;
+        }
+
         return successResponse(req, res, 'Upload Berhasil.', { createDokumen });
     }
     catch (err) {

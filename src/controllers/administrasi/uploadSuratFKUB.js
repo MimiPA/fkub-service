@@ -54,7 +54,6 @@ const uploadSuratFKUB = async (req, res) => {
         const createStatus = await Trx_status_lacak.create({
             id_pengajuan: req.body.id_pengajuan,
             id_pelacakan: pelacakan.id,
-            status: "Proses",
             idUser_create: req.user.nik
         });
 

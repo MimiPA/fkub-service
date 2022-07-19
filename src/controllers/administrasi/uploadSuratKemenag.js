@@ -47,14 +47,13 @@ const uploadSuratKemenag = async (req, res) => {
 
         const pelacakan = await Pelacakan.findOne({
             where: {
-                kategori_pelacakan: "Pengajuan permohonan Rekomendasi Tertulis ke Kementrian Agama"
+                kategori_pelacakan: "Pengajuan permohonan Rekomendasi Tertulis ke Kementerian Agama"
             }
         });
 
         const createStatus = await Trx_status_lacak.create({
             id_pengajuan: req.body.id_pengajuan,
             id_pelacakan: pelacakan.id,
-            status: "Proses",
             idUser_create: req.user.nik
         });
 

@@ -2,7 +2,7 @@
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pengajuan, Pendukung, Trx_dokumen_pendukung } = require('../../models');
+const { Pengajuan, Pendukung, Trx_dokumen_pendukung, Pelacakan, Trx_status_lacak } = require('../../models');
 
 const uploadImage = require('../../utils/image/uploadImage');
 
@@ -96,8 +96,8 @@ const mendukung = async (req, res) => {
             alamatPengajuan: dataPengajuan.alamat,
             rtPengajuan: dataPengajuan.rt,
             rwPengajuan: dataPengajuan.rw,
-            //kelurahanPengajuan: dataPengajuan.kelurahan,
-            //kecamatanPengajuan: dataPengajuan.kecamatan,
+            kelurahanPengajuan: dataPengajuan.kelurahan,
+            kecamatanPengajuan: dataPengajuan.kecamatan,
             createdAt: moment().format('DD MMMM YYYY'),
             tanda_tangan: linkGambarTTD,
         };
@@ -161,7 +161,33 @@ const mendukung = async (req, res) => {
             idUser_create: req.user.nik
         });
 
-        return successResponse(req, res, 'Mendukung Berhasil.', { createPendukung, createDukung });
+        const pelacakan = await Pelacakan.findOne({
+            where: {
+                kategori_pelacakan: "Mengumpulkan Berkas Pendukung"
+            }
+        });
+
+        const checkStatus = await Trx_status_lacak.findOne({
+            where: {
+                id_pengajuan: id,
+                id_pelacakan: pelacakan.id
+            }
+        });
+
+        let createStatus;
+
+        if (!checkStatus) {
+            createStatus = await Trx_status_lacak.create({
+                id_pengajuan: id,
+                id_pelacakan: pelacakan.id,
+                idUser_create: req.user.nik
+            });
+        }
+        else {
+            createStatus = checkStatus;
+        }
+
+        return successResponse(req, res, 'Mendukung Berhasil.', { createPendukung, createDukung, createStatus });
     }
     catch (err) {
         console.log(err.message);

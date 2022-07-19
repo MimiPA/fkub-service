@@ -30,6 +30,12 @@ const pengajuanProposal = async (req, res) => {
         else if (req.body.rw == null || !req.body.rw || req.body.rw == " ") {
             return errorResponse(req, res, 400, "Mohon Mengisi RW");
         }
+        else if (req.body.kelurahan == null || !req.body.kelurahan || req.body.kelurahan == "Kelurahan") {
+            return errorResponse(req, res, 400, "Mohon Memilih Kelurahan");
+        }
+        else if (req.body.kecamatan == null || !req.body.kecamatan || req.body.kecamatan == "Kecamatan") {
+            return errorResponse(req, res, 400, "Mohon Memilih Kecamatan");
+        }
 
         if (req.file.mimetype != 'application/pdf') {
             return errorResponse(req, res, 400, 'File Anda Bukan Tipe .pdf !!! Mohon upload ulang');
@@ -48,7 +54,7 @@ const pengajuanProposal = async (req, res) => {
         const proposal = await Pengajuan.findOne({
             where: {
                 id_user: req.user.nik,
-                status: { [Op.or]: ["Submit", "Proses"] }
+                status: { [Op.or]: ["Pengajuan", "Proses"] }
             }
         });
 
@@ -62,7 +68,7 @@ const pengajuanProposal = async (req, res) => {
                 nama_tempat: req.body.nama_tempat,
                 alamat: req.body.alamat,
                 rt: req.body.rt,
-                rw: req.body.rw
+                rw: req.body.rw,
             },
         });
 
@@ -98,8 +104,10 @@ const pengajuanProposal = async (req, res) => {
             alamat: req.body.alamat,
             rt: req.body.rt,
             rw: req.body.rw,
+            kelurahan: req.body.kelurahan,
+            kecamatan: req.body.kecamatan,
             surat_permohonan: uploaded.secure_url,
-            status: 'Submit',
+            status: 'Pengajuan',
             idUser_create: req.user.nik,
             id_user: req.user.nik,
         });
@@ -117,7 +125,6 @@ const pengajuanProposal = async (req, res) => {
         const createStatus = await Trx_status_lacak.create({
             id_pengajuan: createPengajuan.id,
             id_pelacakan: pelacakan.id,
-            status: "Proses",
             idUser_create: req.user.nik
         });
 

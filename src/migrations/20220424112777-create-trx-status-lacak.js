@@ -8,10 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      status: {
-        type: Sequelize.ENUM('Proses', 'Selesai'),
-        allowNull: false,
-      },
       idUser_create: {
         type: Sequelize.STRING(16),
         allowNull: false

@@ -35,11 +35,6 @@ const changeStatusPengajuan = async (req, res) => {
         }
 
         if (status == "Ditolak") {
-            const updateLacak = await Trx_status_lacak.update({ status: "Selesai" }, { where: { status: "Proses", id_pengajuan: id } });
-            if (!updateLacak) {
-                return errorResponse(req, res, 400, 'Gagal Mengubah Status Pelacakan. Mohon Coba Lagi!');
-            }
-
             const pelacakan = await Pelacakan.findOne({
                 where: {
                     kategori_pelacakan: "Permohonan Pembangunan Rumah Ibadah Anda Ditolak"
@@ -55,7 +50,7 @@ const changeStatusPengajuan = async (req, res) => {
 
             const updatePengajuan = await Pengajuan.update({ status: status }, { where: { id: id } });
 
-            return successResponse(req, res, `Berhasil Menolak Pengajuan Pembangunan Rumah Ibadah`, { updateLacak, createStatus, updatePengajuan });
+            return successResponse(req, res, `Berhasil Menolak Pengajuan Pembangunan Rumah Ibadah`, { createStatus, updatePengajuan });
         }
         else {
             if (req.file == null) {
@@ -85,11 +80,6 @@ const changeStatusPengajuan = async (req, res) => {
                 return errorResponse(req, res, 400, 'Permintaan KRK Tidak Berhasil. Mohon Coba Lagi!');
             }
 
-            const updateLacak = await Trx_status_lacak.update({ status: "Selesai" }, { where: { status: "Proses", id_pengajuan: id } });
-            if (!updateLacak) {
-                return errorResponse(req, res, 400, 'Gagal Mengubah Status Pelacakan. Mohon Coba Lagi!');
-            }
-
             const pelacakan = await Pelacakan.findOne({
                 where: {
                     kategori_pelacakan: "PMPTSP menyampaikan ke Dinas Tata Ruang untuk mendapatkan KRK"
@@ -99,13 +89,12 @@ const changeStatusPengajuan = async (req, res) => {
             const createStatus = await Trx_status_lacak.create({
                 id_pengajuan: id,
                 id_pelacakan: pelacakan.id,
-                status: "Proses",
                 idUser_create: req.user.nik
             });
 
             const updatePengajuan = await Pengajuan.update({ status: status }, { where: { id: id } });
 
-            return successResponse(req, res, `Berhasil Menyetujui Permohonan dan Meminta KRK`, { createDokumen, updateLacak, createStatus, updatePengajuan });
+            return successResponse(req, res, `Berhasil Menyetujui Permohonan dan Meminta KRK`, { createDokumen, createStatus, updatePengajuan });
         }
     }
     catch (err) {

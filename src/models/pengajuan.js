@@ -40,6 +40,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(5),
         allowNull: false,
       },
+      kecamatan: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      kelurahan: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
       surat_permohonan: {
         type: DataTypes.STRING(255),
         allowNull: false

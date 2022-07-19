@@ -37,13 +37,21 @@ module.exports = {
         type: Sequelize.STRING(5),
         allowNull: false
       },
+      kecamatan: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      kelurahan: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
       surat_permohonan: {
         type: Sequelize.STRING(255),
         allowNull: false
       },
       status: {
         type: Sequelize.ENUM('Pengajuan', 'Ditolak', 'Proses', 'Selesai'),
-        defaultValue: "Submit",
+        defaultValue: "Pengajuan",
         allowNull: false
       },
       idUser_create: {

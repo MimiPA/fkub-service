@@ -10,9 +10,6 @@ const statusNow = async (req, res) => {
         const id_user = req.user.nik;
 
         const status = await Trx_status_lacak.findOne({
-            where: {
-                status: { [Op.or]: ["Proses", "Selesai"] }
-            },
             include: [{
                 model: Pelacakan,
                 attributes: ["kategori_pelacakan"]
@@ -20,7 +17,7 @@ const statusNow = async (req, res) => {
                 model: Pengajuan,
                 where: {
                     id_user: id_user,
-                    status: { [Op.or]: ["Submit", "Proses", "Ditolak", "Selesai"] }
+                    status: { [Op.or]: ["Pengajuan", "Proses", "Ditolak", "Selesai"] }
                 },
             }],
             order: [
@@ -30,7 +27,7 @@ const statusNow = async (req, res) => {
         });
 
         if (!status) {
-            return errorResponse(req, res, 404, 'Status Terkini Pengajuan Tidak Ditemukan. Mungkin Anda belum mengajukan');
+            return errorResponse(req, res, 404, 'Status Terkini Pengajuan Tidak Ditemukan.');
         }
 
         return successResponse(req, res, 'Data Status Terkini Berhasil Diambil.', status);

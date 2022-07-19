@@ -45,20 +45,7 @@ const uploadSKPanitia = async (req, res) => {
             return errorResponse(req, res, 400, 'Upload Tidak Berhasil. Mohon Coba Lagi!');
         }
 
-        const pelacakan = await Pelacakan.findOne({
-            where: {
-                kategori_pelacakan: "Melampirkan Berkas Administrasi Pengajuan"
-            }
-        });
-
-        const createStatus = await Trx_status_lacak.create({
-            id_pengajuan: req.body.id_pengajuan,
-            id_pelacakan: pelacakan.id,
-            status: "Proses",
-            idUser_create: req.user.nik
-        });
-
-        return successResponse(req, res, 'Upload Berhasil.', { createDokumen, createStatus });
+        return successResponse(req, res, 'Upload Berhasil.', { createDokumen });
     }
     catch (err) {
         console.log(err.message);

@@ -11,9 +11,7 @@ const listAllPengajuan = async (req, res) => {
             include: [{
                 model: Trx_dokumen_instansi,
                 where: {
-                    kategori_dokumen: {
-                        [Op.and]: ["Surat Rekomendasi Kemenag", "Surat Rekomendasi FKUB"],
-                    },
+                    kategori_dokumen: "Surat Rekomendasi FKUB",
                 },
             },
             {
