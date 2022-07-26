@@ -7,6 +7,9 @@ const landingController = require('../../controllers/landing');
 //GET Pengajuan Proposal
 router.get("/list", landingController.listProposal);
 
+//GET All Status Terkini Proposal
+router.get("/pelacakan", landingController.transparansiLacak);
+
 // //GET Status Proposal untuk Menu
 // router.get("/menu", proposalController.checkStatusProposal);
 
