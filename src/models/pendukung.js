@@ -92,13 +92,20 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     });
-    // Pendukung.hasOne(models.Trx_dokumen_penentang, {
-    //   foreignKey: {
-    //     name: "id",
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false,
-    //   },
-    // });
+    Pendukung.hasOne(models.Trx_dokumen_penentang, {
+      foreignKey: {
+        name: "id",
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+    });
+    Pendukung.hasMany(models.Trx_alasan_penolakan, {
+      foreignKey: {
+        name: "id_pendukung",
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+    });
   }
 
   return Pendukung;
