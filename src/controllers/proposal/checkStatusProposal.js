@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pengajuan, Trx_dokumen_instansi } = require('../../models');
+const { Pengajuan } = require('../../models');
 
 const checkStatusProposal = async (req, res) => {
     try {
@@ -19,21 +19,7 @@ const checkStatusProposal = async (req, res) => {
             ]
         });
 
-        let dataRekomen;
-
-        if (dataPengajuan) {
-            dataRekomen = await Trx_dokumen_instansi.findOne({
-                where: {
-                    id_pengajuan: dataPengajuan.id,
-                    kategori_dokumen: "Surat Rekomendasi Kemenag",
-                },
-            });
-        }
-        else {
-            dataRekomen = null;
-        }
-
-        return successResponse(req, res, 'Daftar Pengajuan Proposal Berhasil Diambil', { dataPengajuan, dataRekomen });
+        return successResponse(req, res, 'Daftar Pengajuan Proposal Berhasil Diambil', { dataPengajuan });
     }
     catch (err) {
         console.log(err.message);

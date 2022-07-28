@@ -7,14 +7,10 @@ const { Op } = require('sequelize');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pengajuan, Pelacakan, Trx_status_lacak } = require('../../models');
+const { Pengajuan, Pelacakan, Trx_status_lacak, Trx_dokumen_pemohon } = require('../../models');
 
 const pengajuanProposal = async (req, res) => {
     try {
-        if (req.file == null || !req.file) {
-            return errorResponse(req, res, 400, 'Surat Pengajuan Perlu Diisi');
-        }
-
         if (req.body.jenis_pembangunan == 'Pilih' || req.body.jenis_pembangunan == "") {
             return errorResponse(req, res, 400, "Mohon Memilih Jenis Pembangunan");
         }
@@ -35,13 +31,6 @@ const pengajuanProposal = async (req, res) => {
         }
         else if (req.body.kecamatan == null || !req.body.kecamatan || req.body.kecamatan == "Kecamatan") {
             return errorResponse(req, res, 400, "Mohon Memilih Kecamatan");
-        }
-
-        if (req.file.mimetype != 'application/pdf') {
-            return errorResponse(req, res, 400, 'File Anda Bukan Tipe .pdf !!! Mohon upload ulang');
-        }
-        else if (req.file.size > 5242880) {
-            return errorResponse(req, res, 400, 'Batas Maksimal Ukuran File 5 MB');
         }
 
         // Generate Referral Code
@@ -76,8 +65,35 @@ const pengajuanProposal = async (req, res) => {
             return errorResponse(req, res, 400, 'Rincian Pengajuan Sudah Pernah Diajukan.');
         }
 
-        const datauri = new Datauri().format('.pdf', req.file.buffer);
-        const uploaded = await cloudinary.uploader.upload(datauri.content);
+        const datauriSuratPermohonan = new Datauri().format('.pdf', req.files[0].buffer);
+        const uploadedSuratPermohonan = await cloudinary.uploader.upload(datauriSuratPermohonan.content);
+
+        const datauriPermohonanKemenag = new Datauri().format('.pdf', req.files[1].buffer);
+        const uploadedPermohonanKemenag = await cloudinary.uploader.upload(datauriPermohonanKemenag.content);
+
+        const datauriSKPanitia = new Datauri().format('.pdf', req.files[2].buffer);
+        const uploadedSKPanitia = await cloudinary.uploader.upload(datauriSKPanitia.content);
+
+        const datauriPermohonanFKUB = new Datauri().format('.pdf', req.files[3].buffer);
+        const uploadedPermohonanFKUB = await cloudinary.uploader.upload(datauriPermohonanFKUB.content);
+
+        const datauriAktaJualBeli = new Datauri().format('.pdf', req.files[4].buffer);
+        const uploadedAktaJualBeli = await cloudinary.uploader.upload(datauriAktaJualBeli.content);
+
+        const datauriSHM = new Datauri().format('.pdf', req.files[5].buffer);
+        const uploadedSHM = await cloudinary.uploader.upload(datauriSHM.content);
+
+        const datauriSuratUkur = new Datauri().format('.pdf', req.files[6].buffer);
+        const uploadedSuratUkur = await cloudinary.uploader.upload(datauriSuratUkur.content);
+
+        const datauriBadanHukum = new Datauri().format('.pdf', req.files[7].buffer);
+        const uploadedBadanHukum = await cloudinary.uploader.upload(datauriBadanHukum.content);
+
+        const datauriRAB = new Datauri().format('.pdf', req.files[8].buffer);
+        const uploadedRAB = await cloudinary.uploader.upload(datauriRAB.content);
+
+        const datauriGambarDenah = new Datauri().format('.pdf', req.files[9].buffer);
+        const uploadedGambarDenah = await cloudinary.uploader.upload(datauriGambarDenah.content);
 
         let tempat_ibadah = "";
         if (req.user.agama == 'Buddha') {
@@ -106,7 +122,7 @@ const pengajuanProposal = async (req, res) => {
             rw: req.body.rw,
             kelurahan: req.body.kelurahan,
             kecamatan: req.body.kecamatan,
-            surat_permohonan: uploaded.secure_url,
+            surat_permohonan: uploadedSuratPermohonan.secure_url,
             status: 'Pengajuan',
             idUser_create: req.user.nik,
             id_user: req.user.nik,
@@ -115,6 +131,63 @@ const pengajuanProposal = async (req, res) => {
         if (!createPengajuan) {
             return errorResponse(req, res, 400, 'Pengajuan Tidak Berhasil. Mohon Coba Lagi!');
         }
+
+        const createDokumenPemohon = await Trx_dokumen_pemohon.bulkCreate([
+            {
+                dokumen: uploadedPermohonanKemenag.secure_url,
+                kategori_dokumen: "Surat Permohonan Rekomendasi Kemenag",
+                idUser_create: req.user.nik,
+                id_pengajuan: createPengajuan.id,
+            },
+            {
+                dokumen: uploadedSKPanitia.secure_url,
+                kategori_dokumen: "SK Panitia Pembangunan",
+                idUser_create: req.user.nik,
+                id_pengajuan: createPengajuan.id,
+            },
+            {
+                dokumen: uploadedPermohonanFKUB.secure_url,
+                kategori_dokumen: "Surat Permohonan Rekomendasi FKUB",
+                idUser_create: req.user.nik,
+                id_pengajuan: createPengajuan.id,
+            },
+            {
+                dokumen: uploadedAktaJualBeli.secure_url,
+                kategori_dokumen: "Akta Jual Beli",
+                idUser_create: req.user.nik,
+                id_pengajuan: createPengajuan.id,
+            },
+            {
+                dokumen: uploadedSHM.secure_url,
+                kategori_dokumen: "Sertifikat Hak Milik",
+                idUser_create: req.user.nik,
+                id_pengajuan: createPengajuan.id,
+            },
+            {
+                dokumen: uploadedSuratUkur.secure_url,
+                kategori_dokumen: "Surat Ukur",
+                idUser_create: req.user.nik,
+                id_pengajuan: createPengajuan.id,
+            },
+            {
+                dokumen: uploadedBadanHukum.secure_url,
+                kategori_dokumen: "Badan Hukum",
+                idUser_create: req.user.nik,
+                id_pengajuan: createPengajuan.id,
+            },
+            {
+                dokumen: uploadedRAB.secure_url,
+                kategori_dokumen: "Rencana Anggaran Biaya",
+                idUser_create: req.user.nik,
+                id_pengajuan: createPengajuan.id,
+            },
+            {
+                dokumen: uploadedGambarDenah.secure_url,
+                kategori_dokumen: "Gambar Denah Gedung",
+                idUser_create: req.user.nik,
+                id_pengajuan: createPengajuan.id,
+            }
+        ]);
 
         const pelacakan = await Pelacakan.findOne({
             where: {
@@ -128,7 +201,7 @@ const pengajuanProposal = async (req, res) => {
             idUser_create: req.user.nik
         });
 
-        return successResponse(req, res, 'Pengajuan Berhasil.', { createPengajuan, createStatus });
+        return successResponse(req, res, 'Pengajuan Berhasil.', { createPengajuan, createStatus, createDokumenPemohon });
     }
     catch (err) {
         console.log(err.message);
