@@ -1,6 +1,11 @@
 //Response Message
 const { errorResponse, successResponse } = require("../../helpers");
 
+//Validator
+const Validator = require('fastest-validator');
+const v = new Validator();
+const teleponValidator = require('./validator');
+
 //Import Model
 const { Pengajuan, Pendukung, Trx_dokumen_pendukung, Pelacakan, Trx_status_lacak } = require('../../models');
 
@@ -38,6 +43,14 @@ const mendukung = async (req, res) => {
             tanda_tangan
         } = req.body;
 
+        // const checkTelepon = v.validate(telepon, teleponValidator.telepon);
+
+        // if (checkTelepon.length) {
+        //     return errorResponse(req, res, 400, checkTelepon);
+        // }
+
+        let pattern = /(\()?(\+62|62|0)(\d{2,3})?\)?[ .-]?\d{2,4}[ .-]?\d{2,4}[ .-]?\d{2,4}/g;
+
         if (!id) {
             return errorResponse(req, res, 400, 'ID Pengajuan Dibutuhkan Di Request Parameter');
         }
@@ -47,6 +60,13 @@ const mendukung = async (req, res) => {
         else if ((foto_diri && foto_ktp && tanda_tangan) == null || !(foto_ktp && foto_diri && tanda_tangan) || (foto_ktp && foto_diri && tanda_tangan) == undefined) {
             return errorResponse(req, res, 400, 'Mohon Foto KTP / Foto Diri / Tanda Tangan');
         }
+        else if (!telepon || telepon == null || telepon == "") {
+            return errorResponse(req, res, 400, 'Mohon Memasukkan Nomor Telepon');
+        }
+        else if (telepon.length != 12 || pattern.test(telepon) == false) {
+            return errorResponse(req, res, 400, 'Mohon Memasukkan Nomor Telepon Valid');
+        }
+
 
         const dataPengajuan = await Pengajuan.findOne({
             where: {
