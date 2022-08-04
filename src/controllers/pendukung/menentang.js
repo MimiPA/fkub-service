@@ -2,7 +2,7 @@
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pengajuan, Pendukung, Trx_dokumen_pendukung, Pelacakan, Trx_status_lacak } = require('../../models');
+const { Pengajuan, Pendukung, Trx_dokumen_penentang } = require('../../models');
 
 const uploadImage = require('../../utils/image/uploadImage');
 
@@ -15,10 +15,9 @@ const path = require("path");
 const handlebars = require('handlebars');
 const moment = require('moment');
 
-const mendukung = async (req, res) => {
+const menentang = async (req, res) => {
     try {
         const { id } = req.params;
-        const { sumber_dukungan } = req.query;
 
         const {
             nik,
@@ -35,16 +34,14 @@ const mendukung = async (req, res) => {
             kelurahan,
             foto_ktp,
             foto_diri,
-            tanda_tangan
+            tanda_tangan,
+            alasan,
         } = req.body;
 
         let pattern = /(\()?(\+62|62|0)(\d{2,3})?\)?[ .-]?\d{2,4}[ .-]?\d{2,4}[ .-]?\d{2,4}/g;
 
         if (!id) {
             return errorResponse(req, res, 400, 'ID Pengajuan Dibutuhkan Di Request Parameter');
-        }
-        else if (!sumber_dukungan || sumber_dukungan == "") {
-            return errorResponse(req, res, 400, 'Mohon Memilih Sumber Dukungan');
         }
         else if ((foto_diri && foto_ktp && tanda_tangan) == null || !(foto_ktp && foto_diri && tanda_tangan) || (foto_ktp && foto_diri && tanda_tangan) == undefined) {
             return errorResponse(req, res, 400, 'Mohon Foto KTP / Foto Diri / Tanda Tangan');
@@ -75,7 +72,7 @@ const mendukung = async (req, res) => {
         });
 
         if (dataPendukung) {
-            return errorResponse(req, res, 400, `NIK Sudah Pernah Mendukung`);
+            return errorResponse(req, res, 400, `NIK Sudah Pernah Mendukung/Menentang`);
         }
 
         const gambarKTP = uploadImage(foto_ktp, "./src/public");
@@ -111,11 +108,11 @@ const mendukung = async (req, res) => {
             tanda_tangan: linkGambarTTD,
         };
 
-        var templateHtml = fs.readFileSync(path.join('src/utils/template', `${sumber_dukungan}.html`), 'utf8');
+        var templateHtml = fs.readFileSync(path.join('src/utils/template', `Menentang.html`), 'utf8');
         var template = handlebars.compile(templateHtml);
         var html = template(payload);
 
-        const pdfName = `suratPernyataan-${Date.now()}.pdf`;
+        const pdfName = `suratPernyataan-Menentang-${Date.now()}.pdf`;
         var pdfPath = path.join('src/public', pdfName);
 
         var options = {
@@ -160,43 +157,17 @@ const mendukung = async (req, res) => {
             id_pengajuan: id
         })
 
-        const createDukung = await Trx_dokumen_pendukung.create({
+        const createTentang = await Trx_dokumen_penentang.create({
             id: createPendukung.id,
-            sumber_dukungan: sumber_dukungan,
             surat_pernyataan: linkPDF,
             foto_ktp: linkGambarKTP,
             foto_diri: linkGambarDiri,
             tanda_tangan: linkGambarTTD,
+            alasan: alasan,
             idUser_create: req.user.nik
         });
 
-        const pelacakan = await Pelacakan.findOne({
-            where: {
-                kategori_pelacakan: "Mengumpulkan Berkas Pendukung"
-            }
-        });
-
-        const checkStatus = await Trx_status_lacak.findOne({
-            where: {
-                id_pengajuan: id,
-                id_pelacakan: pelacakan.id
-            }
-        });
-
-        let createStatus;
-
-        if (!checkStatus) {
-            createStatus = await Trx_status_lacak.create({
-                id_pengajuan: id,
-                id_pelacakan: pelacakan.id,
-                idUser_create: req.user.nik
-            });
-        }
-        else {
-            createStatus = checkStatus;
-        }
-
-        return successResponse(req, res, 'Mendukung Berhasil.', { createPendukung, createDukung, createStatus });
+        return successResponse(req, res, 'Mendukung Berhasil.', { createPendukung, createTentang });
     }
     catch (err) {
         console.log(err.message);
@@ -204,4 +175,4 @@ const mendukung = async (req, res) => {
     }
 };
 
-module.exports = mendukung;
+module.exports = menentang;

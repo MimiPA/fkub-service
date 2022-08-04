@@ -23,4 +23,7 @@ router.get('/list/detailPendukung/:id?', fkubController.detailDokumenPendukung);
 //PUT Change Status Pendukung
 router.put('/dukungan/:id?/status', fkubController.changeStatusPendukung);
 
+//GET Detail Pengajuan with Dokumen Penentang
+router.get('/list/detailPenentang/:id?', fkubController.listAllPenentang);
+
 module.exports = router;

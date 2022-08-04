@@ -20,8 +20,21 @@ const transparansiLacak = async (req, res) => {
             order: [
                 [Pengajuan, 'createdAt', 'DESC'],
                 ['createdAt', 'DESC']
-            ]
+            ],
         });
+
+        // const status = await Pengajuan.findAll({
+        //     include: [{
+        //         model: Trx_status_lacak,
+        //         include: [{
+        //             model: Pelacakan,
+        //             attributes: ["kategori_pelacakan"]
+        //         }],
+        //         order: [
+        //             [Trx_status_lacak, 'createdAt', 'DESC']
+        //         ]
+        //     }],
+        // });
 
         if (!status) {
             return errorResponse(req, res, 404, 'Transparansi Pelacakan Pengajuan Tidak Ditemukan.');

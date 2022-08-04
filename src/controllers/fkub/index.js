@@ -5,6 +5,8 @@ const detailDokumenInstansi = require('./detailDokumenInstansi');
 const detailDokumenPendukung = require('./detailDokumenPendukung');
 const changeStatusPendukung = require('./changeStatusPendukung');
 
+const listAllPenentang = require('./listAllPenentang');
+
 const uploadSuratRekomendasi = require('./uploadSuratRekomendasi');
 const listAllSuratRekomendasi = require('./listAllSuratRekomendasi');
 const suratRekomendasiById = require('./suratRekomendasi_byId');
@@ -19,4 +21,5 @@ module.exports = {
     uploadSuratRekomendasi,
     listAllSuratRekomendasi,
     suratRekomendasiById,
+    listAllPenentang
 };
