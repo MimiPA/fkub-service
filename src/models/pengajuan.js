@@ -48,6 +48,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
+      latitude: {
+        type: DataTypes.STRING(100),
+        allowNull: false
+      },
+      longitude: {
+        type: DataTypes.STRING(100),
+        allowNull: false
+      },
+      zipcode: {
+        type: DataTypes.STRING(10),
+        allowNull: false
+      },
       surat_permohonan: {
         type: DataTypes.STRING(255),
         allowNull: false

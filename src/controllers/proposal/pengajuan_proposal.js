@@ -3,6 +3,10 @@ const Datauri = require('datauri/parser');
 const { nanoid } = require('nanoid');
 const { Op } = require('sequelize');
 
+//Google Maps
+const NodeGeocoder = require('node-geocoder');
+const { API_KEY_MAPS } = process.env;
+
 //Response Message
 const { errorResponse, successResponse } = require("../../helpers");
 
@@ -32,6 +36,29 @@ const pengajuanProposal = async (req, res) => {
         else if (req.body.kecamatan == null || !req.body.kecamatan || req.body.kecamatan == "Kecamatan") {
             return errorResponse(req, res, 400, "Mohon Memilih Kecamatan");
         }
+        else if (req.body.zipcode == null || !req.body.zipcode || req.body.zipcode == " ") {
+            return errorResponse(req, res, 400, "Mohon Mengisi Kode Pos");
+        }
+
+        const optionsMaps = {
+            provider: 'google',
+            apiKey: API_KEY_MAPS,
+        };
+
+        const geocoder = NodeGeocoder(optionsMaps);
+
+        const resMaps = await geocoder.geocode({
+            address: req.body.alamat,
+            countryCode: 'ID',
+            zipcode: req.body.zipcode,
+        });
+
+        if (resMaps.length == 0 || resMaps == undefined || !resMaps) {
+            return errorResponse(req, res, 400, "Mohon Memasukkan Alamat Valid Sesuai GMaps");
+        }
+
+        const latitude = resMaps[0].latitude;
+        const longitude = resMaps[0].longitude;
 
         // Generate Referral Code
         const referralCode = nanoid(8);
@@ -122,6 +149,9 @@ const pengajuanProposal = async (req, res) => {
             rw: req.body.rw,
             kelurahan: req.body.kelurahan,
             kecamatan: req.body.kecamatan,
+            latitude: latitude,
+            longitude: longitude,
+            zipcode: req.body.zipcode,
             surat_permohonan: uploadedSuratPermohonan.secure_url,
             status: 'Pengajuan',
             idUser_create: req.user.nik,

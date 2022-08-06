@@ -59,6 +59,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
+      latitude: {
+        type: DataTypes.STRING(100),
+        allowNull: false
+      },
+      longitude: {
+        type: DataTypes.STRING(100),
+        allowNull: false
+      },
+      zipcode: {
+        type: DataTypes.STRING(10),
+        allowNull: false
+      },
       status: {
         type: DataTypes.ENUM('Submit', 'Ditolak', 'Diterima'),
         defaultValue: "Submit",

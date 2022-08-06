@@ -45,6 +45,18 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false
       },
+      latitude: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      longitude: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      zipcode: {
+        type: Sequelize.STRING(10),
+        allowNull: false
+      },
       surat_permohonan: {
         type: Sequelize.STRING(255),
         allowNull: false
