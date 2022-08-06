@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pengguna, Pengajuan, Trx_dokumen_pemohon, Trx_dokumen_instansi, Trx_dokumen_pendukung } = require('../../models');
+const { Pengguna, Pengajuan } = require('../../models');
 
 const detailPengajuanById = async (req, res) => {
     try {
