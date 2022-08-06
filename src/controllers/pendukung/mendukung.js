@@ -56,6 +56,7 @@ const mendukung = async (req, res) => {
             return errorResponse(req, res, 400, 'Mohon Memasukkan Nomor Telepon Valid');
         }
 
+        console.log(alamat);
 
         const dataPengajuan = await Pengajuan.findOne({
             where: {
