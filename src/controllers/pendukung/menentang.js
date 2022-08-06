@@ -1,6 +1,10 @@
 //Response Message
 const { errorResponse, successResponse } = require("../../helpers");
 
+//Google Maps
+const NodeGeocoder = require('node-geocoder');
+const { API_KEY_MAPS } = process.env;
+
 //Import Model
 const { Pengajuan, Pendukung, Trx_dokumen_penentang } = require('../../models');
 
@@ -28,6 +32,7 @@ const menentang = async (req, res) => {
             tempat_lahir,
             tanggal_lahir,
             alamat,
+            zipcode,
             rt,
             rw,
             kecamatan,
@@ -39,6 +44,7 @@ const menentang = async (req, res) => {
         } = req.body;
 
         let pattern = /(\()?(\+62|62|0)(\d{2,3})?\)?[ .-]?\d{2,4}[ .-]?\d{2,4}[ .-]?\d{2,4}/g;
+        let patternzipcode = /^[0-9]+$/i;
 
         if (!id) {
             return errorResponse(req, res, 400, 'ID Pengajuan Dibutuhkan Di Request Parameter');
@@ -52,7 +58,32 @@ const menentang = async (req, res) => {
         else if (telepon.length != 12 || pattern.test(telepon) == false) {
             return errorResponse(req, res, 400, 'Mohon Memasukkan Nomor Telepon Valid');
         }
+        else if (!alasan || alasan == null || alasan == "") {
+            return errorResponse(req, res, 400, 'Mohon Memasukkan Alasan Menentang');
+        }
+        else if (zipcode == null || !zipcode || zipcode == " " || patternzipcode.test(zipcode) == false) {
+            return errorResponse(req, res, 400, "Mohon Mengisi Kode Pos Valid");
+        }
 
+        const optionsMaps = {
+            provider: 'google',
+            apiKey: API_KEY_MAPS,
+        };
+
+        const geocoder = NodeGeocoder(optionsMaps);
+
+        const resMaps = await geocoder.geocode({
+            address: alamat,
+            countryCode: 'ID',
+            zipcode: zipcode,
+        });
+
+        if (resMaps.length == 0 || resMaps == undefined || !resMaps) {
+            return errorResponse(req, res, 400, "Mohon Memasukkan Alamat Valid Sesuai GMaps");
+        }
+
+        const latitude = resMaps[0].latitude;
+        const longitude = resMaps[0].longitude;
 
         const dataPengajuan = await Pengajuan.findOne({
             where: {
@@ -151,6 +182,9 @@ const menentang = async (req, res) => {
             rw: rw,
             kecamatan: kecamatan,
             kelurahan: kelurahan,
+            latitude: latitude,
+            longitude: longitude,
+            zipcode: zipcode,
             status: "Submit",
             idUser_create: req.user.nik,
             idUser_update: req.user.nik,
@@ -167,7 +201,7 @@ const menentang = async (req, res) => {
             idUser_create: req.user.nik
         });
 
-        return successResponse(req, res, 'Mendukung Berhasil.', { createPendukung, createTentang });
+        return successResponse(req, res, 'Menentang Pendirian Berhasil.', { createPendukung, createTentang });
     }
     catch (err) {
         console.log(err.message);

@@ -85,8 +85,6 @@ const mendukung = async (req, res) => {
         const latitude = resMaps[0].latitude;
         const longitude = resMaps[0].longitude;
 
-        console.log(alamat);
-
         const dataPengajuan = await Pengajuan.findOne({
             where: {
                 id: id
