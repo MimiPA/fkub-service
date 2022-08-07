@@ -4,6 +4,7 @@ const listAllDukungan = require('./listAllDukungan');
 
 const searchCode = require('./searchCode');
 const menentang = require('./menentang');
+const listAllPenentang = require('./listAllPenentang');
 
 module.exports = {
     detailPengajuanById,
@@ -11,4 +12,5 @@ module.exports = {
     listAllDukungan,
     searchCode,
     menentang,
+    listAllPenentang,
 };

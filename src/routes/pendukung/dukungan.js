@@ -20,4 +20,7 @@ router.get("/searchCode/:referral_code?", pendukungController.searchCode);
 //POST Menentang
 router.post("/menentang/upload/:id?", pendukungController.menentang);
 
+//GET List All Tentangan
+router.get("/menentang/list", pendukungController.listAllPenentang);
+
 module.exports = router;
