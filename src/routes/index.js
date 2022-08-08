@@ -16,6 +16,7 @@ const pendukungRouter = require("./pendukung");
 const countRouter = require('./count');
 const imbRouter = require('./imb');
 const landingRouter = require('./landingPage');
+const petaRouter = require('./petaPersebaran');
 
 // Get All Routes
 router.use("", authRouter);
@@ -31,5 +32,6 @@ router.use("/pendukung", pendukungRouter);
 router.use("/count", countRouter);
 router.use("/imb", imbRouter);
 router.use("/landing", landingRouter);
+router.use("/peta", petaRouter);
 
 module.exports = router;

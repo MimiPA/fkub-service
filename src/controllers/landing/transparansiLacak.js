@@ -21,6 +21,7 @@ const transparansiLacak = async (req, res) => {
                 [Pengajuan, 'createdAt', 'DESC'],
                 ['createdAt', 'DESC']
             ],
+            limit: 1,
         });
 
         // const status = await Pengajuan.findAll({
