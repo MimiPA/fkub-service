@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const { errorResponse, successResponse } = require("../../helpers");
 
 //Import Model
-const { Pendukung, Pelacakan, Trx_status_lacak } = require('../../models');
+const { Pendukung, Pelacakan, Trx_status_lacak, Trx_alasan_penolakan } = require('../../models');
 
 const changeStatusPendukung = async (req, res) => {
     try {
@@ -26,6 +26,20 @@ const changeStatusPendukung = async (req, res) => {
 
         if (!dataPendukung) {
             return errorResponse(req, res, 400, 'Data Tidak Ditemukan.');
+        }
+
+        if (status == "Ditolak") {
+            const { alasan } = req.body;
+
+            if (!alasan || alasan == null || alasan == "") {
+                return errorResponse(req, res, 400, 'Mohon Memasukkan Alasan Menolak');
+            }
+
+            const createAlasan = await Trx_alasan_penolakan.create({
+                alasan: alasan,
+                idUser_create: req.user.nik,
+                id_pendukung: dataPendukung.id
+            });
         }
 
         const update = await Pendukung.update({ status: status }, { where: { id: id } });

@@ -10,12 +10,12 @@ const listAllPenentang = async (req, res) => {
     try {
         const id_pengajuan = req.params.id;
 
-        const dataPenentang = await Pendukung.findAll({
-            where: {
-                id_pengajuan: id_pengajuan,
-            },
+        const dataPenentang = await Trx_dokumen_penentang.findAll({
             include: [{
-                model: Trx_dokumen_penentang,
+                model: Pendukung,
+                where: {
+                    id_pengajuan: id_pengajuan,
+                },
             }]
         });
 
