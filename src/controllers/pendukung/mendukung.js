@@ -64,6 +64,9 @@ const mendukung = async (req, res) => {
         else if (zipcode == null || !zipcode || zipcode == " " || patternzipcode.test(zipcode) == false) {
             return errorResponse(req, res, 400, "Mohon Mengisi Kode Pos Valid");
         }
+        else if (zipcode.substring(0, 2) != "90") {
+            return errorResponse(req, res, 400, "Hanya boleh Alamat + Kode Pos di Kota Makassar");
+        }
 
         const optionsMaps = {
             provider: 'google',
