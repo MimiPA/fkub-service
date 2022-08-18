@@ -19,9 +19,8 @@ const transparansiLacak = async (req, res) => {
             }],
             order: [
                 [Pengajuan, 'createdAt', 'DESC'],
-                ['createdAt', 'DESC']
+                ['createdAt', 'DESC'],
             ],
-            limit: 1,
         });
 
         // const status = await Pengajuan.findAll({
@@ -29,12 +28,12 @@ const transparansiLacak = async (req, res) => {
         //         model: Trx_status_lacak,
         //         include: [{
         //             model: Pelacakan,
-        //             attributes: ["kategori_pelacakan"]
+        //             attributes: ["kategori_pelacakan"],
         //         }],
-        //         order: [
-        //             [Trx_status_lacak, 'createdAt', 'DESC']
-        //         ]
         //     }],
+        //     order: [
+        //         [Trx_status_lacak, 'createdAt', 'DESC']
+        //     ],
         // });
 
         if (!status) {
